@@ -160,6 +160,27 @@ export default function TodayPage() {
 
       <div className="relative flex-1 w-full h-full flex items-center justify-center z-10 overflow-hidden">
         
+        {/* Dynamic Persistent Mobile Logo Header */}
+        <button 
+          onClick={() => {
+            if (currentSlide > 0 && slideContainerRef.current) {
+              slideContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          className={cn(
+            "absolute left-1/2 -translate-x-1/2 flex flex-col items-center md:hidden z-50 transition-all duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)] origin-top",
+            currentSlide === 0 
+              ? "top-10 gap-2 scale-100 cursor-default animate-fade-rise" 
+              : "top-[max(env(safe-area-inset-top),20px)] gap-2 scale-[0.65] cursor-pointer hover:opacity-80 bg-mist-white/60 backdrop-blur-md px-6 py-2 rounded-full shadow-[0_4px_16px_rgba(27,46,75,0.05)] text-ink-navy"
+          )}
+        >
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+            <path d="M10 3 H 6a2 2 0 0 0 -2 2 v 14a2 2 0 0 0 2 2 h 12a2 2 0 0 0 2 -2 V 5a2 2 0 0 0 -2 -2 h -4" />
+            <path d="M 8 8 L 16 16 M 16 8 L 8 16" />
+          </svg>
+          <span className="font-bold tracking-[0.3em] text-2xl uppercase mt-1">HOXE</span>
+        </button>
+
         <div 
           ref={slideContainerRef}
           className="flex flex-col w-full h-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth"
@@ -168,16 +189,7 @@ export default function TodayPage() {
           <section data-index={0} className="hoxe-slide min-h-[100dvh] w-full h-full shrink-0 snap-center relative flex flex-col items-center justify-center px-6 md:px-16 transition-opacity">
             <div className={cn("absolute inset-0 flex flex-col items-center justify-center px-6 md:px-16 transition-opacity duration-700", currentSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none")}>
               
-               {/* Mobile Logo Header */}
-               <div className="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-50 animate-fade-rise">
-                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-ink-navy">
-                   <path d="M10 3 H 6a2 2 0 0 0 -2 2 v 14a2 2 0 0 0 2 2 h 12a2 2 0 0 0 2 -2 V 5a2 2 0 0 0 -2 -2 h -4" />
-                   <path d="M 8 8 L 16 16" />
-                   <path d="M 16 8 L 8 16" />
-                 </svg>
-                 <span className="font-bold tracking-[0.3em] text-2xl text-ink-navy uppercase">HOXE</span>
-               </div>
-
+ 
                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
                  <div className="absolute w-[600px] h-[600px] rounded-full bg-atlantic-blue/[0.03] blur-[120px] -top-[200px] -left-[200px] animate-[drift_25s_ease-in-out_infinite]" />
                  <div className="absolute w-[500px] h-[500px] rounded-full bg-slate-blue/[0.04] blur-[100px] -bottom-[150px] -right-[150px] animate-[drift_30s_ease-in-out_infinite_reverse]" />
@@ -287,7 +299,7 @@ export default function TodayPage() {
               <section 
                 data-index={slideIndex} 
                 key={item.id} 
-                className="hoxe-slide min-h-[100dvh] w-full h-full shrink-0 snap-center relative flex flex-col px-10 md:px-20 lg:px-28 pt-16 md:pt-[68px]"
+                className="hoxe-slide min-h-[100dvh] w-full h-full shrink-0 snap-center relative flex flex-col px-10 md:px-20 lg:px-28 pt-28 md:pt-[68px]"
               >
                 <div className={cn("w-full h-full transition-opacity duration-700", isActive ? "opacity-100" : "opacity-0 pointer-events-none")}>
                  <CategorySlideContent item={item} index={idx} isActive={isActive} />
