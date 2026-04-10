@@ -27,27 +27,27 @@ const EDITORIAL_KEYWORDS: Record<EditorialCategory, string[]> = {
   sports:   ["championship", "olympic", "tournament", "world cup", "medal", "athlete", "football", "baseball", "soccer", "tennis"],
   culture:  ["novel", "film", "artist", "album", "painting", "museum", "literature", "theater", "poetry", "dance"],
   people:   ["born", "death", "president", "king", "queen", "emperor", "pope", "prime minister", "leader"],
-  music:    ["beatles", "mccartney", "lennon", "singer", "songwriter", "musician", "guitarist", "drummer", "bass", "rock band", "punk", "jazz", "blues", "opera", "symphony", "orchestra", "composer", "debut album"],
+  music:    ["beatles", "mccartney", "lennon", "singer", "songwriter", "musician", "guitarist", "drummer", "bass", "rock band", "punk", "jazz", "blues", "opera", "symphony", "orchestra", "composer", "debut album", "concert", "oratorio", "concerto", "premiere"],
   history:  [] // Default fallback
 };
 
 const VIRAL_KEYWORDS: Record<ViralCategory, string[]> = {
-  viral_music:   ["number one", "billboard", "chart", "#1", "grammy", "hit single", "platinum", "album release", "gold record", "top of the charts"],
-  viral_scandal: ["scandal", "arrest", "controversy", "impeach", "resign", "affair", "fraud", "trial", "convicted", "fired", "banned", "accused"],
-  viral_movie:   ["premiere", "box office", "oscar", "film release", "movie", "cinema", "academy award", "starring", "directed by"],
-  viral_record:  ["world record", "first person", "first woman", "first man", "fastest", "longest", "guinness", "youngest", "oldest", "broke the record"],
-  viral_moment:  ["television", "broadcast live", "viral", "internet", "social media", "meme", "trending", "sensation"],
+  viral_music:   ["number one hit", "billboard hot", "chart-topping", "#1 single", "grammy award", "hit single", "platinum album", "gold record", "top of the charts", "number-one"],
+  viral_scandal: ["scandal", "impeach", "resign in disgrace", "sex scandal", "corruption scandal", "watergate", "cover-up", "whistleblow", "leaked", "exposed"],
+  viral_movie:   ["box office", "oscar", "academy award", "best picture", "blockbuster", "highest-grossing", "film festival", "cannes", "golden globe", "motion picture"],
+  viral_record:  ["world record", "guinness", "broke the record", "new record", "fastest ever", "longest ever", "first person to", "first woman to", "first man to", "unprecedented"],
+  viral_moment:  ["broadcast live", "viral video", "watched by millions", "trending", "social media sensation", "broke the internet", "live television"],
   viral_quote:   [] // Filled from deaths endpoint
 };
 
 // Category quotas: [min, max]
 const EDITORIAL_QUOTAS: Record<EditorialCategory, [number, number]> = {
   history:  [3, 5],
-  science:  [2, 4],
+  science:  [3, 5],
   warfare:  [1, 3],
   culture:  [1, 3],
   people:   [1, 3],
-  space:    [1, 2],
+  space:    [2, 4],
   sports:   [1, 2],
   music:    [0, 2],
 };
