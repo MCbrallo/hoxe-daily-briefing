@@ -58,32 +58,35 @@ export default function SavedPage() {
               const colorObj = getCategoryColor(item.category);
 
               return (
-                <div key={item.id} className="group border border-ink-navy/10 bg-warm-white/30 hover:bg-warm-white p-6 md:p-8 flex flex-col justify-between transition-all relative">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
+                <div key={item.id} className="group relative bg-white/70 backdrop-blur-md rounded-[28px] border border-white shadow-[0_8px_30px_-5px_rgba(27,46,75,0.05)] hover:shadow-[0_20px_40px_-10px_rgba(27,46,75,0.1)] hover:-translate-y-1 transition-all duration-500 overflow-hidden flex flex-col">
+                  {/* Subtle Top Gradient Bar */}
+                  <div className={cn("absolute top-0 left-0 w-full h-1", colorObj.text.replace('text-', 'bg-'))} />
+                  
+                  <div className="p-8 flex flex-col flex-1 relative z-10">
+                    <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-3">
-                        <span className={cn("text-[10px] font-bold tracking-[0.2em] uppercase", colorObj.text)}>
+                        <span className={cn("text-[9px] font-bold tracking-[0.25em] uppercase px-3 py-1 bg-white rounded-full border border-ink-navy/5 shadow-sm", colorObj.text)}>
                           {catLabel}
                         </span>
                         {item.year && (
-                          <span className="text-[10px] font-serif italic text-ink-navy/30">{item.year}</span>
+                          <span className="text-[10px] font-serif italic text-ink-navy/40">{item.year}</span>
                         )}
                       </div>
                       
                       <button 
                         onClick={() => removeCard(item.id)}
-                        className="text-ink-navy/20 hover:text-red-700 transition-colors focus:outline-none z-10"
-                        title="Remove"
+                        className="w-8 h-8 rounded-full bg-ink-navy/5 flex items-center justify-center text-ink-navy/30 hover:bg-red-50 hover:text-red-500 transition-colors focus:outline-none"
+                        title="Remove Bookmark"
                       >
-                        <BookmarkMinus size={16} strokeWidth={1.5} />
+                        <BookmarkMinus size={14} strokeWidth={2} />
                       </button>
                     </div>
 
-                    <h3 className="text-xl md:text-2xl font-serif text-ink-navy leading-snug mb-3">
+                    <h3 className="text-xl md:text-2xl font-serif text-ink-navy leading-snug mb-4">
                       {item.title}
                     </h3>
                     
-                    <p className="text-sm font-sans text-ink-navy/60 leading-relaxed [hyphens:none] line-clamp-4">
+                    <p className="text-sm font-sans text-ink-navy/60 leading-relaxed [hyphens:none] line-clamp-4 flex-1">
                       {item.shortExplanation}
                     </p>
                   </div>

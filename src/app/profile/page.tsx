@@ -60,8 +60,8 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
 
         {/* Left Column: Auth & Preferences */}
-        <div className="md:col-span-7 flex flex-col gap-8">
-          <div className="border border-ink-navy/10 bg-warm-white/20 p-8 md:p-10 flex flex-col items-center text-center">
+        <div className="md:col-span-7 flex flex-col gap-6">
+          <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-8 md:p-10 flex flex-col items-center text-center">
             <div className="w-16 h-16 rounded-full border border-ink-navy/15 bg-warm-white/40 flex items-center justify-center mb-5">
               <User size={26} className="text-ink-navy/30" />
             </div>
@@ -103,114 +103,90 @@ export default function ProfilePage() {
           </div>
 
           <section>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-navy/35 mb-4 flex items-center gap-2.5">
-              <Settings2 size={13} /> Content Preferences
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 px-4">
+              Content Preferences
             </h2>
-            <div className="border border-ink-navy/10 bg-warm-white/20 p-5 md:p-6">
-              <p className="text-xs text-ink-navy/60 mb-5 font-medium leading-relaxed">Categorías editoriales que aparecerán diariamente en tu panel de TODAY. Desactiva las que no te interesen.</p>
-              <div className="flex flex-wrap gap-3">
-                {EDITORIAL_CATS.map((cat) => {
-                  const isActive = !disabledCategories.includes(cat);
-                  return (
+            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white overflow-hidden">
+              {EDITORIAL_CATS.map((cat, idx) => {
+                const isActive = !disabledCategories.includes(cat);
+                return (
+                  <div key={cat} className={cn("flex items-center justify-between p-4 px-5", idx !== EDITORIAL_CATS.length - 1 ? "border-b border-ink-navy/5" : "")}>
+                    <span className="text-sm font-medium text-ink-navy capitalize tracking-wide">{cat}</span>
                     <button 
-                      key={cat} 
                       onClick={() => toggleCategory(cat)}
-                      className={cn(
-                        "text-[10px] font-bold tracking-widest uppercase px-4 py-2.5 transition-colors border",
-                        isActive 
-                          ? "bg-ink-navy text-mist-white border-ink-navy" 
-                          : "text-ink-navy/30 bg-transparent border-ink-navy/15 hover:border-ink-navy/30 hover:text-ink-navy/60"
-                      )}
+                      className={cn("w-11 h-6 rounded-full relative transition-colors duration-300", isActive ? "bg-emerald-500" : "bg-ink-navy/15")}
                     >
-                      {cat}
+                      <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300", isActive ? "left-6" : "left-1")}></div>
                     </button>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
             </div>
           </section>
 
           <section>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-navy/35 mb-4 flex items-center gap-2.5">
-              <Languages size={13} /> Language
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 px-4 mt-6">
+              Language / Idioma
             </h2>
-            <div className="border border-ink-navy/10 bg-warm-white/20 p-5 md:p-6">
-              <div className="flex items-center flex-wrap gap-3">
-                {[
-                  { id: "en", label: "English" },
-                  { id: "es", label: "Español" },
-                  { id: "gl", label: "Galego" }
-                ].map((lang) => (
-                  <button 
-                    key={lang.id} 
-                    onClick={() => setLanguage(lang.id as any)}
-                    className={cn(
-                      "text-xs font-bold tracking-widest uppercase px-4 py-2 transition-colors border",
-                      language === lang.id 
-                        ? "bg-ink-navy text-mist-white border-ink-navy" 
-                        : "text-ink-navy/40 bg-transparent border-ink-navy/10 hover:border-ink-navy/30"
-                    )}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
+            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white overflow-hidden p-2 flex gap-2">
+              {[
+                { id: "en", label: "Eng" },
+                { id: "es", label: "Esp" },
+                { id: "gl", label: "Gal" }
+              ].map((lang) => (
+                <button 
+                  key={lang.id} 
+                  onClick={() => setLanguage(lang.id as any)}
+                  className={cn(
+                    "flex-1 py-3 text-xs md:text-sm font-bold tracking-[0.1em] uppercase transition-all rounded-2xl",
+                    language === lang.id 
+                      ? "bg-ink-navy text-white shadow-md" 
+                      : "text-ink-navy/40 hover:bg-ink-navy/5"
+                  )}
+                >
+                  {lang.label}
+                </button>
+              ))}
             </div>
           </section>
 
         </div>
 
         {/* Right Column: Stats & Secondary */}
-        <div className="md:col-span-5 flex flex-col gap-8">
+        <div className="md:col-span-5 flex flex-col gap-6">
           
           <div className="flex flex-col gap-4">
-            <div className="border border-ink-navy/10 bg-warm-white/20 p-5 md:p-6 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-ink-navy/5 flex items-center justify-center shrink-0">
-                <Bookmark size={16} className="text-ink-navy/40" />
-              </div>
+            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 md:p-6 flex items-center justify-between">
               <div>
-                <span className="text-2xl font-serif text-ink-navy">{session ? "0" : "--"}</span>
+                <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block">{session ? "0" : "--"}</span>
                 <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/35">Saved Contexts</p>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-slate-blue/10 flex items-center justify-center shrink-0">
+                <Bookmark size={20} className="text-slate-blue" strokeWidth={2} />
               </div>
             </div>
 
-            <div className="border border-ink-navy/10 bg-warm-white/20 p-5 md:p-6 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-ink-navy/5 flex items-center justify-center shrink-0">
-                <Clock size={16} className="text-ink-navy/40" />
-              </div>
+            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 md:p-6 flex items-center justify-between">
               <div>
-                <span className="text-2xl font-serif text-ink-navy">{session ? "1" : "--"}</span>
+                <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block">{session ? "1" : "--"}</span>
                 <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/35">Days Explored</p>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
+                <Clock size={20} className="text-emerald-600" strokeWidth={2} />
               </div>
             </div>
           </div>
 
           <section>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-navy/35 mb-4 flex items-center gap-2.5">
-              <Bell size={13} /> Communications
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 px-4 mt-2">
+              Application
             </h2>
-            <div className="border border-ink-navy/10 bg-warm-white/20 p-5 md:p-6 flex items-center justify-between">
-              <div className="pr-4">
-                <span className="text-xs font-bold text-ink-navy tracking-widest uppercase block mb-0.5">09:00 Briefing</span>
-                <p className="text-[11px] text-ink-navy/50 font-serif italic">Daily email preview.</p>
-              </div>
-              <button className="w-11 h-[22px] bg-slate-blue rounded-full relative shrink-0 transition-colors">
-                <div className="absolute right-[3px] top-[3px] w-4 h-4 rounded-full bg-mist-white shadow-sm"></div>
+            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white overflow-hidden flex flex-col">
+              <button className="text-left text-xs font-bold uppercase tracking-widest text-ink-navy/70 hover:bg-ink-navy/5 transition-colors p-5 border-b border-ink-navy/5 flex items-center justify-between group">
+                Privacy Policy <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform opacity-50" />
               </button>
-            </div>
-          </section>
-          
-          <section>
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-navy/35 mb-4 flex items-center gap-2.5">
-              <Shield size={13} /> Application
-            </h2>
-            <div className="border border-ink-navy/10 bg-warm-white/20 p-5 md:p-6 flex flex-col gap-4">
-              <button className="text-left text-[10px] font-bold uppercase tracking-widest text-ink-navy/50 hover:text-ink-navy transition-colors">
-                Privacy Policy
-              </button>
-              <div className="w-full h-[1px] bg-ink-navy/8"></div>
-              <button className="text-left text-[10px] font-bold uppercase tracking-widest text-red-900/50 hover:text-red-900 transition-colors">
-                Delete Account
+              <button className="text-left text-xs font-bold uppercase tracking-widest text-red-500 hover:bg-red-50 transition-colors p-5 flex items-center justify-between group">
+                Delete Account <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform opacity-30" />
               </button>
             </div>
           </section>

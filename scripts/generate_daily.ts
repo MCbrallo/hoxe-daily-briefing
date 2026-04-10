@@ -208,157 +208,110 @@ export async function generateForDate(targetDateObj: Date) {
       .filter((e: any) => e.pages?.length > 0 && e.pages[0].extract)
       .sort(() => 0.5 - Math.random());
 
-    // Buckets for editorial categories
-    const editorialBuckets: Record<EditorialCategory, any[]> = {
-      history: [], science: [], culture: [], warfare: [], space: [], sports: [], people: [], music: []
-    };
-
-    // Buckets for viral categories
-    const viralBuckets: Record<string, any[]> = {
+    // ── STEP 1: Candidate Pools ──
+    const pools: Record<string, any[]> = {
+      history: [], science: [], culture: [], warfare: [], space: [], sports: [], people: [], music: [],
       viral_music: [], viral_scandal: [], viral_movie: [], viral_record: [], viral_moment: []
     };
 
     for (const event of allEvents) {
       const page = event.pages[0];
       const combined = (event.text || '') + ' ' + (page.extract || '');
-
-      // Try viral first (more specific)
+      
       const viralCat = categorizeViral(combined);
-      if (viralCat && viralBuckets[viralCat] !== undefined && viralBuckets[viralCat].length < 3) {
-        viralBuckets[viralCat].push({ event, page, year: event.year });
+      if (viralCat) {
+        pools[viralCat].push({ event, page, year: event.year });
         continue;
       }
-
-      // Editorial category
-      const editCat = categorize(combined);
-      const [, max] = EDITORIAL_QUOTAS[editCat];
-      if (editorialBuckets[editCat].length < max) {
-        editorialBuckets[editCat].push({ event, page, year: event.year });
-      }
+      pools[categorize(combined)].push({ event, page, year: event.year });
     }
 
-    // ── STEP 2: Fill under-served editorial categories from remaining events ──
-    for (const event of allEvents) {
-      const page = event.pages[0];
-      const combined = (event.text || '') + ' ' + (page.extract || '');
-      const editCat = categorize(combined);
-      const [min] = EDITORIAL_QUOTAS[editCat];
-
-      // Already assigned somewhere?
-      const alreadyUsed = Object.values(editorialBuckets).flat().some(b => b.page.title === page.title) ||
-                          Object.values(viralBuckets).flat().some(b => b.page.title === page.title);
-      if (alreadyUsed) continue;
-
-      if (editorialBuckets[editCat].length < min) {
-        editorialBuckets[editCat].push({ event, page, year: event.year });
-      }
-    }
-
-    // ── STEP 3: Process editorial items with image validation && Spotify validation ──
-    for (const [cat, bucket] of Object.entries(editorialBuckets)) {
-      let finalCatCount = 0;
-      for (const { event, page, year } of bucket) {
-        const title = page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled';
-        const imgUrl = await resolveImage(page);
+    // ── STEP 2: Process Editorial items until max quota (with strict image constraint) ──
+    for (const [cat, limits] of Object.entries(EDITORIAL_QUOTAS) as [EditorialCategory, [number, number]][]) {
+      let count = 0;
+      for (const { event, page, year } of pools[cat]) {
+        if (count >= limits[1]) break; // Reached max
         
-        let finalCat = cat;
+        const imgUrl = await resolveImage(page);
+        if (!imgUrl) continue; // STRICT IMAGE CONSTRAINT
+        
+        const title = page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled';
         let spotifyId: string | null = null;
-        if (cat === "music") {
-          spotifyId = await resolveSpotifyId(title);
-        }
+        if (cat === "music") spotifyId = await resolveSpotifyId(title);
 
         allItems.push({
-          briefing_id: root.id,
-          category: finalCat,
-          title,
-          year: year ? String(year) : "Unknown",
-          short_explanation: event.text,
-          why_it_matters: page.extract,
-          image_url: imgUrl,
-          image_source: imgUrl ? "Wikimedia Commons" : null,
-          metadata_spotify_track_id: spotifyId
+          briefing_id: root.id, category: cat, title, year: year ? String(year) : "Unknown",
+          short_explanation: event.text, why_it_matters: page.extract, image_url: imgUrl,
+          image_source: "Wikimedia Commons", metadata_spotify_track_id: spotifyId
         });
-        finalCatCount++;
-      }
-      if (finalCatCount > 0) {
-        console.log(`  📰 ${cat} (or fallback): ${finalCatCount} items`);
+        count++;
       }
     }
 
-    // ── STEP 4: Process viral items ──
-    for (const [cat, bucket] of Object.entries(viralBuckets)) {
-      let finalCatCount = 0;
-      for (const { event, page, year } of bucket) {
-        const title = page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled';
-        const imgUrl = await resolveImage(page);
+    // ── STEP 3: Process Viral items intelligently to hit EXACTLY 5 minimum viral cards ──
+    let viralFound = 0;
+    const saveViral = async (cat: string, candidate: any) => {
+        const imgUrl = await resolveImage(candidate.page);
+        if (!imgUrl) return false;
         
+        const title = candidate.page.normalizedtitle || candidate.page.title?.replace(/_/g, ' ') || 'Untitled';
         let spotifyId: string | null = null;
-        if (cat === "viral_music") {
-          spotifyId = await resolveSpotifyId(title);
-        }
-
+        if (cat === "viral_music" || cat === "music") spotifyId = await resolveSpotifyId(title);
+        
         allItems.push({
-          briefing_id: root.id,
-          category: cat,
-          title,
-          year: year ? String(year) : "Unknown",
-          short_explanation: event.text,
-          why_it_matters: page.extract,
-          image_url: imgUrl,
-          image_source: imgUrl ? "Wikimedia Commons" : null,
-          metadata_spotify_track_id: spotifyId
+          briefing_id: root.id, category: cat, title, year: candidate.year ? String(candidate.year) : "Unknown",
+          short_explanation: candidate.event.text, why_it_matters: candidate.page.extract, image_url: imgUrl,
+          image_source: "Wikimedia Commons", metadata_spotify_track_id: spotifyId
         });
-        finalCatCount++;
+        viralFound++;
+        return true;
+    };
+
+    // 1. Force at least 1 viral_music if available
+    if (pools.viral_music.length > 0) {
+      for (const cand of pools.viral_music) {
+        if (await saveViral("viral_music", cand)) break;
       }
-      if (finalCatCount > 0) console.log(`  🔥 ${cat}: ${finalCatCount}`);
     }
 
-    // ── STEP 5: Deaths → boost people category ──
-    if (editorialBuckets.people.length < 3) {
-      const deaths = (deathsData.deaths || [])
-        .filter((d: any) => d.pages?.length > 0 && d.pages[0].extract)
-        .sort(() => 0.5 - Math.random());
+    // 2. Round-robin through all viral pools until we have 5 total
+    const viralKeys = ["viral_scandal", "viral_movie", "viral_record", "viral_moment", "viral_music"];
+    let keepLooking = true;
+    while(keepLooking && viralFound < 5) {
+      let foundInRound = false;
+      for (const k of viralKeys) {
+        if (viralFound >= 5) break;
+        if (pools[k].length > 0) {
+          const cand = pools[k].shift(); // pull one
+          const success = await saveViral(k, cand);
+          if (success) foundInRound = true;
+        }
+      }
+      if (!foundInRound) keepLooking = false; // Ran out of candidates!
+    }
 
-      for (const death of deaths.slice(0, 2)) {
+    // 3. Last Fallback: If STILL less than 5 viral cards, borrow from history and mask as viral_moment
+    if (viralFound < 5) {
+       for (let i = 0; i < pools.history.length && viralFound < 5; i++) {
+           await saveViral("viral_moment", pools.history[i]);
+       }
+    }
+
+    // ── STEP 4: Births/Deaths fallback for 'people' category ──
+    const peopleCount = allItems.filter(i => i.category === 'people').length;
+    if (peopleCount < 3) {
+      const deaths = (deathsData.deaths || []).filter((d: any) => d.pages?.length > 0 && d.pages[0].extract).sort(() => 0.5 - Math.random());
+      for (const death of deaths) {
+        if (allItems.filter(i => i.category === 'people').length >= 3) break;
         const page = death.pages[0];
         const imgUrl = await resolveImage(page);
+        if (!imgUrl) continue; // strictly enforce images
         allItems.push({
-          briefing_id: root.id,
-          category: "people",
-          title: page.normalizedtitle || page.title?.replace(/_/g, ' '),
-          year: death.year ? String(death.year) : "Unknown",
-          short_explanation: death.text || `Died on this day`,
-          why_it_matters: page.extract,
-          image_url: imgUrl,
-          image_source: imgUrl ? "Wikimedia Commons" : null,
-          metadata_spotify_track_id: null
-        });
-        console.log(`  💀 added death to people`);
-      }
-    }
-
-    // ── STEP 6: Births → people category boost ──
-    if (editorialBuckets.people.length < 2) {
-      const births = (birthsData.births || [])
-        .filter((b: any) => b.pages?.length > 0 && b.pages[0].extract)
-        .sort(() => 0.5 - Math.random());
-
-      for (const birth of births.slice(0, 2)) {
-        const page = birth.pages[0];
-        const imgUrl = await resolveImage(page);
-        allItems.push({
-          briefing_id: root.id,
-          category: "people",
-          title: page.normalizedtitle || page.title?.replace(/_/g, ' '),
-          year: birth.year ? String(birth.year) : "Unknown",
-          short_explanation: birth.text || `Born on this day`,
-          why_it_matters: page.extract,
-          image_url: imgUrl,
-          image_source: imgUrl ? "Wikimedia Commons" : null,
-          metadata_spotify_track_id: null
+          briefing_id: root.id, category: "people", title: page.normalizedtitle || page.title?.replace(/_/g, ' '),
+          year: death.year ? String(death.year) : "Unknown", short_explanation: death.text || `Died on this day`,
+          why_it_matters: page.extract, image_url: imgUrl, image_source: "Wikimedia Commons", metadata_spotify_track_id: null
         });
       }
-      if (births.length > 0) console.log(`  👤 people (births): +${Math.min(2, births.length)}`);
     }
 
     // ── COMMIT ──
