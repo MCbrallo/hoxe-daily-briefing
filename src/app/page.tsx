@@ -344,7 +344,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
           )}
           {showImage && (
             <div className="relative w-full flex flex-col group mt-1">
-              <img src={item.imageUrl} alt={item.title} className="w-full h-auto max-h-[60vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" />
+              <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" className="w-full h-auto max-h-[60vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" />
               <div className="w-full relative mt-3">
                 <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
                 <span className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource}</span>
@@ -405,7 +405,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
         {/* Mobile Image Layer (parte baja) */}
         {showImage && (
           <div className="col-span-full mt-10 mb-8 md:hidden relative left-1/2 -ml-[50vw] w-screen flex flex-col items-end">
-            <img src={item.imageUrl} alt={item.title} className="w-full h-auto object-cover filter grayscale" />
+            <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" className="w-full h-auto object-cover filter grayscale" />
             <div className="w-full relative mt-3 px-6 h-full flex flex-col pb-4">
               <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
               <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource}</span>

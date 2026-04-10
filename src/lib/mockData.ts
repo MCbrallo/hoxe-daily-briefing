@@ -6,6 +6,8 @@ export interface BriefingItem {
   shortExplanation: string;
   whyItMatters: string;
   countryRelevance?: string;
+  imageUrl?: string;
+  imageSource?: string;
   metadata?: {
     artist?: string;
     composer?: string;
