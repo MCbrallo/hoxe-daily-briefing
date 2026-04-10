@@ -37,7 +37,8 @@ const translations = {
     ObEnter: "ENTER HOXE",
     ObNext: "NEXT",
     SelectLang: "Choose your language",
-    SelectLangDesc: "Select your preferred context language."
+    SelectLangDesc: "Select your preferred context language.",
+    ScrollDown: "Scroll down to explore"
   },
   es: {
     Today: "Hoy",
@@ -64,7 +65,8 @@ const translations = {
     ObEnter: "ENTRAR A HOXE",
     ObNext: "SIGUIENTE",
     SelectLang: "Elige tu idioma",
-    SelectLangDesc: "Selecciona tu idioma preferido para el contexto."
+    SelectLangDesc: "Selecciona tu idioma preferido para el contexto.",
+    ScrollDown: "Desliza para explorar"
   },
   gl: {
     Today: "Hoxe",
@@ -91,7 +93,8 @@ const translations = {
     ObEnter: "ENTRAR A HOXE",
     ObNext: "SEGUINTE",
     SelectLang: "Escolle o teu idioma",
-    SelectLangDesc: "Selecciona o teu idioma preferido para o contexto."
+    SelectLangDesc: "Selecciona o teu idioma preferido para o contexto.",
+    ScrollDown: "Desliza para explorar"
   }
 };
 
