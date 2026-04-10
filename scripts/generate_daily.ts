@@ -7,85 +7,81 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
-  console.error("Missing Supabase credentials system variables.");
+  console.error("Missing Supabase credentials.");
   process.exit(1);
 }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ─── EDITORIAL CATEGORIZATION ───
+// ═══════════════════════════════════════════════
+//  CATEGORIZATION ENGINE
+// ═══════════════════════════════════════════════
 
-function categorizeWikipediaArticle(pageText: string): "history" | "science" | "culture" | "warfare" | "space" | "sports" | "people" {
-  const t = pageText.toLowerCase();
-  if (t.includes("war ") || t.includes("battle") || t.includes("military") || t.includes("army")) return "warfare";
-  if (t.includes("nasa") || t.includes("orbit") || t.includes("spacecraft") || t.includes("planet")) return "space";
-  if (t.includes("discovery") || t.includes("scientist") || t.includes("physics") || t.includes("quantum")) return "science";
-  if (t.includes("championship") || t.includes("olympic") || t.includes("tournament")) return "sports";
-  if (t.includes("novel") || t.includes("film") || t.includes("artist") || t.includes("album")) return "culture";
-  if (t.includes("born") || t.includes("death")) return "people";
+type EditorialCategory = "history" | "science" | "culture" | "warfare" | "space" | "sports" | "people";
+type ViralCategory = "viral_music" | "viral_scandal" | "viral_movie" | "viral_quote" | "viral_moment" | "viral_record";
+
+const EDITORIAL_KEYWORDS: Record<EditorialCategory, string[]> = {
+  warfare:  ["war ", "battle", "military", "army", "invasion", "siege", "troops", "combat", "bombing", "naval"],
+  space:    ["nasa", "orbit", "spacecraft", "planet", "astronaut", "rocket", "satellite", "lunar", "mars", "space"],
+  science:  ["discovery", "scientist", "physics", "quantum", "chemistry", "biology", "molecule", "experiment", "theory", "research"],
+  sports:   ["championship", "olympic", "tournament", "world cup", "medal", "athlete", "football", "baseball", "soccer", "tennis"],
+  culture:  ["novel", "film", "artist", "album", "painting", "museum", "literature", "theater", "poetry", "dance"],
+  people:   ["born", "death", "president", "king", "queen", "emperor", "pope", "prime minister", "leader"],
+  history:  [] // Default fallback
+};
+
+const VIRAL_KEYWORDS: Record<ViralCategory, string[]> = {
+  viral_music:   ["number one", "billboard", "chart", "#1", "grammy", "hit single", "platinum", "album release", "concert", "singer", "band", "song"],
+  viral_scandal: ["scandal", "arrest", "controversy", "impeach", "resign", "affair", "fraud", "trial", "convicted", "fired", "banned", "accused"],
+  viral_movie:   ["premiere", "box office", "oscar", "film release", "movie", "cinema", "academy award", "starring", "directed by"],
+  viral_record:  ["world record", "first person", "first woman", "first man", "fastest", "longest", "guinness", "youngest", "oldest", "broke the record"],
+  viral_moment:  ["television", "broadcast live", "viral", "internet", "social media", "meme", "trending", "sensation"],
+  viral_quote:   [] // Filled from deaths endpoint
+};
+
+// Category quotas: [min, max]
+const EDITORIAL_QUOTAS: Record<EditorialCategory, [number, number]> = {
+  history:  [3, 5],
+  science:  [2, 4],
+  warfare:  [1, 3],
+  culture:  [1, 3],
+  people:   [1, 3],
+  space:    [1, 2],
+  sports:   [1, 2],
+};
+
+function categorize(text: string): EditorialCategory {
+  const t = text.toLowerCase();
+  for (const [cat, keywords] of Object.entries(EDITORIAL_KEYWORDS)) {
+    if (cat === "history") continue; // Default
+    if (keywords.some(kw => t.includes(kw))) return cat as EditorialCategory;
+  }
   return "history";
 }
 
-// ─── VIRAL CATEGORIZATION ───
-// Smart keyword matching to assign Wikipedia events to fun viral categories
-
-function categorizeAsViral(text: string, extract: string): string | null {
-  const combined = (text + " " + extract).toLowerCase();
-
-  // Music: charts, #1, hit song, Grammy, album, singer, band
-  if (combined.includes("number one") || combined.includes("billboard") || combined.includes("chart") ||
-      combined.includes("#1") || combined.includes("grammy") || combined.includes("hit single") ||
-      combined.includes("platinum") || combined.includes("album") || combined.includes("singer") ||
-      combined.includes("band") || combined.includes("concert") || combined.includes("song")) {
-    return "viral_music";
+function categorizeViral(text: string): ViralCategory | null {
+  const t = text.toLowerCase();
+  for (const [cat, keywords] of Object.entries(VIRAL_KEYWORDS)) {
+    if (keywords.length === 0) continue;
+    if (keywords.some(kw => t.includes(kw))) return cat as ViralCategory;
   }
-
-  // Scandal: arrest, scandal, controversy, trial, impeach, resign, affair
-  if (combined.includes("scandal") || combined.includes("arrest") || combined.includes("controversy") ||
-      combined.includes("impeach") || combined.includes("resign") || combined.includes("affair") ||
-      combined.includes("fraud") || combined.includes("trial") || combined.includes("convicted") ||
-      combined.includes("fired") || combined.includes("banned")) {
-    return "viral_scandal";
-  }
-
-  // Movies: premiere, film, box office, Oscar, director, movie, cinema
-  if (combined.includes("premiere") || combined.includes("box office") || combined.includes("oscar") ||
-      combined.includes("film") || combined.includes("movie") || combined.includes("cinema") ||
-      combined.includes("directed") || combined.includes("academy award") || combined.includes("starring")) {
-    return "viral_movie";
-  }
-
-  // Records: record, first, fastest, longest, guinness, broke, youngest, oldest
-  if (combined.includes("record") || combined.includes("first person") || combined.includes("first woman") ||
-      combined.includes("first man") || combined.includes("fastest") || combined.includes("longest") ||
-      combined.includes("guinness") || combined.includes("youngest") || combined.includes("oldest") ||
-      combined.includes("broke the record") || combined.includes("world record")) {
-    return "viral_record";
-  }
-
-  // Viral moments: television, broadcast, live, viral, internet, social media, tweet
-  if (combined.includes("television") || combined.includes("broadcast") || combined.includes("live") ||
-      combined.includes("viral") || combined.includes("internet") || combined.includes("social media") ||
-      combined.includes("meme") || combined.includes("trending")) {
-    return "viral_moment";
-  }
-
   return null;
 }
 
-// ─── IMAGE HANDLING ───
+// ═══════════════════════════════════════════════
+//  IMAGE ENGINE — Bulletproof
+// ═══════════════════════════════════════════════
 
 function isValidImageFormat(url: string): boolean {
   if (!url) return false;
-  const cleanUrl = url.split('?')[0].toLowerCase();
-  return cleanUrl.endsWith('.jpg') || cleanUrl.endsWith('.jpeg') || cleanUrl.endsWith('.png') || cleanUrl.endsWith('.webp');
+  const clean = url.split('?')[0].toLowerCase();
+  return clean.endsWith('.jpg') || clean.endsWith('.jpeg') || clean.endsWith('.png') || clean.endsWith('.webp');
 }
 
 function getReliableImageUrl(page: any): string | null {
-  // Prefer thumbnail (800px) — served from upload.wikimedia.org/thumb/, almost never blocked
   if (page.thumbnail?.source) {
-    const biggerThumb = page.thumbnail.source.replace(/\/\d+px-/, '/800px-');
-    if (isValidImageFormat(biggerThumb)) return biggerThumb;
+    const big = page.thumbnail.source.replace(/\/\d+px-/, '/800px-');
+    if (isValidImageFormat(big)) return big;
     if (isValidImageFormat(page.thumbnail.source)) return page.thumbnail.source;
   }
   if (page.originalimage?.source && isValidImageFormat(page.originalimage.source)) {
@@ -94,202 +90,245 @@ function getReliableImageUrl(page: any): string | null {
   return null;
 }
 
-async function isImageReachable(url: string): Promise<boolean> {
+async function validateImage(url: string): Promise<boolean> {
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-    const res = await fetch(url, {
-      method: 'HEAD',
-      signal: controller.signal,
-      headers: { 'User-Agent': 'HoxeDailyBriefing/1.0' }
-    });
-    clearTimeout(timeout);
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch(url, { method: 'HEAD', signal: ctrl.signal, headers: { 'User-Agent': 'HoxeBot/2.0' } });
+    clearTimeout(t);
     if (!res.ok) return false;
-    const ct = res.headers.get('content-type') || '';
-    return ct.startsWith('image/');
-  } catch {
-    return false;
-  }
+    return (res.headers.get('content-type') || '').startsWith('image/');
+  } catch { return false; }
 }
 
-// ─── MAIN GENERATION ───
+async function resolveImage(page: any): Promise<string | null> {
+  const url = getReliableImageUrl(page);
+  if (!url) return null;
+  const ok = await validateImage(url);
+  return ok ? url : null;
+}
 
-async function generateLanguageDataset(targetDateObj: Date, languageCode: 'en' | 'es') {
+// ═══════════════════════════════════════════════
+//  PIPELINE
+// ═══════════════════════════════════════════════
+
+async function generateForDate(targetDateObj: Date) {
   const mm = String(targetDateObj.getMonth() + 1).padStart(2, '0');
   const dd = String(targetDateObj.getDate()).padStart(2, '0');
-  const locales: Record<string, string> = { 'en': 'en-US', 'es': 'es-ES' };
 
-  const dateString = targetDateObj.toLocaleDateString(locales[languageCode], { month: "long", day: "numeric" });
-  const dayOfWeek = targetDateObj.toLocaleDateString(locales[languageCode], { weekday: "long" });
+  // CANONICAL: Always use en-US for the database key
+  const dateString = targetDateObj.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+  const dayOfWeek = targetDateObj.toLocaleDateString("en-US", { weekday: "long" });
 
   // Idempotency
   const { data: existing } = await supabase
     .from("daily_briefings")
     .select("id")
     .eq("date", dateString)
-    .eq("language", languageCode)
     .limit(1)
     .single();
 
   if (existing) {
-    console.log(`[SKIP] ${dateString} (${languageCode}) already exists.`);
+    console.log(`[SKIP] ${dateString} already exists.`);
     return;
   }
 
-  console.log(`\n[GENERATE] ${dateString} [${languageCode.toUpperCase()}]`);
+  console.log(`\n══ GENERATING: ${dateString} (${dayOfWeek}) ══`);
 
   try {
-    // Fetch both events AND deaths for richer content
-    const [eventsRes, deathsRes] = await Promise.all([
-      fetch(`https://${languageCode}.wikipedia.org/api/rest_v1/feed/onthisday/events/${mm}/${dd}`),
-      fetch(`https://${languageCode}.wikipedia.org/api/rest_v1/feed/onthisday/deaths/${mm}/${dd}`)
+    // Fetch ALL Wikipedia sources in parallel
+    const [eventsRes, deathsRes, birthsRes] = await Promise.all([
+      fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${mm}/${dd}`),
+      fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/deaths/${mm}/${dd}`),
+      fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/births/${mm}/${dd}`)
     ]);
 
     const eventsData = await eventsRes.json();
     const deathsData = await deathsRes.json();
+    const birthsData = await birthsRes.json();
 
     // Create root briefing
-    const { data: rootNode, error: rootError } = await supabase
+    const { data: root, error: rootErr } = await supabase
       .from("daily_briefings")
-      .insert([{ date: dateString, day_of_week: dayOfWeek, language: languageCode }])
-      .select()
-      .single();
+      .insert([{ date: dateString, day_of_week: dayOfWeek }])
+      .select().single();
 
-    if (rootError) throw rootError;
+    if (rootErr) throw rootErr;
 
     const allItems: any[] = [];
 
-    // ── A) EDITORIAL items (regular categories) ──
-    let editorialCandidates = (eventsData.events || [])
+    // ── STEP 1: Categorize ALL events ──
+    const allEvents = (eventsData.events || [])
       .filter((e: any) => e.pages?.length > 0 && e.pages[0].extract)
       .sort(() => 0.5 - Math.random());
 
-    for (const event of editorialCandidates) {
-      if (allItems.filter(i => !i.category.startsWith('viral_')).length >= 6) break;
+    // Buckets for editorial categories
+    const editorialBuckets: Record<EditorialCategory, any[]> = {
+      history: [], science: [], culture: [], warfare: [], space: [], sports: [], people: []
+    };
 
+    // Buckets for viral categories
+    const viralBuckets: Record<string, any[]> = {
+      viral_music: [], viral_scandal: [], viral_movie: [], viral_record: [], viral_moment: []
+    };
+
+    for (const event of allEvents) {
       const page = event.pages[0];
-      const viralCat = categorizeAsViral(event.text || '', page.extract || '');
-      if (viralCat) continue; // Skip — this will go in the viral section
+      const combined = (event.text || '') + ' ' + (page.extract || '');
 
-      const candidateUrl = getReliableImageUrl(page);
-      let finalUrl: string | null = null;
-      if (candidateUrl) {
-        const reachable = await isImageReachable(candidateUrl);
-        finalUrl = reachable ? candidateUrl : null;
+      // Try viral first (more specific)
+      const viralCat = categorizeViral(combined);
+      if (viralCat && viralBuckets[viralCat] !== undefined && viralBuckets[viralCat].length < 1) {
+        viralBuckets[viralCat].push({ event, page, year: event.year });
+        continue;
       }
 
-      allItems.push({
-        briefing_id: rootNode.id,
-        category: categorizeWikipediaArticle(page.extract || ''),
-        title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
-        year: event.year ? String(event.year) : "Unknown",
-        short_explanation: event.text,
-        why_it_matters: page.extract,
-        image_url: finalUrl,
-        image_source: finalUrl ? "Wikimedia Commons" : null,
-        metadata_spotify_track_id: null
-      });
-    }
-
-    // ── B) VIRAL items (fun categories) ──
-    const viralCategoriesUsed = new Set<string>();
-
-    // Scan events for viral content
-    for (const event of editorialCandidates) {
-      if (viralCategoriesUsed.size >= 5) break;
-
-      const page = event.pages[0];
-      if (!page?.extract) continue;
-
-      const viralCat = categorizeAsViral(event.text || '', page.extract || '');
-      if (!viralCat || viralCategoriesUsed.has(viralCat)) continue;
-
-      const candidateUrl = getReliableImageUrl(page);
-      let finalUrl: string | null = null;
-      if (candidateUrl) {
-        const reachable = await isImageReachable(candidateUrl);
-        finalUrl = reachable ? candidateUrl : null;
+      // Editorial category
+      const editCat = categorize(combined);
+      const [, max] = EDITORIAL_QUOTAS[editCat];
+      if (editorialBuckets[editCat].length < max) {
+        editorialBuckets[editCat].push({ event, page, year: event.year });
       }
-
-      allItems.push({
-        briefing_id: rootNode.id,
-        category: viralCat,
-        title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
-        year: event.year ? String(event.year) : "Unknown",
-        short_explanation: event.text,
-        why_it_matters: page.extract,
-        image_url: finalUrl,
-        image_source: finalUrl ? "Wikimedia Commons" : null,
-        metadata_spotify_track_id: null
-      });
-
-      viralCategoriesUsed.add(viralCat);
-      console.log(`  🔥 Viral [${viralCat}]: ${(page.normalizedtitle || page.title || '').substring(0, 50)}`);
     }
 
-    // ── C) FAMOUS DEATHS → viral_quote ──
-    if (!viralCategoriesUsed.has("viral_quote") && deathsData.deaths?.length > 0) {
-      const notableDeaths = deathsData.deaths
+    // ── STEP 2: Fill under-served editorial categories from remaining events ──
+    for (const event of allEvents) {
+      const page = event.pages[0];
+      const combined = (event.text || '') + ' ' + (page.extract || '');
+      const editCat = categorize(combined);
+      const [min] = EDITORIAL_QUOTAS[editCat];
+
+      // Already assigned somewhere?
+      const alreadyUsed = Object.values(editorialBuckets).flat().some(b => b.page.title === page.title) ||
+                          Object.values(viralBuckets).flat().some(b => b.page.title === page.title);
+      if (alreadyUsed) continue;
+
+      if (editorialBuckets[editCat].length < min) {
+        editorialBuckets[editCat].push({ event, page, year: event.year });
+      }
+    }
+
+    // ── STEP 3: Process editorial items with image validation ──
+    for (const [cat, bucket] of Object.entries(editorialBuckets)) {
+      for (const { event, page, year } of bucket) {
+        const imgUrl = await resolveImage(page);
+        allItems.push({
+          briefing_id: root.id,
+          category: cat,
+          title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
+          year: year ? String(year) : "Unknown",
+          short_explanation: event.text,
+          why_it_matters: page.extract,
+          image_url: imgUrl,
+          image_source: imgUrl ? "Wikimedia Commons" : null,
+          metadata_spotify_track_id: null
+        });
+      }
+      if (bucket.length > 0) {
+        console.log(`  📰 ${cat}: ${bucket.length} items`);
+      }
+    }
+
+    // ── STEP 4: Process viral items ──
+    for (const [cat, bucket] of Object.entries(viralBuckets)) {
+      for (const { event, page, year } of bucket) {
+        const imgUrl = await resolveImage(page);
+        allItems.push({
+          briefing_id: root.id,
+          category: cat,
+          title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
+          year: year ? String(year) : "Unknown",
+          short_explanation: event.text,
+          why_it_matters: page.extract,
+          image_url: imgUrl,
+          image_source: imgUrl ? "Wikimedia Commons" : null,
+          metadata_spotify_track_id: null
+        });
+      }
+      if (bucket.length > 0) console.log(`  🔥 ${cat}: ${bucket.length}`);
+    }
+
+    // ── STEP 5: Deaths → viral_quote ──
+    if (!viralBuckets["viral_quote"]) {
+      const deaths = (deathsData.deaths || [])
         .filter((d: any) => d.pages?.length > 0 && d.pages[0].extract)
         .sort(() => 0.5 - Math.random());
 
-      for (const death of notableDeaths) {
+      for (const death of deaths.slice(0, 1)) {
         const page = death.pages[0];
-        const candidateUrl = getReliableImageUrl(page);
-        let finalUrl: string | null = null;
-        if (candidateUrl) {
-          const reachable = await isImageReachable(candidateUrl);
-          finalUrl = reachable ? candidateUrl : null;
-        }
-
+        const imgUrl = await resolveImage(page);
         allItems.push({
-          briefing_id: rootNode.id,
+          briefing_id: root.id,
           category: "viral_quote",
-          title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
+          title: page.normalizedtitle || page.title?.replace(/_/g, ' '),
           year: death.year ? String(death.year) : "Unknown",
           short_explanation: death.text || `Died on this day`,
           why_it_matters: page.extract,
-          image_url: finalUrl,
-          image_source: finalUrl ? "Wikimedia Commons" : null,
+          image_url: imgUrl,
+          image_source: imgUrl ? "Wikimedia Commons" : null,
           metadata_spotify_track_id: null
         });
-
-        viralCategoriesUsed.add("viral_quote");
-        console.log(`  💀 Quote [death]: ${(page.normalizedtitle || page.title || '').substring(0, 50)}`);
-        break;
+        console.log(`  💀 viral_quote: 1`);
       }
     }
 
-    // Insert all items
+    // ── STEP 6: Births → people category boost ──
+    if (editorialBuckets.people.length < 2) {
+      const births = (birthsData.births || [])
+        .filter((b: any) => b.pages?.length > 0 && b.pages[0].extract)
+        .sort(() => 0.5 - Math.random());
+
+      for (const birth of births.slice(0, 2)) {
+        const page = birth.pages[0];
+        const imgUrl = await resolveImage(page);
+        allItems.push({
+          briefing_id: root.id,
+          category: "people",
+          title: page.normalizedtitle || page.title?.replace(/_/g, ' '),
+          year: birth.year ? String(birth.year) : "Unknown",
+          short_explanation: birth.text || `Born on this day`,
+          why_it_matters: page.extract,
+          image_url: imgUrl,
+          image_source: imgUrl ? "Wikimedia Commons" : null,
+          metadata_spotify_track_id: null
+        });
+      }
+      if (births.length > 0) console.log(`  👤 people (births): +${Math.min(2, births.length)}`);
+    }
+
+    // ── COMMIT ──
     if (allItems.length > 0) {
-      const { error: itemsError } = await supabase.from("briefing_items").insert(allItems);
-      if (itemsError) throw itemsError;
+      const { error } = await supabase.from("briefing_items").insert(allItems);
+      if (error) throw error;
 
       const editorial = allItems.filter(i => !i.category.startsWith('viral_')).length;
       const viral = allItems.filter(i => i.category.startsWith('viral_')).length;
       const withImg = allItems.filter(i => i.image_url).length;
-      console.log(`✓ ${dateString} [${languageCode}]: ${editorial} editorial + ${viral} viral items (${withImg} with verified images)`);
+      console.log(`  ✓ COMMITTED: ${editorial} editorial + ${viral} viral (${withImg} with verified images)\n`);
     }
 
   } catch (err) {
-    console.error(`✗ Failed ${dateString} [${languageCode}]:`, err);
+    console.error(`  ✗ FAILED: ${dateString}`, err);
   }
 }
 
-async function runAutomation() {
-  console.log("═══════════════════════════════════════════════════════");
-  console.log("  HOXE v5 — Multilingual Editorial + Viral Pipeline");
-  console.log("  Strategy: Thumbnail-first, server-side HEAD validation");
-  console.log("═══════════════════════════════════════════════════════\n");
+// ═══════════════════════════════════════════════
+//  MAIN
+// ═══════════════════════════════════════════════
+
+async function main() {
+  console.log("╔══════════════════════════════════════════════════╗");
+  console.log("║  HOXE v5 — Category Quota Pipeline              ║");
+  console.log("║  Thumbnails + HEAD validation + Smart routing    ║");
+  console.log("╚══════════════════════════════════════════════════╝\n");
 
   for (let offset = 0; offset < 5; offset++) {
     const d = new Date();
     d.setDate(d.getDate() + offset);
-    await generateLanguageDataset(d, 'en');
-    await generateLanguageDataset(d, 'es');
+    await generateForDate(d);
   }
 
-  console.log("\n✓ Pipeline complete.");
+  console.log("✓ Pipeline complete.");
 }
 
-runAutomation();
+main();

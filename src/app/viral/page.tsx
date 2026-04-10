@@ -73,12 +73,16 @@ export default function ViralPage() {
 
   useEffect(() => {
     async function load() {
-      const locales: any = { en: "en-US", es: "es-ES", gl: "es-ES" };
-      const fallbackLang = language === "gl" ? "es" : language;
-      const todayStr = new Date().toLocaleDateString(locales[language] || "en-US", { month: "long", day: "numeric" });
+      // CANONICAL: Always en-US for DB matching
+      const todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
       setDateLabel(todayStr);
 
-      const { data } = await supabase
+      // Try with language filter, then without
+      const fallbackLang = language === "gl" ? "es" : language;
+
+      let data: any = null;
+
+      const { data: d1 } = await supabase
         .from("daily_briefings")
         .select("*, briefing_items (*)")
         .eq("date", todayStr)
@@ -86,10 +90,24 @@ export default function ViralPage() {
         .limit(1)
         .single();
 
+      if (d1) {
+        data = d1;
+      } else {
+        const { data: d2 } = await supabase
+          .from("daily_briefings")
+          .select("*, briefing_items (*)")
+          .eq("date", todayStr)
+          .limit(1)
+          .single();
+        data = d2;
+      }
+
       if (data?.briefing_items) {
         const viralItems = data.briefing_items.filter((i: any) => i.category.startsWith("viral_"));
+        const allItems = data.briefing_items;
         setItems(viralItems);
-        setQuizQuestions(generateQuiz(viralItems.length > 0 ? viralItems : data.briefing_items));
+        // Generate quiz from viral items if available, otherwise from all items
+        setQuizQuestions(generateQuiz(viralItems.length > 0 ? viralItems : allItems));
       }
       setLoading(false);
     }

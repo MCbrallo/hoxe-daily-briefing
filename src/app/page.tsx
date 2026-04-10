@@ -33,50 +33,73 @@ export default function TodayPage() {
       
       const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, culture: 4, people: 5, warfare: 6, sports: 7, curiosity: 8, local: 9, observance: 10, music: 11 };
 
-      let query = supabase.from('daily_briefings').select(`*, briefing_items (*)`).order('created_at', { ascending: false });
-      
-      const locales: any = { en: "en-US", es: "es-ES", gl: "gl-ES" };
-      const fallbackLangCode = language === 'gl' ? 'es' : language; // fallback for DB fetch
+      // CANONICAL DATE: Always use en-US for DB key matching, regardless of UI language
+      const todayStr = targetDate || new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
-      if (targetDate) {
-        // Admin preview passes explicit date
-        query = query.eq('date', targetDate).eq('language', fallbackLangCode);
-      } else {
-        // Normal user logic
-        const todayStr = new Date().toLocaleDateString(locales[language] || "en-US", { month: "long", day: "numeric" });
-        query = query.eq('date', todayStr).eq('language', fallbackLangCode);
-      }
-
-      const { data, error } = await query.limit(1).single();
-      
       const mapPayload = (dbNode: any) => {
         return {
           date: dbNode.date,
           dayOfWeek: dbNode.day_of_week,
-          items: dbNode.briefing_items.map((it: any) => ({
-            id: it.id,
-            category: it.category,
-            title: it.title,
-            year: it.year,
-            shortExplanation: it.short_explanation,
-            whyItMatters: it.why_it_matters,
-            imageUrl: it.image_url,
-            imageSource: it.image_source,
-            metadata: it.metadata_spotify_track_id ? { spotifyTrackId: it.metadata_spotify_track_id } : undefined
-          })).sort((a: any, b: any) => (CATEGORY_ORDER[a.category] || 99) - (CATEGORY_ORDER[b.category] || 99))
+          items: (dbNode.briefing_items || [])
+            .filter((it: any) => !it.category.startsWith('viral_')) // Exclude viral items from main page
+            .map((it: any) => ({
+              id: it.id,
+              category: it.category,
+              title: it.title,
+              year: it.year,
+              shortExplanation: it.short_explanation,
+              whyItMatters: it.why_it_matters,
+              imageUrl: it.image_url,
+              imageSource: it.image_source,
+              metadata: it.metadata_spotify_track_id ? { spotifyTrackId: it.metadata_spotify_track_id } : undefined
+            })).sort((a: any, b: any) => (CATEGORY_ORDER[a.category] || 99) - (CATEGORY_ORDER[b.category] || 99))
         }
       }
 
-      if (data && !error) {
-        setBriefing(mapPayload(data));
-      } else {
-        // Fallback or previewing logic loop (if fails, fetch latest available regardless)
-        const { data: fallback } = await supabase.from('daily_briefings').select(`*, briefing_items (*)`).order('created_at', { ascending: false }).limit(1).single();
-        if (fallback) setBriefing(mapPayload(fallback));
+      // Strategy: Try with language filter first, then without (for pre-migration compatibility)
+      const fallbackLangCode = language === 'gl' ? 'es' : language;
+
+      // Attempt 1: Match date + language
+      const { data: langData } = await supabase
+        .from('daily_briefings')
+        .select(`*, briefing_items (*)`)
+        .eq('date', todayStr)
+        .eq('language', fallbackLangCode)
+        .limit(1)
+        .single();
+
+      if (langData) {
+        setBriefing(mapPayload(langData));
+        return;
+      }
+
+      // Attempt 2: Match date only (language column may not exist yet)
+      const { data: dateData } = await supabase
+        .from('daily_briefings')
+        .select(`*, briefing_items (*)`)
+        .eq('date', todayStr)
+        .limit(1)
+        .single();
+
+      if (dateData) {
+        setBriefing(mapPayload(dateData));
+        return;
+      }
+
+      // Attempt 3: If still nothing, show the earliest available briefing (NOT the newest future one)
+      const { data: anyData } = await supabase
+        .from('daily_briefings')
+        .select(`*, briefing_items (*)`)
+        .order('created_at', { ascending: true })
+        .limit(1)
+        .single();
+
+      if (anyData) {
+        setBriefing(mapPayload(anyData));
       }
     }
     fetchTodayData();
-  }, []);
+  }, [language]);
 
   // 2. Lock Body Scroll
   useEffect(() => {
