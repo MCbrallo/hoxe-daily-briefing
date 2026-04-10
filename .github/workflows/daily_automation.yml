@@ -2,7 +2,7 @@ name: HOXE Daily Editorial Generation
 
 on:
   schedule:
-    - cron: '1 0 * * *' # Runs at 00:01 UTC every day
+    - cron: '0 12 * * *' # Runs at 12:00 PM UTC every day
   workflow_dispatch: # Allows manual triggering from Github UI
 
 jobs:

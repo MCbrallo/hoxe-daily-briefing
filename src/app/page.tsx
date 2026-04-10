@@ -26,21 +26,29 @@ export default function TodayPage() {
   // 1. Fetch Data
   useEffect(() => {
     async function fetchTodayData() {
-      const { data, error } = await supabase
-        .from('daily_briefings')
-        .select(`
-          *,
-          briefing_items (*)
-        `)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+      const params = new URLSearchParams(window.location.search);
+      const targetDate = params.get('date');
       
-      if (data && !error) {
-        setBriefing({
-          date: data.date,
-          dayOfWeek: data.day_of_week,
-          items: data.briefing_items.map((it: any) => ({
+      const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, culture: 4, people: 5, warfare: 6, sports: 7, curiosity: 8, local: 9, observance: 10, music: 11 };
+
+      let query = supabase.from('daily_briefings').select(`*, briefing_items (*)`).order('created_at', { ascending: false });
+
+      if (targetDate) {
+        // If an admin requests a specific pre-generated date
+        query = query.eq('date', targetDate);
+      } else {
+        // Normal user logic: We need the briefing for exactly 'Today'
+        const todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
+        query = query.eq('date', todayStr);
+      }
+
+      const { data, error } = await query.limit(1).single();
+      
+      const mapPayload = (dbNode: any) => {
+        return {
+          date: dbNode.date,
+          dayOfWeek: dbNode.day_of_week,
+          items: dbNode.briefing_items.map((it: any) => ({
             id: it.id,
             category: it.category,
             title: it.title,
@@ -50,8 +58,16 @@ export default function TodayPage() {
             imageUrl: it.image_url,
             imageSource: it.image_source,
             metadata: it.metadata_spotify_track_id ? { spotifyTrackId: it.metadata_spotify_track_id } : undefined
-          }))
-        });
+          })).sort((a: any, b: any) => (CATEGORY_ORDER[a.category] || 99) - (CATEGORY_ORDER[b.category] || 99))
+        }
+      }
+
+      if (data && !error) {
+        setBriefing(mapPayload(data));
+      } else {
+        // Fallback or previewing logic loop (if fails, fetch latest available regardless)
+        const { data: fallback } = await supabase.from('daily_briefings').select(`*, briefing_items (*)`).order('created_at', { ascending: false }).limit(1).single();
+        if (fallback) setBriefing(mapPayload(fallback));
       }
     }
     fetchTodayData();
@@ -138,6 +154,12 @@ export default function TodayPage() {
           <section data-index={0} className="hoxe-slide min-h-[100dvh] w-full h-full shrink-0 snap-center relative flex flex-col items-center justify-center px-6 md:px-16 transition-opacity">
             <div className={cn("absolute inset-0 flex flex-col items-center justify-center px-6 md:px-16 transition-opacity duration-700", currentSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none")}>
               
+               {/* Mobile Logo Header */}
+               <div className="absolute top-6 left-6 flex items-center gap-2 md:hidden z-50 animate-fade-rise">
+                 <div className="w-[18px] h-[18px] bg-ink-navy text-mist-white flex items-center justify-center font-serif font-bold text-[10px] leading-none shrink-0">H</div>
+                 <span className="font-bold tracking-[0.2em] uppercase text-[10px] text-ink-navy pt-[2px]">Hoxe</span>
+               </div>
+
                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
                  <div className="absolute w-[600px] h-[600px] rounded-full bg-atlantic-blue/[0.03] blur-[120px] -top-[200px] -left-[200px] animate-[drift_25s_ease-in-out_infinite]" />
                  <div className="absolute w-[500px] h-[500px] rounded-full bg-slate-blue/[0.04] blur-[100px] -bottom-[150px] -right-[150px] animate-[drift_30s_ease-in-out_infinite_reverse]" />
@@ -344,7 +366,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
           )}
           {showImage && (
             <div className="relative w-full flex flex-col group mt-1">
-              <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" className="w-full h-auto max-h-[60vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" />
+              <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} className="w-full h-auto max-h-[60vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" />
               <div className="w-full relative mt-3">
                 <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
                 <span className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource}</span>
@@ -405,7 +427,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
         {/* Mobile Image Layer (parte baja) */}
         {showImage && (
           <div className="col-span-full mt-10 mb-8 md:hidden relative left-1/2 -ml-[50vw] w-screen flex flex-col items-end">
-            <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" className="w-full h-auto object-cover filter grayscale" />
+            <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" onError={(e) => { e.currentTarget.style.display = 'none'; }} className="w-full h-auto object-cover filter grayscale" />
             <div className="w-full relative mt-3 px-6 h-full flex flex-col pb-4">
               <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
               <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource}</span>
