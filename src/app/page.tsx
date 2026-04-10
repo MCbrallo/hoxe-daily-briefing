@@ -155,9 +155,13 @@ export default function TodayPage() {
             <div className={cn("absolute inset-0 flex flex-col items-center justify-center px-6 md:px-16 transition-opacity duration-700", currentSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none")}>
               
                {/* Mobile Logo Header */}
-               <div className="absolute top-6 left-6 flex items-center gap-2 md:hidden z-50 animate-fade-rise">
-                 <div className="w-[18px] h-[18px] bg-ink-navy text-mist-white flex items-center justify-center font-serif font-bold text-[10px] leading-none shrink-0">H</div>
-                 <span className="font-bold tracking-[0.2em] uppercase text-[10px] text-ink-navy pt-[2px]">Hoxe</span>
+               <div className="absolute top-6 left-6 flex items-center gap-3 md:hidden z-50 animate-fade-rise">
+                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-ink-navy">
+                   <path d="M10 3 H 6a2 2 0 0 0 -2 2 v 14a2 2 0 0 0 2 2 h 12a2 2 0 0 0 2 -2 V 5a2 2 0 0 0 -2 -2 h -4" />
+                   <path d="M 8 8 L 16 16" />
+                   <path d="M 16 8 L 8 16" />
+                 </svg>
+                 <span className="font-bold tracking-[0.25em] text-[13px] text-ink-navy pt-[1px]">HOXE</span>
                </div>
 
                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
