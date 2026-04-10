@@ -2,4 +2,4 @@
 2:I[39756,["/hoxe-daily-briefing/_next/static/chunks/110asww2w3hm3.js","/hoxe-daily-briefing/_next/static/chunks/0d3shmwh5_nmn.js","/hoxe-daily-briefing/_next/static/chunks/0fh3ex8ary-it.js"],"default"]
 3:I[37457,["/hoxe-daily-briefing/_next/static/chunks/110asww2w3hm3.js","/hoxe-daily-briefing/_next/static/chunks/0d3shmwh5_nmn.js","/hoxe-daily-briefing/_next/static/chunks/0fh3ex8ary-it.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"y28cFa9uAfrLD5md7vzRl"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"Ggi4FKw-Z9bai9SDhWe-9"}
