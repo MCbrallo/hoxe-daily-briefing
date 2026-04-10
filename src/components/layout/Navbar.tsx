@@ -30,13 +30,13 @@ export function Navbar() {
       <header className="hidden md:flex fixed top-0 w-full z-50 bg-mist-white/90 backdrop-blur-md border-b border-ink-navy/8 h-16 items-center px-12 justify-between">
         <div className="flex items-center justify-between w-full mx-auto">
           {/* Logo — Refined stroke weight */}
-          <a href="/" className="flex items-center gap-3 text-ink-navy hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-3 text-ink-navy hover:opacity-80 transition-opacity">
             <svg width="22" height="22" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M 40 10 L 20 10 C 14 10 10 14 10 20 L 10 80 C 10 86 14 90 20 90 L 80 90 C 86 90 90 86 90 80 L 90 20 C 90 14 86 10 80 10 L 60 10" />
               <path d="M 30 30 L 70 70 M 70 30 L 30 70" />
             </svg>
             <span className="font-serif font-bold text-xl tracking-[0.08em] mt-0.5">HOXE</span>
-          </a>
+          </Link>
 
           {/* Navigation — Priority Tiers */}
           <nav className="flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
