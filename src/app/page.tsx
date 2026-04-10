@@ -31,7 +31,7 @@ export default function TodayPage() {
       const params = new URLSearchParams(window.location.search);
       const targetDate = params.get('date');
       
-      const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, culture: 4, people: 5, warfare: 6, sports: 7, curiosity: 8, local: 9, observance: 10, music: 11 };
+      const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, warfare: 4, culture: 5, people: 6, viral_quote: 7, sports: 8, curiosity: 9, local: 10, observance: 11, music: 12 };
 
       // CANONICAL DATE: Always en-US for DB matching
       const todayStr = targetDate || new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
@@ -41,7 +41,7 @@ export default function TodayPage() {
           date: dbNode.date,
           dayOfWeek: dbNode.day_of_week,
           items: (dbNode.briefing_items || [])
-            .filter((it: any) => !it.category.startsWith('viral_'))
+            .filter((it: any) => !it.category.startsWith('viral_') || it.category === 'viral_quote')
             .map((it: any) => ({
               id: it.id,
               category: it.category,
@@ -346,7 +346,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
       <div className="col-span-full">
         <div className="flex items-center justify-between border-b border-ink-navy/10 pb-2.5">
           <span className={cn("text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase", catColor.text)}>
-            {index + 1 < 10 ? `0${index + 1}` : index + 1} — {item.category === "local" ? "LOCAL LENS" : item.category.toUpperCase()}
+            {index + 1 < 10 ? `0${index + 1}` : index + 1} — {item.category === "local" ? "LOCAL LENS" : item.category === "viral_quote" ? "IN MEMORIAM" : item.category.toUpperCase()}
           </span>
           <div className="flex items-center gap-4 md:gap-6">
             {item.year && (
