@@ -1,6 +1,6 @@
 export interface BriefingItem {
   id: string;
-  category: "history" | "local" | "music" | "science" | "observance" | "people" | "curiosity" | "warfare" | "sports" | "space" | "culture";
+  category: "history" | "local" | "music" | "science" | "observance" | "people" | "curiosity" | "warfare" | "sports" | "space" | "culture" | "viral_quote";
   title: string;
   year?: string;
   shortExplanation: string;
