@@ -18,7 +18,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 // ═══════════════════════════════════════════════
 
 type EditorialCategory = "history" | "science" | "culture" | "warfare" | "space" | "sports" | "people" | "music";
-type ViralCategory = "viral_music" | "viral_scandal" | "viral_movie" | "viral_quote" | "viral_moment" | "viral_record";
+type ViralCategory = "viral_music" | "viral_scandal" | "viral_movie" | "viral_moment" | "viral_record";
 
 const EDITORIAL_KEYWORDS: Record<EditorialCategory, string[]> = {
   warfare:  ["war ", "battle", "military", "army", "invasion", "siege", "troops", "combat", "bombing", "naval"],
@@ -36,8 +36,7 @@ const VIRAL_KEYWORDS: Record<ViralCategory, string[]> = {
   viral_scandal: ["scandal", "impeach", "resign in disgrace", "sex scandal", "corruption scandal", "watergate", "cover-up", "whistleblow", "leaked", "exposed"],
   viral_movie:   ["box office", "oscar", "academy award", "best picture", "blockbuster", "highest-grossing", "film festival", "cannes", "golden globe", "motion picture"],
   viral_record:  ["world record", "guinness", "broke the record", "new record", "fastest ever", "longest ever", "first person to", "first woman to", "first man to", "unprecedented"],
-  viral_moment:  ["broadcast live", "viral video", "watched by millions", "trending", "social media sensation", "broke the internet", "live television"],
-  viral_quote:   [] // Filled from deaths endpoint
+  viral_moment:  ["broadcast live", "viral video", "watched by millions", "trending", "social media sensation", "broke the internet", "live television"]
 };
 
 // Category quotas: [min, max]
@@ -141,6 +140,20 @@ async function resolveImage(page: any): Promise<string | null> {
   return null;
 }
 
+async function resolveSpotifyId(title: string): Promise<string | null> {
+  try {
+    const q = `site:open.spotify.com/artist OR site:open.spotify.com/track "${title}"`;
+    const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(q)}`;
+    const res = await fetch(url, { headers: { "User-Agent": "HoxeBot/2.0" } });
+    const html = await res.text();
+    const match = html.match(/open\.spotify\.com\/(artist|track)\/([a-zA-Z0-9]+)/);
+    if (match) return `${match[1]}/${match[2]}`;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 // ═══════════════════════════════════════════════
 //  PIPELINE
 // ═══════════════════════════════════════════════
@@ -241,58 +254,79 @@ async function generateForDate(targetDateObj: Date) {
       }
     }
 
-    // ── STEP 3: Process editorial items with image validation ──
+    // ── STEP 3: Process editorial items with image validation && Spotify validation ──
     for (const [cat, bucket] of Object.entries(editorialBuckets)) {
+      let finalCatCount = 0;
       for (const { event, page, year } of bucket) {
+        const title = page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled';
         const imgUrl = await resolveImage(page);
+        
+        let finalCat = cat;
+        let spotifyId: string | null = null;
+        if (cat === "music") {
+          spotifyId = await resolveSpotifyId(title);
+          if (!spotifyId) finalCat = "culture"; // Fallback to culture if no Spotify found! The user said ALWAYS.
+        }
+
         allItems.push({
           briefing_id: root.id,
-          category: cat,
-          title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
+          category: finalCat,
+          title,
           year: year ? String(year) : "Unknown",
           short_explanation: event.text,
           why_it_matters: page.extract,
           image_url: imgUrl,
           image_source: imgUrl ? "Wikimedia Commons" : null,
-          metadata_spotify_track_id: null
+          metadata_spotify_track_id: spotifyId
         });
+        finalCatCount++;
       }
-      if (bucket.length > 0) {
-        console.log(`  📰 ${cat}: ${bucket.length} items`);
+      if (finalCatCount > 0) {
+        console.log(`  📰 ${cat} (or fallback): ${finalCatCount} items`);
       }
     }
 
     // ── STEP 4: Process viral items ──
     for (const [cat, bucket] of Object.entries(viralBuckets)) {
+      let finalCatCount = 0;
       for (const { event, page, year } of bucket) {
+        const title = page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled';
         const imgUrl = await resolveImage(page);
+        
+        let spotifyId: string | null = null;
+        if (cat === "viral_music") {
+          spotifyId = await resolveSpotifyId(title);
+          if (!spotifyId) continue; // Drop viral music entirely if no Spotify embed since we can't show it!
+        }
+
         allItems.push({
           briefing_id: root.id,
           category: cat,
-          title: page.normalizedtitle || page.title?.replace(/_/g, ' ') || 'Untitled',
+          title,
           year: year ? String(year) : "Unknown",
           short_explanation: event.text,
           why_it_matters: page.extract,
           image_url: imgUrl,
           image_source: imgUrl ? "Wikimedia Commons" : null,
-          metadata_spotify_track_id: null
+          metadata_spotify_track_id: spotifyId
         });
+        finalCatCount++;
       }
-      if (bucket.length > 0) console.log(`  🔥 ${cat}: ${bucket.length}`);
+      if (finalCatCount > 0) console.log(`  🔥 ${cat}: ${finalCatCount}`);
     }
 
-    // ── STEP 5: Deaths → viral_quote ──
-    if (!viralBuckets["viral_quote"]) {
+    // ── STEP 5: Deaths → boost people category ──
+    if (editorialBuckets.people.length < 3) {
       const deaths = (deathsData.deaths || [])
         .filter((d: any) => d.pages?.length > 0 && d.pages[0].extract)
         .sort(() => 0.5 - Math.random());
 
-      for (const death of deaths.slice(0, 3)) {
+      for (const death of deaths.slice(0, 2)) {
         const page = death.pages[0];
         const imgUrl = await resolveImage(page);
         allItems.push({
           briefing_id: root.id,
-          category: "viral_quote",
+          category: "people",
           title: page.normalizedtitle || page.title?.replace(/_/g, ' '),
           year: death.year ? String(death.year) : "Unknown",
           short_explanation: death.text || `Died on this day`,
@@ -301,7 +335,7 @@ async function generateForDate(targetDateObj: Date) {
           image_source: imgUrl ? "Wikimedia Commons" : null,
           metadata_spotify_track_id: null
         });
-        console.log(`  💀 viral_quote: 1`);
+        console.log(`  💀 added death to people`);
       }
     }
 

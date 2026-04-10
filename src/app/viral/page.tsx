@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Music, Flame, Film, Quote, Smartphone, Trophy, Brain, ChevronRight, Check, X } from "lucide-react";
+import { Music, Flame, Film, Smartphone, Trophy, Brain, ChevronRight, Check, X } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/context/LanguageContext";
@@ -25,7 +25,6 @@ const VIRAL_META: Record<string, {
   viral_music:   { icon: Music,      label: "Nº1 DEL DÍA",     gradient: "from-violet-950 via-purple-900 to-fuchsia-950", pillBg: "bg-violet-400/20",  pillText: "text-violet-200",  dotColor: "bg-violet-400" },
   viral_scandal: { icon: Flame,      label: "EL ESCÁNDALO",     gradient: "from-rose-950 via-red-900 to-orange-950",       pillBg: "bg-rose-400/20",    pillText: "text-rose-200",    dotColor: "bg-rose-400" },
   viral_movie:   { icon: Film,       label: "ESTRENO DEL DÍA",  gradient: "from-amber-950 via-orange-900 to-yellow-950",   pillBg: "bg-amber-400/20",   pillText: "text-amber-200",   dotColor: "bg-amber-400" },
-  viral_quote:   { icon: Quote,      label: "IN MEMORIAM",      gradient: "from-slate-900 via-zinc-800 to-neutral-900",    pillBg: "bg-slate-400/20",   pillText: "text-slate-300",   dotColor: "bg-slate-400" },
   viral_moment:  { icon: Smartphone, label: "MOMENTO VIRAL",    gradient: "from-cyan-950 via-sky-900 to-blue-950",         pillBg: "bg-sky-400/20",     pillText: "text-sky-200",     dotColor: "bg-sky-400" },
   viral_record:  { icon: Trophy,     label: "RÉCORD ROTO",      gradient: "from-emerald-950 via-green-900 to-teal-950",    pillBg: "bg-emerald-400/20", pillText: "text-emerald-200", dotColor: "bg-emerald-400" },
 };
