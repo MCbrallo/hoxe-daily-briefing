@@ -3,7 +3,7 @@
 3:I[13399,["/hoxe-daily-briefing/_next/static/chunks/08_.p8a.2tulx.js","/hoxe-daily-briefing/_next/static/chunks/0d3shmwh5_nmn.js","/hoxe-daily-briefing/_next/static/chunks/0f5s_me8ctpuk.js","/hoxe-daily-briefing/_next/static/chunks/0ort1-hpgnr17.js"],"default"]
 6:I[97367,["/hoxe-daily-briefing/_next/static/chunks/08_.p8a.2tulx.js","/hoxe-daily-briefing/_next/static/chunks/0d3shmwh5_nmn.js","/hoxe-daily-briefing/_next/static/chunks/0f5s_me8ctpuk.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/hoxe-daily-briefing/_next/static/chunks/0ort1-hpgnr17.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"kQnH7K5AnhouH0DTKNdxG"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/hoxe-daily-briefing/_next/static/chunks/0ort1-hpgnr17.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"GIUWCNm-cIVKAmyWmqo9M"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
