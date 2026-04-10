@@ -33,7 +33,7 @@ export default function TodayPage() {
       
       const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, culture: 4, people: 5, warfare: 6, sports: 7, curiosity: 8, local: 9, observance: 10, music: 11 };
 
-      // CANONICAL DATE: Always use en-US for DB key matching, regardless of UI language
+      // CANONICAL DATE: Always en-US for DB matching
       const todayStr = targetDate || new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
       const mapPayload = (dbNode: any) => {
@@ -41,7 +41,7 @@ export default function TodayPage() {
           date: dbNode.date,
           dayOfWeek: dbNode.day_of_week,
           items: (dbNode.briefing_items || [])
-            .filter((it: any) => !it.category.startsWith('viral_')) // Exclude viral items from main page
+            .filter((it: any) => !it.category.startsWith('viral_'))
             .map((it: any) => ({
               id: it.id,
               category: it.category,
@@ -56,46 +56,27 @@ export default function TodayPage() {
         }
       }
 
-      // Strategy: Try with language filter first, then without (for pre-migration compatibility)
-      const fallbackLangCode = language === 'gl' ? 'es' : language;
-
-      // Attempt 1: Match date + language
-      const { data: langData } = await supabase
+      // Safe query: match by date, no language filter (compatible pre/post migration)
+      const { data: rows } = await supabase
         .from('daily_briefings')
         .select(`*, briefing_items (*)`)
         .eq('date', todayStr)
-        .eq('language', fallbackLangCode)
-        .limit(1)
-        .single();
+        .limit(1);
 
-      if (langData) {
-        setBriefing(mapPayload(langData));
+      if (rows && rows.length > 0) {
+        setBriefing(mapPayload(rows[0]));
         return;
       }
 
-      // Attempt 2: Match date only (language column may not exist yet)
-      const { data: dateData } = await supabase
-        .from('daily_briefings')
-        .select(`*, briefing_items (*)`)
-        .eq('date', todayStr)
-        .limit(1)
-        .single();
-
-      if (dateData) {
-        setBriefing(mapPayload(dateData));
-        return;
-      }
-
-      // Attempt 3: If still nothing, show the earliest available briefing (NOT the newest future one)
-      const { data: anyData } = await supabase
+      // Fallback: get the OLDEST briefing (not newest, to avoid showing future dates)
+      const { data: fallbackRows } = await supabase
         .from('daily_briefings')
         .select(`*, briefing_items (*)`)
         .order('created_at', { ascending: true })
-        .limit(1)
-        .single();
+        .limit(1);
 
-      if (anyData) {
-        setBriefing(mapPayload(anyData));
+      if (fallbackRows && fallbackRows.length > 0) {
+        setBriefing(mapPayload(fallbackRows[0]));
       }
     }
     fetchTodayData();
