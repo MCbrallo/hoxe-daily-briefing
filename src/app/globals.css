@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mist-white: #EEECE1;
+  --color-warm-white: #E4E2D3;
+  --color-atlantic-blue: #3E5A6A;
+  --color-slate-blue: #4B6B7A;
+  --color-granite-grey: #1B2931;
+  --color-ink-navy: #1D2F38;
+  --color-seafoam: #8FBC8F;
+  --color-eucalyptus: #A3B18A;
+  
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
+}
+
+:root {
+  --background: #EEECE1;
+  --foreground: #1D2F38;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #EEECE1;
+    --foreground: #1D2F38;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Editorial Motion System ── */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-rise {
+  animation: fadeRise 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+.animate-delay-1 { animation-delay: 200ms; }
+.animate-delay-2 { animation-delay: 400ms; }
+.animate-delay-3 { animation-delay: 600ms; }
+.animate-delay-4 { animation-delay: 800ms; }
+.animate-delay-5 { animation-delay: 1000ms; }
+.animate-delay-6 { animation-delay: 1200ms; }
+
+/* ── Ambient Drift for Living Background ── */
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 15px) scale(0.95);
+  }
+}
+
+/* ── Tagline Slide Up Reveal ── */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.glass-panel {
+  background: rgba(247, 248, 249, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.atlantic-shadow {
+  box-shadow: 0 10px 40px -10px rgba(29, 53, 87, 0.08), 0 1px 3px rgba(29, 53, 87, 0.05);
+}
