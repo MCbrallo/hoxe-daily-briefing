@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Music, Flame, Film, Smartphone, Trophy, Brain, ChevronRight, Check, X } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { supabase } from "@/lib/supabase";
+import { MusicPlayerCard } from "@/components/MusicPlayerCard";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface ViralItem {
@@ -180,6 +181,18 @@ function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () 
               </div>
             </div>
           </div>
+          
+          {/* Spotify Player Overlay */}
+          {item?.metadata_spotify_track_id && (
+            <div className="absolute -bottom-40 left-0 right-0 z-40 animate-fade-rise">
+              <MusicPlayerCard 
+                title={item.title}
+                artist="Viral Tracker"
+                spotifyTrackId={item.metadata_spotify_track_id}
+              />
+            </div>
+          )}
+          
         </div>
       )}
 

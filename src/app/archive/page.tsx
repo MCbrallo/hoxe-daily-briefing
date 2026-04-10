@@ -13,7 +13,16 @@ export default async function ArchivePage() {
     .order("created_at", { ascending: false })
     .limit(30);
 
-  const archives = (records || []).map(r => {
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+
+  const pastRecords = (records || []).filter(r => {
+    const year = new Date(r.created_at).getFullYear();
+    const parsedDate = new Date(`${r.date}, ${year}`);
+    return parsedDate.getTime() < todayStart.getTime();
+  });
+
+  const archives = pastRecords.slice(0, 10).map(r => {
     const titles = r.briefing_items?.filter((bi: any) => bi.title).map((bi: any) => bi.title.split(' - ')[0]) || [];
     const summary = titles.slice(0, 3).join(" • ") + (titles.length > 3 ? "..." : "");
     const dateObj = new Date(r.created_at);
