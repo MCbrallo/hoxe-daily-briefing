@@ -214,7 +214,7 @@ export default function TodayPage() {
                      {t("Pending")}
                    </h2>
 
-                   <div className="flex flex-col items-center md:items-start mt-12 md:mt-16 animate-fade-rise animate-delay-2 w-full pt-8 md:pt-0">
+                   <div className="flex flex-col items-center md:items-start mt-6 md:mt-8 animate-fade-rise animate-delay-2 w-full pt-4 md:pt-0">
                      <div className="w-12 h-[1.5px] bg-ink-navy/30 mb-6"></div>
                      <p className="text-sm md:text-base font-bold tracking-[0.3em] uppercase text-ink-navy/80 overflow-hidden text-center md:text-left leading-relaxed px-4 md:px-0">
                        <span className="inline-block animate-[slideUp_1s_ease-out_0.6s_both]">
@@ -240,7 +240,7 @@ export default function TodayPage() {
                    aria-label="Scroll down"
                  >
                    <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-ink-navy/40 mb-[-10px]">{t("ScrollDown")}</span>
-                   <ChevronDown size={64} strokeWidth={1} className="animate-bounce text-ink-navy/50 drop-shadow-sm" />
+                   <ChevronDown size={64} strokeWidth={1} className="animate-bounce text-ink-navy/50 drop-shadow-sm translate-y-3 md:translate-y-4" />
                  </button>
 
                  {/* Desktop Category Previews */}
