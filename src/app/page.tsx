@@ -224,7 +224,7 @@ export default function TodayPage() {
                  {/* Mobile Chevron */}
                  <button 
                    onClick={goNext}
-                   className="absolute bottom-36 md:bottom-40 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-2"
+                   className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-2"
                    aria-label="Scroll down"
                  >
                    <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-ink-navy/40 mb-[-10px]">{t("ScrollDown")}</span>
