@@ -17,7 +17,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 //  CATEGORIZATION ENGINE
 // ═══════════════════════════════════════════════
 
-type EditorialCategory = "history" | "science" | "culture" | "warfare" | "space" | "sports" | "people";
+type EditorialCategory = "history" | "science" | "culture" | "warfare" | "space" | "sports" | "people" | "music";
 type ViralCategory = "viral_music" | "viral_scandal" | "viral_movie" | "viral_quote" | "viral_moment" | "viral_record";
 
 const EDITORIAL_KEYWORDS: Record<EditorialCategory, string[]> = {
@@ -27,11 +27,12 @@ const EDITORIAL_KEYWORDS: Record<EditorialCategory, string[]> = {
   sports:   ["championship", "olympic", "tournament", "world cup", "medal", "athlete", "football", "baseball", "soccer", "tennis"],
   culture:  ["novel", "film", "artist", "album", "painting", "museum", "literature", "theater", "poetry", "dance"],
   people:   ["born", "death", "president", "king", "queen", "emperor", "pope", "prime minister", "leader"],
+  music:    ["beatles", "mccartney", "lennon", "singer", "songwriter", "musician", "guitarist", "drummer", "bass", "rock band", "punk", "jazz", "blues", "opera", "symphony", "orchestra", "composer", "debut album"],
   history:  [] // Default fallback
 };
 
 const VIRAL_KEYWORDS: Record<ViralCategory, string[]> = {
-  viral_music:   ["number one", "billboard", "chart", "#1", "grammy", "hit single", "platinum", "album release", "concert", "singer", "band", "song"],
+  viral_music:   ["number one", "billboard", "chart", "#1", "grammy", "hit single", "platinum", "album release", "gold record", "top of the charts"],
   viral_scandal: ["scandal", "arrest", "controversy", "impeach", "resign", "affair", "fraud", "trial", "convicted", "fired", "banned", "accused"],
   viral_movie:   ["premiere", "box office", "oscar", "film release", "movie", "cinema", "academy award", "starring", "directed by"],
   viral_record:  ["world record", "first person", "first woman", "first man", "fastest", "longest", "guinness", "youngest", "oldest", "broke the record"],
@@ -48,6 +49,7 @@ const EDITORIAL_QUOTAS: Record<EditorialCategory, [number, number]> = {
   people:   [1, 3],
   space:    [1, 2],
   sports:   [1, 2],
+  music:    [0, 2],
 };
 
 function categorize(text: string): EditorialCategory {
@@ -197,7 +199,7 @@ async function generateForDate(targetDateObj: Date) {
 
     // Buckets for editorial categories
     const editorialBuckets: Record<EditorialCategory, any[]> = {
-      history: [], science: [], culture: [], warfare: [], space: [], sports: [], people: []
+      history: [], science: [], culture: [], warfare: [], space: [], sports: [], people: [], music: []
     };
 
     // Buckets for viral categories
@@ -211,7 +213,7 @@ async function generateForDate(targetDateObj: Date) {
 
       // Try viral first (more specific)
       const viralCat = categorizeViral(combined);
-      if (viralCat && viralBuckets[viralCat] !== undefined && viralBuckets[viralCat].length < 1) {
+      if (viralCat && viralBuckets[viralCat] !== undefined && viralBuckets[viralCat].length < 3) {
         viralBuckets[viralCat].push({ event, page, year: event.year });
         continue;
       }
@@ -287,7 +289,7 @@ async function generateForDate(targetDateObj: Date) {
         .filter((d: any) => d.pages?.length > 0 && d.pages[0].extract)
         .sort(() => 0.5 - Math.random());
 
-      for (const death of deaths.slice(0, 1)) {
+      for (const death of deaths.slice(0, 3)) {
         const page = death.pages[0];
         const imgUrl = await resolveImage(page);
         allItems.push({

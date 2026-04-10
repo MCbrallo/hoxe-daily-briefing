@@ -346,15 +346,18 @@ export default function ViralPage() {
   const handleAnswer = (idx: number) => { if (answered) return; setSelectedAnswer(idx); setAnswered(true); if (idx === quizQuestions[currentQ].correctIndex) setScore(s => s + 1); };
   const nextQ = () => { if (currentQ + 1 >= quizQuestions.length) setQuizDone(true); else { setCurrentQ(q => q + 1); setSelectedAnswer(null); setAnswered(false); } };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-[#0A0A0A]"><div className="w-6 h-6 border-t-2 border-white/30 rounded-full animate-spin" /></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-mist-white"><div className="w-6 h-6 border-t-2 border-ink-navy/30 rounded-full animate-spin" /></div>;
 
   return (
-    <div className="fixed inset-0 bg-[#0A0A0A] flex flex-col pt-14 md:pt-20 pb-20 md:pb-6">
+    <div className="fixed inset-0 bg-mist-white flex flex-col pt-14 md:pt-20 pb-20 md:pb-6">
       {/* Header */}
       <header className="px-6 pb-3 shrink-0">
-        <div className="max-w-md mx-auto flex items-baseline justify-between">
-          <h1 className="font-serif text-xl text-white/80 tracking-tight">Viral</h1>
-          <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/20">{dateLabel}</span>
+        <div className="max-w-md mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Flame size={18} className="text-red-500" strokeWidth={2.2} />
+            <h1 className="font-serif text-xl text-ink-navy tracking-tight">Viral</h1>
+          </div>
+          <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/20">{dateLabel}</span>
         </div>
       </header>
 
@@ -366,9 +369,9 @@ export default function ViralPage() {
             <SwipeStack items={items} onComplete={() => setShowQuiz(true)} />
           ) : !showQuiz ? (
             <div className="flex-1 flex items-center justify-center">
-              <div className="rounded-[24px] border border-white/10 bg-white/5 p-10 text-center">
-                <Flame size={24} className="mx-auto text-white/10 mb-3" />
-                <p className="text-sm text-white/20 font-serif italic">Contenido viral generándose...</p>
+              <div className="rounded-[24px] border border-ink-navy/8 bg-ink-navy/[0.02] p-10 text-center">
+                <Flame size={24} className="mx-auto text-ink-navy/10 mb-3" />
+                <p className="text-sm text-ink-navy/25 font-serif italic">Contenido viral generándose...</p>
               </div>
             </div>
           ) : null}
@@ -378,25 +381,25 @@ export default function ViralPage() {
             <div className="flex-1 flex items-center justify-center animate-fade-rise">
               <div className="w-full">
                 <div className="text-center mb-4">
-                  <Brain size={18} className="mx-auto text-white/15 mb-1" />
-                  <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/20">Quiz del Día</span>
+                  <Brain size={18} className="mx-auto text-ink-navy/15 mb-1" />
+                  <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/25">Quiz del Día</span>
                 </div>
                 {quizDone ? (
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-xl p-8 text-center">
-                    <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-serif font-bold text-white/80">{score}/{quizQuestions.length}</span>
+                  <div className="rounded-[24px] border border-ink-navy/8 bg-white p-8 text-center shadow-lg">
+                    <div className="w-16 h-16 rounded-full bg-ink-navy/5 flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl font-serif font-bold text-ink-navy">{score}/{quizQuestions.length}</span>
                     </div>
-                    <h3 className="font-serif text-xl text-white/80 mb-1">{score === quizQuestions.length ? "Perfecto." : score >= quizQuestions.length / 2 ? "Bien hecho." : "A mejorar."}</h3>
-                    <p className="text-xs text-white/25 font-serif italic mb-5">{score}/{quizQuestions.length} correctas</p>
+                    <h3 className="font-serif text-xl text-ink-navy mb-1">{score === quizQuestions.length ? "Perfecto." : score >= quizQuestions.length / 2 ? "Bien hecho." : "A mejorar."}</h3>
+                    <p className="text-xs text-ink-navy/30 font-serif italic mb-5">{score}/{quizQuestions.length} correctas</p>
                     <button onClick={() => { setShowQuiz(false); setCurrentQ(0); setScore(0); setQuizDone(false); setSelectedAnswer(null); setAnswered(false); }}
-                      className="bg-white/10 text-white/80 px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-white/15 transition-colors border border-white/10">Reintentar</button>
+                      className="bg-ink-navy text-mist-white px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">Reintentar</button>
                   </div>
                 ) : (
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
-                    <div className="h-1 bg-white/5"><div className="h-full bg-white/40 transition-all duration-500" style={{ width: `${((currentQ + 1) / quizQuestions.length) * 100}%` }} /></div>
+                  <div className="rounded-[24px] border border-ink-navy/8 bg-white overflow-hidden shadow-lg">
+                    <div className="h-1 bg-ink-navy/5"><div className="h-full bg-ink-navy transition-all duration-500" style={{ width: `${((currentQ + 1) / quizQuestions.length) * 100}%` }} /></div>
                     <div className="p-5 md:p-7">
-                      <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/20 block mb-3">{currentQ + 1} / {quizQuestions.length}</span>
-                      <h3 className="font-serif text-base md:text-lg text-white/80 mb-5 leading-snug">{quizQuestions[currentQ].question}</h3>
+                      <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/25 block mb-3">{currentQ + 1} / {quizQuestions.length}</span>
+                      <h3 className="font-serif text-base md:text-lg text-ink-navy mb-5 leading-snug">{quizQuestions[currentQ].question}</h3>
                       <div className="flex flex-col gap-2">
                         {quizQuestions[currentQ].options.map((opt, idx) => {
                           const isC = idx === quizQuestions[currentQ].correctIndex;
@@ -404,24 +407,24 @@ export default function ViralPage() {
                           return (
                             <button key={idx} onClick={() => handleAnswer(idx)} disabled={answered}
                               className={cn("flex items-center gap-3 p-3 rounded-xl border text-left transition-all",
-                                !answered && "hover:border-white/15 cursor-pointer border-white/8",
-                                answered && isC && "border-emerald-500/50 bg-emerald-500/10",
-                                answered && isS && !isC && "border-red-500/50 bg-red-500/10",
-                                answered && !isC && !isS && "opacity-25")}>
+                                !answered && "hover:border-ink-navy/15 cursor-pointer border-ink-navy/8",
+                                answered && isC && "border-emerald-400 bg-emerald-50/60",
+                                answered && isS && !isC && "border-red-300 bg-red-50/60",
+                                answered && !isC && !isS && "opacity-30")}>
                               <span className={cn("w-7 h-7 rounded-full border flex items-center justify-center shrink-0 text-xs font-bold",
                                 answered && isC ? "bg-emerald-500 border-emerald-500 text-white" : "",
-                                answered && isS && !isC ? "bg-red-500 border-red-500 text-white" : "",
-                                !answered ? "border-white/15 text-white/25" : "")}>
+                                answered && isS && !isC ? "bg-red-400 border-red-400 text-white" : "",
+                                !answered ? "border-ink-navy/12 text-ink-navy/25" : "")}>
                                 {answered && isC ? <Check size={12} /> : answered && isS && !isC ? <X size={12} /> : String.fromCharCode(65 + idx)}
                               </span>
-                              <span className={cn("font-bold text-sm", answered && isC ? "text-emerald-400" : "text-white/50")}>{opt}</span>
+                              <span className={cn("font-bold text-sm", answered && isC ? "text-emerald-700" : "text-ink-navy/50")}>{opt}</span>
                             </button>
                           );
                         })}
                       </div>
                       {answered && (
                         <button onClick={nextQ}
-                          className="w-full mt-4 flex items-center justify-center gap-2 bg-white/10 text-white/80 py-2.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-white/15 transition-colors border border-white/10">
+                          className="w-full mt-4 flex items-center justify-center gap-2 bg-ink-navy text-mist-white py-2.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">
                           {currentQ + 1 >= quizQuestions.length ? "Ver resultado" : "Siguiente"} <ChevronRight size={13} />
                         </button>
                       )}
