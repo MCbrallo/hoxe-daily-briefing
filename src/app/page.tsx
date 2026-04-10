@@ -349,15 +349,61 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
   const showImage = !isMusic && item.imageUrl;
 
   const catColor = CATEGORY_COLOR_MAP[item.category] || DEFAULT_CAT_COLOR;
+  
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [showShareMenu, setShowShareMenu] = useState(false);
 
   useEffect(() => {
     if (!isActive) {
       setTimeout(() => setExpanded(false), 300);
+      setShowShareMenu(false);
     }
   }, [isActive]);
 
+  const handleShareLink = async () => {
+    if (navigator.share) {
+      try { await navigator.share({ title: `HOXE: ${item.title}`, url: window.location.href }); } catch (err) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied!");
+    }
+    setShowShareMenu(false);
+  };
+
+  const handleDownloadImage = async () => {
+    if (!cardRef.current) return;
+    try {
+      const { toPng } = await import('html-to-image');
+      const dataUrl = await toPng(cardRef.current, { 
+        filter: (node: any) => !node.tagName?.includes('IFRAME') && node.id !== 'share-overlay',
+        backgroundColor: '#F5F5F3', 
+        pixelRatio: 2
+      });
+      const link = document.createElement('a');
+      link.download = `HOXE-${item.title.replace(/\s+/g, '-')}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error(err);
+      alert("Network error: Could not export card image directly.");
+    }
+    setShowShareMenu(false);
+  };
+
   return (
-    <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 h-full" style={{ gridTemplateRows: 'auto auto 1fr' }}>
+    <div ref={cardRef} className="w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 h-full relative" style={{ gridTemplateRows: 'auto auto 1fr' }}>
+      
+      {/* Share Overlay */}
+      {showShareMenu && (
+        <div id="share-overlay" className="absolute top-10 right-0 z-50 bg-white shadow-xl border border-ink-navy/10 rounded-2xl flex flex-col overflow-hidden animate-fade-rise">
+          <button onClick={handleShareLink} className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-ink-navy/70 hover:bg-ink-navy/5 text-left border-b border-ink-navy/5">
+            Share App Link
+          </button>
+          <button onClick={handleDownloadImage} className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-ink-navy/70 hover:bg-ink-navy/5 text-left">
+            Save as Image
+          </button>
+        </div>
+      )}
       
       <div className="col-span-full">
         <div className="flex items-center justify-between border-b border-ink-navy/10 pb-2.5">
@@ -375,7 +421,11 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
             >
               <Bookmark size={16} strokeWidth={1.5} className={saved ? "fill-current" : ""} />
             </button>
-            <button className="text-ink-navy/40 hover:text-ink-navy transition-colors focus:outline-none" title="Share">
+            <button 
+              onClick={() => setShowShareMenu(!showShareMenu)} 
+              className={cn("transition-colors focus:outline-none", showShareMenu ? "text-ink-navy" : "text-ink-navy/40 hover:text-ink-navy")} 
+              title="Share"
+            >
               <Share size={16} strokeWidth={1.5} />
             </button>
           </div>

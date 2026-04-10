@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight, User, Bookmark, Clock, LogOut, Settings2, Bell, Shield, Languages } from "lucide-react";
+import { ArrowRight, User, Bookmark, Clock, LogOut, Settings2, Bell, Shield, Languages, Flame, Star } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/context/LanguageContext";
 import { cn } from "@/utils/cn";
@@ -24,6 +24,40 @@ export default function ProfilePage() {
     });
 
     return () => subscription.unsubscribe();
+  }, []);
+
+  const [streak, setStreak] = useState(1);
+  const [points, setPoints] = useState(10);
+
+  useEffect(() => {
+    try {
+      const lastLoginStr = localStorage.getItem("hoxe_last_login");
+      const currentStreak = parseInt(localStorage.getItem("hoxe_streak") || "0", 10);
+      const currentPoints = parseInt(localStorage.getItem("hoxe_points") || "0", 10);
+      const today = new Date().toDateString();
+
+      if (lastLoginStr !== today) {
+        const lastLogin = new Date(lastLoginStr || 0);
+        const now = new Date(today);
+        const diffDays = Math.round(Math.abs((now.getTime() - lastLogin.getTime()) / (1000 * 3600 * 24)));
+        
+        let nextStreak = currentStreak;
+        if (diffDays === 1) nextStreak = currentStreak + 1;
+        else if (diffDays > 1) nextStreak = 1;
+
+        const nextPoints = currentPoints + 10;
+
+        localStorage.setItem("hoxe_streak", nextStreak.toString());
+        localStorage.setItem("hoxe_points", nextPoints.toString());
+        localStorage.setItem("hoxe_last_login", today);
+        
+        setStreak(nextStreak);
+        setPoints(nextPoints);
+      } else {
+        setStreak(currentStreak || 1);
+        setPoints(currentPoints || 10);
+      }
+    } catch(e) {}
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -156,6 +190,31 @@ export default function ProfilePage() {
         <div className="md:col-span-5 flex flex-col gap-6">
           
           <div className="flex flex-col gap-4">
+            
+            <div className="flex gap-4">
+              <div className="flex-1 bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 flex flex-col justify-between relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/5 rounded-full blur-2xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                <div>
+                  <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block relative z-10">{streak}</span>
+                  <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/40 relative z-10">Day Streak</p>
+                </div>
+                <div className="absolute bottom-4 right-4 text-orange-500/80">
+                  <Flame size={24} strokeWidth={1.5} />
+                </div>
+              </div>
+
+              <div className="flex-1 bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 flex flex-col justify-between relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/10 rounded-full blur-2xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
+                <div>
+                  <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block relative z-10">{points}</span>
+                  <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/40 relative z-10">Total Points</p>
+                </div>
+                <div className="absolute bottom-4 right-4 text-amber-500/80">
+                  <Star size={24} strokeWidth={1.5} />
+                </div>
+              </div>
+            </div>
+
             <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 md:p-6 flex items-center justify-between">
               <div>
                 <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block">{session ? "0" : "--"}</span>
@@ -163,16 +222,6 @@ export default function ProfilePage() {
               </div>
               <div className="w-12 h-12 rounded-full bg-slate-blue/10 flex items-center justify-center shrink-0">
                 <Bookmark size={20} className="text-slate-blue" strokeWidth={2} />
-              </div>
-            </div>
-
-            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 md:p-6 flex items-center justify-between">
-              <div>
-                <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block">{session ? "1" : "--"}</span>
-                <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/35">Days Explored</p>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
-                <Clock size={20} className="text-emerald-600" strokeWidth={2} />
               </div>
             </div>
           </div>

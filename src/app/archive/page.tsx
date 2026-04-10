@@ -2,16 +2,28 @@ import Link from "next/link";
 import { ArrowRight, Lock } from "lucide-react";
 import { cn } from "@/utils/cn";
 
-export default function ArchivePage() {
-  const archives = [
-    { date: "April 10", year: "2026", summary: "Titanic, Zapata, & The Abyss", available: true },
-    { date: "April 9", year: "2026", summary: "The Fall of Baghdad & Literary Giants", available: false },
-    { date: "April 8", year: "2026", summary: "Solar Eclipses & Renaissance Discoveries", available: false },
-    { date: "April 7", year: "2026", summary: "The World Health Organization is Born", available: false },
-    { date: "April 6", year: "2026", summary: "The First Modern Olympic Games", available: false },
-    { date: "April 5", year: "2026", summary: "Triumph in Mathematics: The Fields Medal", available: false },
-    { date: "April 4", year: "2026", summary: "Founding of the UN Space Treaty", available: false },
-  ];
+import { supabase } from "@/lib/supabase";
+
+export const revalidate = 60; // Cash for a minute
+
+export default async function ArchivePage() {
+  const { data: records } = await supabase
+    .from("daily_briefings")
+    .select("date, created_at, day_of_week, briefing_items(title)")
+    .order("created_at", { ascending: false })
+    .limit(30);
+
+  const archives = (records || []).map(r => {
+    const titles = r.briefing_items?.filter((bi: any) => bi.title).map((bi: any) => bi.title.split(' - ')[0]) || [];
+    const summary = titles.slice(0, 3).join(" • ") + (titles.length > 3 ? "..." : "");
+    const dateObj = new Date(r.created_at);
+    return {
+      date: r.date,
+      year: dateObj.getFullYear().toString(),
+      summary: summary || "Full briefing available",
+      available: true
+    };
+  });
 
   return (
     <div className="flex flex-col min-h-[100dvh] w-full bg-mist-white text-ink-navy font-sans pt-16 md:pt-20 pb-24 px-6 md:px-12 lg:px-24">
@@ -32,7 +44,7 @@ export default function ArchivePage() {
           {archives.map((day, i) => (
             <div key={i} className="group relative">
               {day.available ? (
-                <Link href="/" className="flex items-center p-5 md:p-6 bg-white/70 backdrop-blur-md rounded-[24px] shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white/50 hover:border-ink-navy/10 hover:shadow-[0_8px_30px_-5px_rgba(27,46,75,0.1)] transition-all duration-300">
+                <Link href={`/?date=${encodeURIComponent(day.date)}`} className="flex items-center p-5 md:p-6 bg-white/70 backdrop-blur-md rounded-[24px] shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white/50 hover:border-ink-navy/10 hover:shadow-[0_8px_30px_-5px_rgba(27,46,75,0.1)] transition-all duration-300">
                   <div className="flex flex-col w-[90px] md:w-[110px] shrink-0">
                     <span className="text-xl md:text-2xl font-serif text-ink-navy leading-none">{day.date}</span>
                     <span className="text-[9px] font-bold tracking-[0.2em] text-ink-navy/30 mt-1">{day.year}</span>
