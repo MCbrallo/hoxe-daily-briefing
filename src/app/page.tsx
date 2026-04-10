@@ -184,9 +184,9 @@ export default function TodayPage() {
                  <div className="absolute w-[350px] h-[350px] rounded-full bg-eucalyptus/[0.03] blur-[80px] top-1/3 right-1/4 animate-[drift_20s_ease-in-out_infinite_0.5s]" />
                </div>
 
-               <div className="w-full h-full max-w-6xl mx-auto flex flex-col items-center justify-center relative z-10">
+               <div className="w-full h-full max-w-6xl mx-auto flex flex-col justify-center md:grid md:grid-cols-12 md:gap-14 md:items-center relative z-10">
                  
-                 <div className="flex flex-col items-center text-center">
+                 <div className="md:col-span-6 lg:col-span-7 flex flex-col items-center md:items-start text-center md:text-left">
                    
                    <span className="text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-ink-navy/50 animate-fade-rise">
                      {briefing.dayOfWeek}
@@ -202,7 +202,7 @@ export default function TodayPage() {
                      {t("Pending")}
                    </h2>
 
-                   <div className="flex flex-col items-center mt-12 md:mt-16 animate-fade-rise animate-delay-2 w-full">
+                   <div className="flex flex-col items-center md:items-start mt-12 md:mt-16 animate-fade-rise animate-delay-2 w-full pt-4 md:pt-0">
                      <div className="w-10 h-[1px] bg-ink-navy/20 mb-6"></div>
                      <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-ink-navy/70 overflow-hidden">
                        <span className="inline-block animate-[slideUp_1s_ease-out_0.6s_both]">
@@ -210,15 +210,68 @@ export default function TodayPage() {
                        </span>
                      </p>
                    </div>
+
+                   {/* Desktop Button */}
+                   <button 
+                     onClick={goNext}
+                     className="mt-8 md:mt-12 hidden md:flex group items-center gap-3 bg-ink-navy text-mist-white px-8 py-4 text-[11px] font-bold tracking-[0.25em] uppercase hover:bg-slate-blue transition-all duration-300 focus:outline-none animate-fade-rise animate-delay-4"
+                   >
+                     Explore the day
+                     <ChevronRight size={14} strokeWidth={2} className="group-hover:translate-x-1 transition-transform" />
+                   </button>
                  </div>
 
+                 {/* Mobile Chevron */}
                  <button 
                    onClick={goNext}
-                   className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 text-ink-navy/40 hover:text-ink-navy transition-colors focus:outline-none"
+                   className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 text-ink-navy/40 hover:text-ink-navy transition-colors focus:outline-none md:hidden"
                    aria-label="Scroll down"
                  >
                    <ChevronRight size={32} strokeWidth={1} className="rotate-90 animate-[bounce_2s_infinite]" />
                  </button>
+
+                 {/* Desktop Category Previews */}
+                 <div className="hidden md:flex md:col-span-6 lg:col-span-5 animate-fade-rise animate-delay-3 md:-mt-4 lg:-mt-8">
+                   <div className="flex flex-col w-full">
+                     {uniqueCategories.slice(0, 4).map((cat: any, i: number) => {
+                       const item = briefing.items.find((it: any) => it.category === cat);
+                       if (!item) return null;
+                       const catLabel = cat === "local" ? "Local Lens" : cat.charAt(0).toUpperCase() + cat.slice(1);
+                       const colorObj = getCategoryColor(cat);
+                       
+                       return (
+                         <button
+                           key={cat}
+                           onClick={() => handleJump(cat)}
+                           className={cn(
+                             "group w-full flex flex-col justify-start py-5 md:py-[22px] px-5 md:px-7 hover:bg-warm-white/50 transition-all text-left",
+                             i === 0 ? "border-t border-ink-navy/10" : "",
+                             "border-b border-ink-navy/8"
+                           )}
+                         >
+                           <div className="flex w-full items-center justify-between">
+                             <div className="flex-1 min-w-0 pr-4">
+                               <div className="flex items-center gap-3 mb-1.5">
+                                 <span className={cn("text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase", colorObj.text)}>
+                                   {catLabel}
+                                 </span>
+                                 {item.year && (
+                                   <span className="text-[10px] font-serif italic text-ink-navy/30">{item.year}</span>
+                                 )}
+                               </div>
+                               <span className="text-base md:text-lg font-serif text-ink-navy/90 group-hover:text-ink-navy transition-colors block leading-snug">
+                                 {item.title}
+                               </span>
+                             </div>
+                             <div className="pl-2">
+                               <ChevronRight size={14} strokeWidth={2} className="text-ink-navy/20 group-hover:text-ink-navy/60 group-hover:translate-x-1.5 transition-all shrink-0" />
+                             </div>
+                           </div>
+                         </button>
+                       );
+                     })}
+                   </div>
+                 </div>
 
                </div>
             </div>
