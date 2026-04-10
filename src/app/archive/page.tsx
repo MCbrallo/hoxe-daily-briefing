@@ -14,7 +14,7 @@ export default function ArchivePage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-[100dvh] w-full bg-mist-white text-ink-navy font-sans pt-24 md:pt-32 pb-24 px-6 md:px-12 lg:px-24">
+    <div className="flex flex-col min-h-[100dvh] w-full bg-mist-white text-ink-navy font-sans pt-16 md:pt-20 pb-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-4xl mx-auto w-full">
         {/* Compact Header */}
         <header className="mb-8 flex items-end justify-between border-b border-ink-navy/15 pb-5">

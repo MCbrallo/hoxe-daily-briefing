@@ -45,7 +45,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-6 md:px-12 bg-mist-white max-w-4xl mx-auto">
+    <div className="min-h-screen pt-16 md:pt-20 pb-20 px-6 md:px-12 bg-mist-white max-w-4xl mx-auto">
       {/* Compact Header */}
       <header className="mb-8 border-b border-ink-navy/15 pb-5">
         <h1 className="font-serif text-4xl md:text-5xl text-ink-navy tracking-tight">Identity</h1>

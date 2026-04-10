@@ -9,15 +9,21 @@ import { MusicPlayerCard } from "@/components/MusicPlayerCard";
 import { useSavedCards } from "@/hooks/useSavedCards";
 import { useLanguage } from "@/context/LanguageContext";
 
-const CATEGORY_COLORS = [
-  { text: "text-[#7F1D1D]", border: "border-[#7F1D1D]" }, // dark red
-  { text: "text-[#1E3A8A]", border: "border-[#1E3A8A]" }, // dark blue
-  { text: "text-[#14532D]", border: "border-[#14532D]" }, // dark green
-  { text: "text-[#701A75]", border: "border-[#701A75]" }, // fuchsia
-  { text: "text-[#9A3412]", border: "border-[#9A3412]" }, // rust
-  { text: "text-[#0F766E]", border: "border-[#0F766E]" }, // teal
-  { text: "text-[#162740]", border: "border-[#162740]" }, // slate
-];
+const CATEGORY_COLOR_MAP: Record<string, { text: string; border: string }> = {
+  history:      { text: "text-[#7F1D1D]", border: "border-[#7F1D1D]" }, // dark red
+  science:      { text: "text-[#1E3A8A]", border: "border-[#1E3A8A]" }, // dark blue
+  space:        { text: "text-[#0F766E]", border: "border-[#0F766E]" }, // teal
+  warfare:      { text: "text-[#162740]", border: "border-[#162740]" }, // slate
+  culture:      { text: "text-[#701A75]", border: "border-[#701A75]" }, // fuchsia
+  people:       { text: "text-[#9A3412]", border: "border-[#9A3412]" }, // rust
+  sports:       { text: "text-[#14532D]", border: "border-[#14532D]" }, // dark green
+  viral_quote:  { text: "text-[#475569]", border: "border-[#475569]" }, // stone
+  music:        { text: "text-[#6D28D9]", border: "border-[#6D28D9]" }, // violet
+  local:        { text: "text-[#B45309]", border: "border-[#B45309]" }, // amber
+  observance:   { text: "text-[#0369A1]", border: "border-[#0369A1]" }, // sky
+  curiosity:    { text: "text-[#9A3412]", border: "border-[#9A3412]" }, // rust
+};
+const DEFAULT_CAT_COLOR = { text: "text-[#334155]", border: "border-[#334155]" };
 
 export default function TodayPage() {
   const { t, language } = useLanguage();
@@ -129,8 +135,7 @@ export default function TodayPage() {
   const uniqueCategories = Array.from(new Set(briefing.items.map((item: any) => item.category)));
 
   const getCategoryColor = (cat: string) => {
-    const idx = uniqueCategories.indexOf(cat as any);
-    return CATEGORY_COLORS[idx % CATEGORY_COLORS.length];
+    return CATEGORY_COLOR_MAP[cat] || DEFAULT_CAT_COLOR;
   };
 
   const goNext = () => {
@@ -332,7 +337,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
   const hasSpotify = isMusic && item.metadata?.spotifyTrackId;
   const showImage = !isMusic && item.imageUrl;
 
-  const catColor = CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+  const catColor = CATEGORY_COLOR_MAP[item.category] || DEFAULT_CAT_COLOR;
 
   useEffect(() => {
     if (!isActive) {

@@ -24,7 +24,7 @@ export default function SavedPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-[100dvh] w-full bg-mist-white text-ink-navy font-sans pt-24 md:pt-32 pb-24 px-6 md:px-12 lg:px-24">
+    <div className="flex flex-col min-h-[100dvh] w-full bg-mist-white text-ink-navy font-sans pt-16 md:pt-20 pb-24 px-6 md:px-12 lg:px-24">
       <div className="max-w-5xl mx-auto w-full">
         
         <header className="mb-12 md:mb-16 border-b border-ink-navy/10 pb-8">

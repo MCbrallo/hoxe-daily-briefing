@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Music, Flame, Film, Quote, Smartphone, Trophy, Brain, ChevronRight, Check, X, ChevronDown } from "lucide-react";
+import { Music, Flame, Film, Quote, Smartphone, Trophy, Brain, ChevronRight, Check, X, ArrowRight } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/context/LanguageContext";
@@ -18,38 +18,26 @@ interface ViralItem {
   metadata_spotify_track_id: string | null;
 }
 
-const VIRAL_SECTIONS = [
-  { key: "viral_music",   icon: Music,      label: "Nº1 del Día",    accent: "text-purple-600",  bg: "bg-purple-500/5",  ring: "ring-purple-300/40" },
-  { key: "viral_scandal", icon: Flame,      label: "El Escándalo",   accent: "text-red-600",     bg: "bg-red-500/5",     ring: "ring-red-300/40" },
-  { key: "viral_movie",   icon: Film,       label: "Estreno del Día",accent: "text-amber-600",   bg: "bg-amber-500/5",   ring: "ring-amber-300/40" },
-  { key: "viral_quote",   icon: Quote,      label: "In Memoriam",    accent: "text-slate-600",   bg: "bg-slate-500/5",   ring: "ring-slate-300/40" },
-  { key: "viral_moment",  icon: Smartphone, label: "Momento Viral",  accent: "text-sky-600",     bg: "bg-sky-500/5",     ring: "ring-sky-300/40" },
-  { key: "viral_record",  icon: Trophy,     label: "Récord Roto",    accent: "text-emerald-600", bg: "bg-emerald-500/5", ring: "ring-emerald-300/40" },
-];
+const VIRAL_META: Record<string, { icon: any; label: string; accent: string; bg: string }> = {
+  viral_music:   { icon: Music,      label: "Nº1 del Día",     accent: "text-purple-600",  bg: "bg-purple-500" },
+  viral_scandal: { icon: Flame,      label: "El Escándalo",    accent: "text-red-600",     bg: "bg-red-500" },
+  viral_movie:   { icon: Film,       label: "Estreno del Día", accent: "text-amber-600",   bg: "bg-amber-500" },
+  viral_quote:   { icon: Quote,      label: "In Memoriam",     accent: "text-slate-600",   bg: "bg-slate-500" },
+  viral_moment:  { icon: Smartphone, label: "Momento Viral",   accent: "text-sky-600",     bg: "bg-sky-500" },
+  viral_record:  { icon: Trophy,     label: "Récord Roto",     accent: "text-emerald-600", bg: "bg-emerald-500" },
+};
 
-interface QuizQuestion {
-  question: string;
-  options: string[];
-  correctIndex: number;
-}
+interface QuizQuestion { question: string; options: string[]; correctIndex: number; }
 
 function generateQuiz(items: ViralItem[]): QuizQuestion[] {
   const questions: QuizQuestion[] = [];
   const usable = items.filter(i => i.year && i.year !== "Unknown");
-
   for (const item of usable.slice(0, 4)) {
-    const correctYear = parseInt(item.year);
-    if (isNaN(correctYear)) continue;
-
+    const y = parseInt(item.year);
+    if (isNaN(y)) continue;
     const offsets = [-12, -5, 7, 15, -20, 10, 3, -8].sort(() => 0.5 - Math.random()).slice(0, 3);
-    const wrongYears = offsets.map(o => correctYear + o).filter(y => y > 0 && y !== correctYear);
-    const options = [String(correctYear), ...wrongYears.map(String)].slice(0, 4).sort(() => 0.5 - Math.random());
-
-    questions.push({
-      question: `¿En qué año ocurrió: "${item.title}"?`,
-      options,
-      correctIndex: options.indexOf(String(correctYear)),
-    });
+    const options = [String(y), ...offsets.map(o => String(y + o)).filter(s => s !== String(y) && parseInt(s) > 0)].slice(0, 4).sort(() => 0.5 - Math.random());
+    questions.push({ question: `¿En qué año: "${item.title}"?`, options, correctIndex: options.indexOf(String(y)) });
   }
   return questions.slice(0, 4);
 }
@@ -57,11 +45,14 @@ function generateQuiz(items: ViralItem[]): QuizQuestion[] {
 export default function ViralPage() {
   const { language } = useLanguage();
   const [items, setItems] = useState<ViralItem[]>([]);
+  const [allItems, setAllItems] = useState<ViralItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [dateLabel, setDateLabel] = useState("");
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+  const [currentCard, setCurrentCard] = useState(0);
+  const [exiting, setExiting] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
-  // Quiz state
+  // Quiz
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
   const [currentQ, setCurrentQ] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -73,23 +64,26 @@ export default function ViralPage() {
     async function load() {
       const todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
       setDateLabel(todayStr);
-
-      const { data: rows } = await supabase
-        .from("daily_briefings")
-        .select("*, briefing_items (*)")
-        .eq("date", todayStr)
-        .limit(1);
-
+      const { data: rows } = await supabase.from("daily_briefings").select("*, briefing_items (*)").eq("date", todayStr).limit(1);
       if (rows && rows.length > 0 && rows[0].briefing_items) {
-        const allDbItems = rows[0].briefing_items;
-        const viralItems = allDbItems.filter((i: any) => i.category.startsWith("viral_"));
+        const viralItems = rows[0].briefing_items.filter((i: any) => i.category.startsWith("viral_"));
         setItems(viralItems);
-        setQuizQuestions(generateQuiz(viralItems.length > 0 ? viralItems : allDbItems));
+        setAllItems(rows[0].briefing_items);
+        setQuizQuestions(generateQuiz(viralItems.length > 0 ? viralItems : rows[0].briefing_items));
       }
       setLoading(false);
     }
     load();
   }, [language]);
+
+  const nextCard = () => {
+    if (currentCard >= items.length - 1) {
+      setShowQuiz(true);
+      return;
+    }
+    setExiting(true);
+    setTimeout(() => { setCurrentCard(c => c + 1); setExiting(false); }, 300);
+  };
 
   const handleAnswer = (idx: number) => {
     if (answered) return;
@@ -97,240 +91,197 @@ export default function ViralPage() {
     setAnswered(true);
     if (idx === quizQuestions[currentQ].correctIndex) setScore(s => s + 1);
   };
-
   const nextQuestion = () => {
-    if (currentQ + 1 >= quizQuestions.length) { setQuizDone(true); }
+    if (currentQ + 1 >= quizQuestions.length) setQuizDone(true);
     else { setCurrentQ(q => q + 1); setSelectedAnswer(null); setAnswered(false); }
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-mist-white">
-        <div className="w-6 h-6 border-t-2 border-ink-navy rounded-full animate-spin" />
-      </div>
-    );
+    return <div className="min-h-screen flex items-center justify-center bg-mist-white"><div className="w-6 h-6 border-t-2 border-ink-navy rounded-full animate-spin" /></div>;
   }
 
+  const card = items[currentCard];
+  const meta = card ? VIRAL_META[card.category] : null;
+
   return (
-    <div className="min-h-screen bg-mist-white pt-20 md:pt-24 pb-28 md:pb-16">
-      {/* ─── HERO ─── */}
-      <header className="px-6 md:px-16 pt-8 pb-10 md:pb-14">
-        <div className="max-w-5xl mx-auto">
-          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-ink-navy/30 block mb-3">{dateLabel}</span>
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-ink-navy tracking-tight leading-[0.9]">
-            Viral
-          </h1>
-          <div className="w-12 h-[2px] bg-ink-navy/15 mt-5 mb-3" />
-          <p className="text-sm md:text-base text-ink-navy/45 font-serif italic max-w-lg">
-            Lo que rompió el mundo este día. Canciones, escándalos, estrenos y momentos que cambiaron la conversación.
-          </p>
+    <div className="min-h-screen bg-mist-white pt-14 md:pt-20 pb-28 md:pb-16 flex flex-col">
+      {/* Header */}
+      <header className="px-6 md:px-16 pb-6">
+        <div className="max-w-lg mx-auto">
+          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-ink-navy/25 block mb-2">{dateLabel}</span>
+          <h1 className="font-serif text-4xl md:text-5xl text-ink-navy tracking-tight leading-[0.9]">Viral</h1>
+          <div className="w-10 h-[1.5px] bg-ink-navy/12 mt-3" />
         </div>
       </header>
 
-      {/* ─── SCROLLABLE CARDS ─── */}
-      <div className="max-w-5xl mx-auto px-6 md:px-16">
-        <div className="flex flex-col gap-5">
-          {VIRAL_SECTIONS.map((section) => {
-            const sectionItems = items.filter(i => i.category === section.key);
-            const item = sectionItems[0];
-            const Icon = section.icon;
-            const isExpanded = expandedCard === section.key;
+      {/* Tinder Card Stack */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 md:px-16">
+        <div className="w-full max-w-lg relative" style={{ minHeight: '420px' }}>
 
-            return (
+          {!showQuiz && items.length > 0 && card && meta ? (
+            <>
+              {/* Card counter */}
+              <div className="text-center mb-4">
+                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-ink-navy/25">
+                  {currentCard + 1} / {items.length}
+                </span>
+              </div>
+
+              {/* Stacked cards behind */}
+              {items.slice(currentCard + 1, currentCard + 3).map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute inset-x-0 mx-auto border border-ink-navy/5 rounded-2xl bg-white shadow-sm"
+                  style={{
+                    top: `${(i + 1) * 8}px`,
+                    width: `calc(100% - ${(i + 1) * 16}px)`,
+                    height: '400px',
+                    zIndex: 10 - i,
+                    opacity: 1 - (i + 1) * 0.25,
+                  }}
+                />
+              ))}
+
+              {/* Active card */}
               <div
-                key={section.key}
                 className={cn(
-                  "group border border-ink-navy/8 rounded-xl overflow-hidden transition-all duration-500",
-                  item ? "hover:border-ink-navy/15 hover:shadow-md cursor-pointer" : "opacity-50"
+                  "relative z-20 border border-ink-navy/8 rounded-2xl bg-white shadow-lg overflow-hidden transition-all duration-300",
+                  exiting && "opacity-0 translate-x-[120%] rotate-6 scale-95"
                 )}
               >
-                {/* Card Header — always visible */}
-                <button
-                  onClick={() => item && setExpandedCard(isExpanded ? null : section.key)}
-                  className="w-full flex items-center gap-4 p-5 md:p-6 text-left"
-                >
-                  <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center shrink-0", section.bg)}>
-                    <Icon size={18} className={section.accent} strokeWidth={1.8} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className={cn("text-[10px] font-bold tracking-[0.2em] uppercase block", section.accent)}>
-                      {section.label}
-                    </span>
-                    {item ? (
-                      <span className="text-base md:text-lg font-serif text-ink-navy leading-snug block mt-0.5 truncate">
-                        {item.title}
-                      </span>
-                    ) : (
-                      <span className="text-sm text-ink-navy/30 font-serif italic block mt-0.5">
-                        Sin contenido disponible
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    {item?.year && item.year !== "Unknown" && (
-                      <span className="text-xs font-serif italic text-ink-navy/30 hidden md:block">{item.year}</span>
-                    )}
-                    {item && (
-                      <ChevronDown
-                        size={16}
-                        className={cn("text-ink-navy/20 transition-transform duration-300", isExpanded && "rotate-180")}
-                      />
-                    )}
-                  </div>
-                </button>
-
-                {/* Card Body — expandable */}
-                {item && (
-                  <div className={cn(
-                    "grid transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
-                    isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                  )}>
-                    <div className="overflow-hidden min-h-0">
-                      <div className="px-5 md:px-6 pb-6 border-t border-ink-navy/5 pt-5">
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                          <div className={cn("flex flex-col", item.image_url ? "md:col-span-7" : "md:col-span-12")}>
-                            {item.year && item.year !== "Unknown" && (
-                              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-ink-navy/25 mb-2 md:hidden">{item.year}</span>
-                            )}
-                            <p className="text-sm md:text-base text-ink-navy/70 leading-relaxed mb-4">
-                              {item.short_explanation}
-                            </p>
-                            {item.why_it_matters && (
-                              <p className="text-xs md:text-sm text-ink-navy/50 font-serif italic leading-relaxed line-clamp-4">
-                                {item.why_it_matters}
-                              </p>
-                            )}
-                            {item.metadata_spotify_track_id && (
-                              <div className="mt-4">
-                                <iframe
-                                  src={`https://open.spotify.com/embed/track/${item.metadata_spotify_track_id}?theme=0`}
-                                  width="100%" height="80" frameBorder="0" allow="encrypted-media"
-                                  className="rounded-lg"
-                                />
-                              </div>
-                            )}
-                          </div>
-                          {item.image_url && (
-                            <div className="md:col-span-5">
-                              <img
-                                src={item.image_url}
-                                alt={item.title}
-                                referrerPolicy="no-referrer"
-                                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                                className="w-full h-44 md:h-56 object-cover rounded-lg"
-                              />
-                            </div>
-                          )}
-                        </div>
+                {/* Card image */}
+                {card.image_url ? (
+                  <div className="relative h-48 md:h-56 overflow-hidden">
+                    <img
+                      src={card.image_url}
+                      alt={card.title}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none'; }}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-4 flex items-center gap-2">
+                      <div className={cn("w-7 h-7 rounded-lg flex items-center justify-center bg-white/90")}>
+                        <meta.icon size={14} className={meta.accent} strokeWidth={2} />
                       </div>
+                      <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/90">{meta.label}</span>
                     </div>
                   </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* ─── QUIZ ─── */}
-        <section className="mt-14 mb-8">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-ink-navy/5 flex items-center justify-center">
-              <Brain size={16} className="text-ink-navy/40" />
-            </div>
-            <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-ink-navy/50">
-              Quiz del Día
-            </h2>
-            <div className="flex-1 h-[1px] bg-ink-navy/6 ml-2" />
-          </div>
-
-          {quizQuestions.length === 0 ? (
-            <div className="border border-ink-navy/8 rounded-xl p-10 text-center">
-              <Brain size={28} className="mx-auto text-ink-navy/15 mb-3" />
-              <p className="text-sm text-ink-navy/30 font-serif italic">El quiz se generará cuando haya contenido disponible.</p>
-            </div>
-          ) : quizDone ? (
-            <div className="border border-ink-navy/8 rounded-xl p-8 md:p-12 text-center">
-              <div className="w-20 h-20 rounded-full bg-ink-navy/5 flex items-center justify-center mx-auto mb-6">
-                <span className="text-3xl font-serif font-bold text-ink-navy">{score}/{quizQuestions.length}</span>
-              </div>
-              <h3 className="font-serif text-2xl md:text-3xl text-ink-navy mb-2">
-                {score === quizQuestions.length ? "Perfecto." : score >= quizQuestions.length / 2 ? "Bien hecho." : "Sigue intentando."}
-              </h3>
-              <p className="text-sm text-ink-navy/40 font-serif italic mb-6">
-                {score === quizQuestions.length ? "Dominas la cultura de este día." : `Acertaste ${score} de ${quizQuestions.length}.`}
-              </p>
-              <button
-                onClick={() => { setCurrentQ(0); setScore(0); setQuizDone(false); setSelectedAnswer(null); setAnswered(false); }}
-                className="bg-ink-navy text-mist-white px-6 py-3 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-slate-blue transition-colors"
-              >
-                Reintentar
-              </button>
-            </div>
-          ) : (
-            <div className="border border-ink-navy/8 rounded-xl overflow-hidden">
-              <div className="h-1 bg-ink-navy/5">
-                <div className="h-full bg-ink-navy transition-all duration-500" style={{ width: `${((currentQ + 1) / quizQuestions.length) * 100}%` }} />
-              </div>
-              <div className="p-6 md:p-10">
-                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-ink-navy/25 block mb-4">
-                  Pregunta {currentQ + 1} de {quizQuestions.length}
-                </span>
-                <h3 className="font-serif text-lg md:text-xl text-ink-navy mb-8 leading-snug">
-                  {quizQuestions[currentQ].question}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {quizQuestions[currentQ].options.map((option, idx) => {
-                    const isCorrect = idx === quizQuestions[currentQ].correctIndex;
-                    const isSelected = selectedAnswer === idx;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => handleAnswer(idx)}
-                        disabled={answered}
-                        className={cn(
-                          "flex items-center gap-3 p-4 rounded-lg border text-left transition-all duration-300",
-                          !answered && "hover:border-ink-navy/20 hover:bg-ink-navy/[0.02] cursor-pointer",
-                          answered && isCorrect && "border-emerald-400 bg-emerald-50/50",
-                          answered && isSelected && !isCorrect && "border-red-300 bg-red-50/50",
-                          !answered && "border-ink-navy/8",
-                          answered && !isCorrect && !isSelected && "opacity-40"
-                        )}
-                      >
-                        <span className={cn(
-                          "w-8 h-8 rounded-full border flex items-center justify-center shrink-0 text-sm font-bold transition-all",
-                          answered && isCorrect ? "bg-emerald-500 border-emerald-500 text-white" : "",
-                          answered && isSelected && !isCorrect ? "bg-red-400 border-red-400 text-white" : "",
-                          !answered ? "border-ink-navy/15 text-ink-navy/30" : ""
-                        )}>
-                          {answered && isCorrect ? <Check size={14} /> :
-                           answered && isSelected && !isCorrect ? <X size={14} /> :
-                           String.fromCharCode(65 + idx)}
-                        </span>
-                        <span className={cn(
-                          "font-bold text-sm tracking-wide",
-                          answered && isCorrect ? "text-emerald-700" : "text-ink-navy/60"
-                        )}>
-                          {option}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-                {answered && (
-                  <div className="mt-6 flex justify-end animate-fade-rise">
-                    <button
-                      onClick={nextQuestion}
-                      className="flex items-center gap-2 bg-ink-navy text-mist-white px-6 py-3 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-slate-blue transition-colors"
-                    >
-                      {currentQ + 1 >= quizQuestions.length ? "Ver resultado" : "Siguiente"}
-                      <ChevronRight size={14} />
-                    </button>
+                ) : (
+                  <div className="px-5 pt-5 flex items-center gap-2">
+                    <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", meta.bg + "/10")}>
+                      <meta.icon size={16} className={meta.accent} strokeWidth={2} />
+                    </div>
+                    <span className={cn("text-[10px] font-bold tracking-[0.2em] uppercase", meta.accent)}>{meta.label}</span>
                   </div>
                 )}
+
+                {/* Card content */}
+                <div className="p-5 md:p-6">
+                  {card.year && card.year !== "Unknown" && (
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-ink-navy/20 block mb-1.5">{card.year}</span>
+                  )}
+                  <h2 className="font-serif text-xl md:text-2xl text-ink-navy leading-snug mb-3">{card.title}</h2>
+                  <p className="text-sm text-ink-navy/60 leading-relaxed mb-3">{card.short_explanation}</p>
+                  {card.why_it_matters && (
+                    <p className="text-xs text-ink-navy/40 font-serif italic leading-relaxed line-clamp-3">{card.why_it_matters}</p>
+                  )}
+
+                  {card.metadata_spotify_track_id && (
+                    <div className="mt-4">
+                      <iframe src={`https://open.spotify.com/embed/track/${card.metadata_spotify_track_id}?theme=0`} width="100%" height="80" frameBorder="0" allow="encrypted-media" className="rounded-lg" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Next button */}
+                <div className="px-5 pb-5">
+                  <button
+                    onClick={nextCard}
+                    className="w-full flex items-center justify-center gap-2 bg-ink-navy text-mist-white py-3.5 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors"
+                  >
+                    {currentCard >= items.length - 1 ? "Ir al Quiz" : "Siguiente"}
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
               </div>
+            </>
+          ) : !showQuiz && items.length === 0 ? (
+            <div className="border border-ink-navy/8 rounded-2xl p-10 text-center bg-white">
+              <Flame size={28} className="mx-auto text-ink-navy/15 mb-3" />
+              <p className="text-sm text-ink-navy/30 font-serif italic">Contenido viral generándose...</p>
+            </div>
+          ) : null}
+
+          {/* Quiz */}
+          {showQuiz && quizQuestions.length > 0 && (
+            <div className="relative z-20">
+              <div className="text-center mb-4">
+                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-ink-navy/25">Quiz del Día</span>
+              </div>
+
+              {quizDone ? (
+                <div className="border border-ink-navy/8 rounded-2xl p-8 md:p-10 text-center bg-white shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-ink-navy/5 flex items-center justify-center mx-auto mb-5">
+                    <span className="text-2xl font-serif font-bold text-ink-navy">{score}/{quizQuestions.length}</span>
+                  </div>
+                  <h3 className="font-serif text-xl text-ink-navy mb-1">
+                    {score === quizQuestions.length ? "Perfecto." : score >= quizQuestions.length / 2 ? "Bien hecho." : "Sigue intentando."}
+                  </h3>
+                  <p className="text-xs text-ink-navy/35 font-serif italic mb-5">{score}/{quizQuestions.length} correctas</p>
+                  <button
+                    onClick={() => { setCurrentCard(0); setShowQuiz(false); setCurrentQ(0); setScore(0); setQuizDone(false); setSelectedAnswer(null); setAnswered(false); setExiting(false); }}
+                    className="bg-ink-navy text-mist-white px-6 py-3 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors"
+                  >
+                    Reintentar
+                  </button>
+                </div>
+              ) : (
+                <div className="border border-ink-navy/8 rounded-2xl overflow-hidden bg-white shadow-lg">
+                  <div className="h-1 bg-ink-navy/5"><div className="h-full bg-ink-navy transition-all duration-500" style={{ width: `${((currentQ + 1) / quizQuestions.length) * 100}%` }} /></div>
+                  <div className="p-5 md:p-8">
+                    <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-ink-navy/20 block mb-3">
+                      {currentQ + 1} / {quizQuestions.length}
+                    </span>
+                    <h3 className="font-serif text-base md:text-lg text-ink-navy mb-6 leading-snug">{quizQuestions[currentQ].question}</h3>
+                    <div className="flex flex-col gap-2.5">
+                      {quizQuestions[currentQ].options.map((opt, idx) => {
+                        const isCorrect = idx === quizQuestions[currentQ].correctIndex;
+                        const isSelected = selectedAnswer === idx;
+                        return (
+                          <button key={idx} onClick={() => handleAnswer(idx)} disabled={answered}
+                            className={cn(
+                              "flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-300",
+                              !answered && "hover:border-ink-navy/15 cursor-pointer border-ink-navy/8",
+                              answered && isCorrect && "border-emerald-400 bg-emerald-50/50",
+                              answered && isSelected && !isCorrect && "border-red-300 bg-red-50/50",
+                              answered && !isCorrect && !isSelected && "opacity-35"
+                            )}>
+                            <span className={cn(
+                              "w-7 h-7 rounded-full border flex items-center justify-center shrink-0 text-xs font-bold",
+                              answered && isCorrect ? "bg-emerald-500 border-emerald-500 text-white" : "",
+                              answered && isSelected && !isCorrect ? "bg-red-400 border-red-400 text-white" : "",
+                              !answered ? "border-ink-navy/12 text-ink-navy/25" : ""
+                            )}>
+                              {answered && isCorrect ? <Check size={12} /> : answered && isSelected && !isCorrect ? <X size={12} /> : String.fromCharCode(65 + idx)}
+                            </span>
+                            <span className={cn("font-bold text-sm", answered && isCorrect ? "text-emerald-700" : "text-ink-navy/55")}>{opt}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {answered && (
+                      <button onClick={nextQuestion}
+                        className="w-full mt-5 flex items-center justify-center gap-2 bg-ink-navy text-mist-white py-3 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">
+                        {currentQ + 1 >= quizQuestions.length ? "Ver resultado" : "Siguiente"} <ChevronRight size={14} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
-        </section>
+        </div>
       </div>
     </div>
   );
