@@ -1,2 +1,2 @@
-:HL["/hoxe-daily-briefing/_next/static/chunks/0fuugm7idoyq8.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"vZz6G65CD7Yg1jdbqy5qS"}
+:HL["/hoxe-daily-briefing/_next/static/chunks/101vmv1s3m.2..css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"EEf2qdU8BxG2MFGjkkZIo"}
