@@ -7,6 +7,8 @@ interface MusicPlayerProps {
 }
 
 export function MusicPlayerCard({ title, artist, spotifyTrackId }: MusicPlayerProps) {
+  if (!spotifyTrackId) return null;
+
   return (
     <div className="w-full">
       <iframe

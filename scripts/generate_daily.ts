@@ -265,7 +265,6 @@ async function generateForDate(targetDateObj: Date) {
         let spotifyId: string | null = null;
         if (cat === "music") {
           spotifyId = await resolveSpotifyId(title);
-          if (!spotifyId) finalCat = "culture"; // Fallback to culture if no Spotify found! The user said ALWAYS.
         }
 
         allItems.push({
@@ -296,7 +295,6 @@ async function generateForDate(targetDateObj: Date) {
         let spotifyId: string | null = null;
         if (cat === "viral_music") {
           spotifyId = await resolveSpotifyId(title);
-          if (!spotifyId) continue; // Drop viral music entirely if no Spotify embed since we can't show it!
         }
 
         allItems.push({
