@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 import { Navbar } from "@/components/layout/Navbar";
+import { Onboarding } from "@/components/layout/Onboarding";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function RootLayout({
@@ -33,6 +34,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased text-granite-grey bg-mist-white min-h-screen flex flex-col bg-fixed" suppressHydrationWarning>
         <LanguageProvider>
+          <Onboarding />
           <Navbar />
           <main className="w-full flex-1 flex flex-col">
             {children}

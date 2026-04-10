@@ -7,13 +7,13 @@ import { cn } from "@/utils/cn";
 import { useLanguage } from "@/context/LanguageContext";
 
 // Each tab has its own accent color
-const TAB_COLORS: Record<string, { active: string; icon: string }> = {
-  "/":          { active: "text-ink-navy",     icon: "text-ink-navy" },
-  "/viral":     { active: "text-red-500",      icon: "text-red-500" },
-  "/archive":   { active: "text-amber-600",    icon: "text-amber-600" },
-  "/saved":     { active: "text-emerald-600",  icon: "text-emerald-600" },
-  "/settings":  { active: "text-slate-500",    icon: "text-slate-500" },
-  "/profile":   { active: "text-purple-600",   icon: "text-purple-600" },
+const TAB_COLORS: Record<string, { active: string; icon: string; dotColor: string }> = {
+  "/":          { active: "text-ink-navy",     icon: "text-ink-navy",     dotColor: "bg-ink-navy" },
+  "/viral":     { active: "text-red-500",      icon: "text-red-500",      dotColor: "bg-red-500" },
+  "/archive":   { active: "text-amber-600",    icon: "text-amber-600",    dotColor: "bg-amber-600" },
+  "/saved":     { active: "text-emerald-600",  icon: "text-emerald-600",  dotColor: "bg-emerald-600" },
+  "/settings":  { active: "text-slate-500",    icon: "text-slate-500",    dotColor: "bg-slate-500" },
+  "/profile":   { active: "text-purple-600",   icon: "text-purple-600",   dotColor: "bg-purple-600" },
 };
 
 export function Navbar() {
@@ -94,9 +94,9 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation — Modern, borderless, colored */}
-      <nav className="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-2xl bg-mist-white/70 px-4 pt-3 pb-safe">
-        <div className="flex justify-around items-center max-w-lg mx-auto">
+      {/* Mobile Bottom Navigation — Modern Floating Pill */}
+      <nav className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <div className="backdrop-blur-2xl bg-white/70 px-8 py-3.5 rounded-full shadow-[0_8px_30px_rgba(27,46,75,0.08)] border border-ink-navy/5 flex gap-8 items-center justify-center">
           {allNavItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -106,19 +106,14 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center gap-1 py-2 px-4 rounded-2xl transition-all duration-300",
-                  isActive
-                    ? cn(colors.active)
-                    : "text-ink-navy/20"
+                  "relative flex flex-col items-center justify-center transition-all duration-300 active:scale-90",
+                  isActive ? colors.active : "text-ink-navy/25 hover:text-ink-navy/40"
                 )}
               >
-                <Icon size={26} strokeWidth={isActive ? 2 : 1.3} className={isActive ? colors.icon : ""} />
-                <span className={cn(
-                  "text-[7px] uppercase tracking-[0.12em] font-bold",
-                  isActive ? colors.active : ""
-                )}>
-                  {item.label}
-                </span>
+                <Icon size={24} strokeWidth={isActive ? 2.5 : 1.5} className={cn("transition-all duration-300", isActive ? "-translate-y-1" : "")} />
+                {isActive && (
+                  <span className={cn("absolute -bottom-2 w-1 h-1 rounded-full animate-fade-rise", colors.dotColor)}></span>
+                )}
               </Link>
             );
           })}

@@ -158,7 +158,7 @@ async function resolveSpotifyId(title: string): Promise<string | null> {
 //  PIPELINE
 // ═══════════════════════════════════════════════
 
-async function generateForDate(targetDateObj: Date) {
+export async function generateForDate(targetDateObj: Date) {
   const mm = String(targetDateObj.getMonth() + 1).padStart(2, '0');
   const dd = String(targetDateObj.getDate()).padStart(2, '0');
 
@@ -396,4 +396,7 @@ async function main() {
   console.log("✓ Pipeline complete.");
 }
 
-main();
+// Only run directly if executed from CLI
+if (typeof process !== 'undefined' && process.argv[1] && process.argv[1].includes('generate_daily.ts')) {
+  main();
+}

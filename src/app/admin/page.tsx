@@ -21,6 +21,9 @@ export default function AdminPage() {
   const [days, setDays] = useState<BriefingDay[]>([]);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [genDate, setGenDate] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [genMsg, setGenMsg] = useState("");
 
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
@@ -48,6 +51,29 @@ export default function AdminPage() {
   const deleteItem = async (itemId: string) => {
     await supabase.from("briefing_items").delete().eq("id", itemId);
     loadDays();
+  };
+
+  const handleGenerate = async () => {
+    if (!genDate) return;
+    setIsGenerating(true);
+    setGenMsg("Generando... Esto tomará entre 15 y 30 segundos.");
+    try {
+      const res = await fetch("/api/admin/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: ADMIN_PASSWORD, date: genDate })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setGenMsg("¡Extraordinario! Contenido generado con éxito.");
+        await loadDays();
+      } else {
+        setGenMsg(`Error: ${data.error}`);
+      }
+    } catch (err: any) {
+      setGenMsg(`Error inyectando: ${err.message}`);
+    }
+    setIsGenerating(false);
   };
 
   const currentDay = days.find(d => d.date === selectedDay);
@@ -108,6 +134,27 @@ export default function AdminPage() {
             Cerrar sesión
           </button>
         </header>
+
+        {/* Generator */}
+        <div className="mb-8 p-6 bg-white border border-ink-navy/10 rounded-2xl flex flex-col gap-4">
+          <h2 className="font-serif text-lg text-ink-navy">Pre-generar Contenido Futuro</h2>
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+            <input 
+              type="date" 
+              value={genDate} 
+              onChange={(e) => setGenDate(e.target.value)} 
+              className="px-4 py-2 border border-ink-navy/20 rounded-xl bg-mist-white text-ink-navy focus:outline-none"
+            />
+            <button 
+              onClick={handleGenerate}
+              disabled={isGenerating || !genDate}
+              className="px-6 py-2 bg-slate-blue text-white tracking-[0.1em] font-bold text-[11px] rounded-xl hover:bg-ink-navy transition-colors disabled:opacity-50"
+            >
+              {isGenerating ? "GENERANDO..." : "GENERAR DÍA"}
+            </button>
+          </div>
+          {genMsg && <p className={cn("text-xs font-bold", genMsg.includes('Error') ? "text-red-500" : "text-emerald-600")}>{genMsg}</p>}
+        </div>
 
         {/* Day selector */}
         <div className="flex gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
