@@ -102,10 +102,43 @@ async function validateImage(url: string): Promise<boolean> {
 }
 
 async function resolveImage(page: any): Promise<string | null> {
-  const url = getReliableImageUrl(page);
-  if (!url) return null;
-  const ok = await validateImage(url);
-  return ok ? url : null;
+  // Strategy 1: Use thumbnail already in the On This Day response
+  const directUrl = getReliableImageUrl(page);
+  if (directUrl) {
+    const ok = await validateImage(directUrl);
+    if (ok) return directUrl;
+  }
+
+  // Strategy 2: Fetch the Wikipedia page summary — this almost always has a thumbnail
+  const title = page.title || page.normalizedtitle;
+  if (!title) return null;
+
+  try {
+    const summaryRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`, {
+      headers: { 'User-Agent': 'HoxeBot/2.0' }
+    });
+    if (summaryRes.ok) {
+      const summary = await summaryRes.json();
+      if (summary.thumbnail?.source) {
+        const thumbUrl = summary.thumbnail.source.replace(/\/\d+px-/, '/800px-');
+        if (isValidImageFormat(thumbUrl)) {
+          const ok = await validateImage(thumbUrl);
+          if (ok) return thumbUrl;
+        }
+        // Try original size from thumbnail
+        if (isValidImageFormat(summary.thumbnail.source)) {
+          const ok = await validateImage(summary.thumbnail.source);
+          if (ok) return summary.thumbnail.source;
+        }
+      }
+      if (summary.originalimage?.source && isValidImageFormat(summary.originalimage.source)) {
+        const ok = await validateImage(summary.originalimage.source);
+        if (ok) return summary.originalimage.source;
+      }
+    }
+  } catch { /* ignore fetch errors */ }
+
+  return null;
 }
 
 // ═══════════════════════════════════════════════
