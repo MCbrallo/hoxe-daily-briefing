@@ -22,11 +22,11 @@ const VIRAL_META: Record<string, {
   icon: any; label: string;
   gradient: string; pillBg: string; pillText: string; dotColor: string;
 }> = {
-  viral_music:   { icon: Music,      label: "Nº1 DEL DÍA",     gradient: "from-violet-950 via-purple-900 to-fuchsia-950", pillBg: "bg-violet-400/20",  pillText: "text-violet-200",  dotColor: "bg-violet-400" },
-  viral_scandal: { icon: Flame,      label: "EL ESCÁNDALO",     gradient: "from-rose-950 via-red-900 to-orange-950",       pillBg: "bg-rose-400/20",    pillText: "text-rose-200",    dotColor: "bg-rose-400" },
-  viral_movie:   { icon: Film,       label: "ESTRENO DEL DÍA",  gradient: "from-amber-950 via-orange-900 to-yellow-950",   pillBg: "bg-amber-400/20",   pillText: "text-amber-200",   dotColor: "bg-amber-400" },
-  viral_moment:  { icon: Smartphone, label: "MOMENTO VIRAL",    gradient: "from-cyan-950 via-sky-900 to-blue-950",         pillBg: "bg-sky-400/20",     pillText: "text-sky-200",     dotColor: "bg-sky-400" },
-  viral_record:  { icon: Trophy,     label: "RÉCORD ROTO",      gradient: "from-emerald-950 via-green-900 to-teal-950",    pillBg: "bg-emerald-400/20", pillText: "text-emerald-200", dotColor: "bg-emerald-400" },
+  viral_music:   { icon: Music,      label: "Nº1 DEL DÍA",     gradient: "from-violet-500/10 to-transparent", pillBg: "bg-white border border-violet-100",  pillText: "text-violet-600",  dotColor: "bg-violet-500" },
+  viral_scandal: { icon: Flame,      label: "EL ESCÁNDALO",     gradient: "from-rose-500/10 to-transparent",       pillBg: "bg-white border border-rose-100",    pillText: "text-rose-600",    dotColor: "bg-rose-500" },
+  viral_movie:   { icon: Film,       label: "ESTRENO DEL DÍA",  gradient: "from-amber-500/10 to-transparent",   pillBg: "bg-white border border-amber-100",   pillText: "text-amber-600",   dotColor: "bg-amber-500" },
+  viral_moment:  { icon: Smartphone, label: "MOMENTO VIRAL",    gradient: "from-sky-500/10 to-transparent",         pillBg: "bg-white border border-sky-100",     pillText: "text-sky-600",     dotColor: "bg-sky-500" },
+  viral_record:  { icon: Trophy,     label: "RÉCORD ROTO",      gradient: "from-emerald-500/10 to-transparent",    pillBg: "bg-white border border-emerald-100", pillText: "text-emerald-600", dotColor: "bg-emerald-500" },
 };
 const FALLBACK_META = VIRAL_META.viral_music;
 
@@ -135,9 +135,9 @@ function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () 
           onTouchStart={onTS} onTouchMove={onTM} onTouchEnd={onTE}
           onMouseDown={onMD} onMouseMove={onMM} onMouseUp={onMU} onMouseLeave={onML}
         >
-          <div className={cn("w-full h-full rounded-[20px] overflow-hidden relative shadow-[0_20px_60px_-10px_rgba(0,0,0,0.4)]")}>
+          <div className={cn("w-full h-full rounded-[32px] overflow-hidden relative shadow-[0_8px_30px_-5px_rgba(27,46,75,0.06)] bg-white/80 backdrop-blur-xl border border-white")}>
 
-            {/* Full-bleed image or gradient background */}
+            {/* Full-bleed glassmorphic image or soft gradient background */}
             {item.image_url ? (
               <>
                 <img src={item.image_url} alt={item.title} referrerPolicy="no-referrer"
@@ -146,22 +146,22 @@ function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () 
                     el.style.display = 'none';
                     el.parentElement!.classList.add('bg-gradient-to-br', ...meta.gradient.split(' '));
                   }}
-                  className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
+                  className="absolute inset-0 w-full h-full object-cover opacity-10 filter grayscale mix-blend-multiply" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent pointer-events-none" />
               </>
             ) : (
-              <div className={cn("absolute inset-0 bg-gradient-to-br", meta.gradient)} />
+              <div className={cn("absolute inset-0 bg-gradient-to-br opacity-50", meta.gradient)} />
             )}
 
             {/* Content overlay */}
-            <div className="absolute inset-0 flex flex-col justify-between p-5">
+            <div className="absolute inset-0 flex flex-col justify-between p-6 pointer-events-none">
               {/* Top row */}
               <div className="flex items-start justify-between">
-                <div className={cn("flex items-center gap-1.5 rounded-full px-3 py-1 border border-white/15 backdrop-blur-md", meta.pillBg)}>
-                  <Icon size={10} className={meta.pillText} strokeWidth={2.5} />
-                  <span className={cn("text-[8px] font-bold tracking-[0.18em]", meta.pillText)}>{meta.label}</span>
+                <div className={cn("flex items-center gap-1.5 rounded-full px-4 py-1.5 shadow-sm", meta.pillBg)}>
+                  <Icon size={12} className={meta.pillText} strokeWidth={2.5} />
+                  <span className={cn("text-[9px] font-bold tracking-[0.2em] pt-0.5", meta.pillText)}>{meta.label}</span>
                 </div>
-                <span className="text-[10px] font-bold text-white/40 backdrop-blur-md bg-black/20 rounded-full px-2.5 py-1 border border-white/10">
+                <span className="text-[10px] font-bold text-ink-navy/40 bg-white/70 rounded-full px-3 py-1.5 border border-ink-navy/5 shadow-sm">
                   {current + 1}/{items.length}
                 </span>
               </div>
@@ -169,12 +169,12 @@ function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () 
               {/* Bottom text block */}
               <div>
                 {item.year && item.year !== "Unknown" && (
-                  <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-white/35 block mb-1">{item.year}</span>
+                  <span className="text-[12px] font-bold tracking-[0.25em] uppercase text-ink-navy/40 block mb-1.5">{item.year}</span>
                 )}
-                <h2 className="font-serif text-[28px] md:text-[34px] leading-[1.05] tracking-tight text-white font-medium mb-2.5 line-clamp-3 drop-shadow-lg">
+                <h2 className="font-serif text-[28px] md:text-[34px] leading-[1.05] tracking-tight text-ink-navy font-medium mb-3 line-clamp-3 drop-shadow-sm">
                   {item.title}
                 </h2>
-                <p className="text-[13px] text-white/60 leading-relaxed line-clamp-2 drop-shadow-md">
+                <p className="text-[13px] text-ink-navy/70 leading-relaxed line-clamp-3">
                   {item.short_explanation}
                 </p>
               </div>

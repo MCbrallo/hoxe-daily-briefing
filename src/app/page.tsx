@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { type BriefingItem } from "@/lib/mockData";
 import { supabase } from "@/lib/supabase";
-import { ChevronLeft, ChevronRight, Bookmark, Share } from "lucide-react";
+import { ChevronLeft, ChevronRight, Bookmark, Share, ChevronDown } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { MusicPlayerCard } from "@/components/MusicPlayerCard";
 import { useSavedCards } from "@/hooks/useSavedCards";
@@ -188,7 +188,7 @@ export default function TodayPage() {
                  
                  <div className="md:col-span-6 lg:col-span-7 flex flex-col items-center md:items-start text-center md:text-left">
                    
-                   <span className="text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-ink-navy/50 animate-fade-rise">
+                   <span className="text-xl md:text-3xl font-bold tracking-[0.6em] md:tracking-[0.8em] uppercase text-ink-navy/60 animate-fade-rise">
                      {briefing.dayOfWeek}
                    </span>
                    
@@ -224,10 +224,10 @@ export default function TodayPage() {
                  {/* Mobile Chevron */}
                  <button 
                    onClick={goNext}
-                   className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-1"
+                   className="absolute bottom-36 md:bottom-40 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-1"
                    aria-label="Scroll down"
                  >
-                   <ChevronRight size={48} strokeWidth={1.5} className="rotate-90 animate-bounce text-ink-navy/60" />
+                   <ChevronDown size={64} strokeWidth={1} className="animate-bounce text-ink-navy/50 drop-shadow-sm" />
                  </button>
 
                  {/* Desktop Category Previews */}
