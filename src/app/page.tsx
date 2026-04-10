@@ -26,7 +26,7 @@ const CATEGORY_COLOR_MAP: Record<string, { text: string; border: string }> = {
 const DEFAULT_CAT_COLOR = { text: "text-[#334155]", border: "border-[#334155]" };
 
 export default function TodayPage() {
-  const { t, language } = useLanguage();
+  const { t, language, disabledCategories } = useLanguage();
   const [briefing, setBriefing] = useState<any>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideContainerRef = useRef<HTMLDivElement>(null);
@@ -47,7 +47,7 @@ export default function TodayPage() {
           date: dbNode.date,
           dayOfWeek: dbNode.day_of_week,
           items: (dbNode.briefing_items || [])
-            .filter((it: any) => !it.category.startsWith('viral_') || it.category === 'viral_quote')
+            .filter((it: any) => (!it.category.startsWith('viral_') || it.category === 'viral_quote') && !disabledCategories.includes(it.category))
             .map((it: any) => ({
               id: it.id,
               category: it.category,
@@ -86,7 +86,7 @@ export default function TodayPage() {
       }
     }
     fetchTodayData();
-  }, [language]);
+  }, [language, disabledCategories]);
 
   // 2. Lock Body Scroll
   useEffect(() => {

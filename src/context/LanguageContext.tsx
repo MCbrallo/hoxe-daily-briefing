@@ -6,6 +6,8 @@ type Language = "en" | "es" | "gl";
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
+  disabledCategories: string[];
+  toggleCategory: (cat: string) => void;
   t: (key: string) => string;
 }
 
@@ -66,34 +68,47 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType>({
   language: "en",
   setLanguage: () => {},
+  disabledCategories: [],
+  toggleCategory: () => {},
   t: (key: string) => key
 });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLangState] = useState<Language>("en");
+  const [disabledCategories, setDisabledCategories] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("hoxe_lang") as Language;
-    if (saved && (saved === "en" || saved === "es" || saved === "gl")) {
-      setLangState(saved);
-    }
+    if (saved && (saved === "en" || saved === "es" || saved === "gl")) setLangState(saved);
+    
+    const savedCats = localStorage.getItem("hoxe_disabled_cats");
+    if (savedCats) setDisabledCategories(JSON.parse(savedCats));
+    
     setMounted(true);
   }, []);
 
   const setLanguage = (lang: Language) => {
     setLangState(lang);
     localStorage.setItem("hoxe_lang", lang);
-    window.location.reload(); // Simple hard-reload to cleanly fetch new DB query state
+    window.location.reload();
+  };
+
+  const toggleCategory = (cat: string) => {
+    setDisabledCategories(prev => {
+      const next = prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat];
+      localStorage.setItem("hoxe_disabled_cats", JSON.stringify(next));
+      return next;
+    });
   };
 
   const t = (key: string) => {
-    if (!mounted) return key; // Prevent hydration server-client mismatch
+    if (!mounted) return key;
     return (translations[language] as any)[key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, disabledCategories, toggleCategory, t }}>
       {children}
     </LanguageContext.Provider>
   );

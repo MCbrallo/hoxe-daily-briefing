@@ -53,19 +53,17 @@ const EDITORIAL_QUOTAS: Record<EditorialCategory, [number, number]> = {
 };
 
 function categorize(text: string): EditorialCategory {
-  const t = text.toLowerCase();
   for (const [cat, keywords] of Object.entries(EDITORIAL_KEYWORDS)) {
     if (cat === "history") continue; // Default
-    if (keywords.some(kw => t.includes(kw))) return cat as EditorialCategory;
+    if (keywords.some(kw => new RegExp(`\\b${kw.replace(/[#-.]/g, '\\$&')}\\b`, 'i').test(text))) return cat as EditorialCategory;
   }
   return "history";
 }
 
 function categorizeViral(text: string): ViralCategory | null {
-  const t = text.toLowerCase();
   for (const [cat, keywords] of Object.entries(VIRAL_KEYWORDS)) {
     if (keywords.length === 0) continue;
-    if (keywords.some(kw => t.includes(kw))) return cat as ViralCategory;
+    if (keywords.some(kw => new RegExp(`\\b${kw.replace(/[#-.]/g, '\\$&')}\\b`, 'i').test(text))) return cat as ViralCategory;
   }
   return null;
 }

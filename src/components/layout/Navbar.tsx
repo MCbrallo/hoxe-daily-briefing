@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Flame, Archive, Bookmark, Settings, User } from "lucide-react";
+import { Compass, Flame, Archive, Bookmark, User } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -31,7 +31,6 @@ export function Navbar() {
   ];
 
   const utilityNav = [
-    { label: t("Settings"), href: "/settings", icon: Settings },
     { label: t("Profile"), href: "/profile", icon: User },
   ];
 
