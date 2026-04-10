@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Music, Flame, Film, Quote, Smartphone, Trophy, Brain, ChevronRight, ChevronLeft, Check, X } from "lucide-react";
+import { Music, Flame, Film, Quote, Smartphone, Trophy, Brain, ChevronRight, Check, X } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/context/LanguageContext";
@@ -18,77 +18,20 @@ interface ViralItem {
   metadata_spotify_track_id: string | null;
 }
 
-// Each category gets a RICH color scheme
 const VIRAL_META: Record<string, {
   icon: any; label: string;
-  cardBg: string; cardBorder: string; accent: string; yearColor: string; pillBg: string; pillText: string; dotActive: string;
+  gradient: string; pillBg: string; pillText: string; dotColor: string;
 }> = {
-  viral_music: {
-    icon: Music, label: "Nº1 DEL DÍA",
-    cardBg: "bg-gradient-to-br from-[#2D1B69] via-[#1E1145] to-[#0F0A2A]",
-    cardBorder: "border-purple-400/20",
-    accent: "text-purple-200",
-    yearColor: "text-purple-500/20",
-    pillBg: "bg-purple-500/20",
-    pillText: "text-purple-200",
-    dotActive: "bg-purple-400",
-  },
-  viral_scandal: {
-    icon: Flame, label: "EL ESCÁNDALO",
-    cardBg: "bg-gradient-to-br from-[#4A0E0E] via-[#2D0808] to-[#1A0505]",
-    cardBorder: "border-red-400/20",
-    accent: "text-red-200",
-    yearColor: "text-red-500/15",
-    pillBg: "bg-red-500/20",
-    pillText: "text-red-200",
-    dotActive: "bg-red-400",
-  },
-  viral_movie: {
-    icon: Film, label: "ESTRENO DEL DÍA",
-    cardBg: "bg-gradient-to-br from-[#4A3500] via-[#2D2000] to-[#1A1300]",
-    cardBorder: "border-amber-400/20",
-    accent: "text-amber-200",
-    yearColor: "text-amber-500/15",
-    pillBg: "bg-amber-500/20",
-    pillText: "text-amber-200",
-    dotActive: "bg-amber-400",
-  },
-  viral_quote: {
-    icon: Quote, label: "IN MEMORIAM",
-    cardBg: "bg-gradient-to-br from-[#1E293B] via-[#0F172A] to-[#0A0F1A]",
-    cardBorder: "border-slate-400/20",
-    accent: "text-slate-300",
-    yearColor: "text-slate-500/15",
-    pillBg: "bg-slate-500/20",
-    pillText: "text-slate-300",
-    dotActive: "bg-slate-400",
-  },
-  viral_moment: {
-    icon: Smartphone, label: "MOMENTO VIRAL",
-    cardBg: "bg-gradient-to-br from-[#0C4A6E] via-[#082F49] to-[#051D2F]",
-    cardBorder: "border-sky-400/20",
-    accent: "text-sky-200",
-    yearColor: "text-sky-500/15",
-    pillBg: "bg-sky-500/20",
-    pillText: "text-sky-200",
-    dotActive: "bg-sky-400",
-  },
-  viral_record: {
-    icon: Trophy, label: "RÉCORD ROTO",
-    cardBg: "bg-gradient-to-br from-[#064E3B] via-[#022C22] to-[#011A14]",
-    cardBorder: "border-emerald-400/20",
-    accent: "text-emerald-200",
-    yearColor: "text-emerald-500/15",
-    pillBg: "bg-emerald-500/20",
-    pillText: "text-emerald-200",
-    dotActive: "bg-emerald-400",
-  },
+  viral_music:   { icon: Music,      label: "Nº1 DEL DÍA",     gradient: "from-violet-950 via-purple-900 to-fuchsia-950", pillBg: "bg-violet-400/20",  pillText: "text-violet-200",  dotColor: "bg-violet-400" },
+  viral_scandal: { icon: Flame,      label: "EL ESCÁNDALO",     gradient: "from-rose-950 via-red-900 to-orange-950",       pillBg: "bg-rose-400/20",    pillText: "text-rose-200",    dotColor: "bg-rose-400" },
+  viral_movie:   { icon: Film,       label: "ESTRENO DEL DÍA",  gradient: "from-amber-950 via-orange-900 to-yellow-950",   pillBg: "bg-amber-400/20",   pillText: "text-amber-200",   dotColor: "bg-amber-400" },
+  viral_quote:   { icon: Quote,      label: "IN MEMORIAM",      gradient: "from-slate-900 via-zinc-800 to-neutral-900",    pillBg: "bg-slate-400/20",   pillText: "text-slate-300",   dotColor: "bg-slate-400" },
+  viral_moment:  { icon: Smartphone, label: "MOMENTO VIRAL",    gradient: "from-cyan-950 via-sky-900 to-blue-950",         pillBg: "bg-sky-400/20",     pillText: "text-sky-200",     dotColor: "bg-sky-400" },
+  viral_record:  { icon: Trophy,     label: "RÉCORD ROTO",      gradient: "from-emerald-950 via-green-900 to-teal-950",    pillBg: "bg-emerald-400/20", pillText: "text-emerald-200", dotColor: "bg-emerald-400" },
 };
-
 const FALLBACK_META = VIRAL_META.viral_music;
 
 interface QuizQuestion { question: string; options: string[]; correctIndex: number; }
-
 function generateQuiz(items: ViralItem[]): QuizQuestion[] {
   const qs: QuizQuestion[] = [];
   for (const item of items.filter(i => i.year && i.year !== "Unknown").slice(0, 4)) {
@@ -100,18 +43,16 @@ function generateQuiz(items: ViralItem[]): QuizQuestion[] {
   return qs;
 }
 
-// ═══════════════════════════════════════════════
-// SWIPEABLE CARD STACK — Bidirectional
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────
+// SWIPEABLE CARD STACK
+// ─────────────────────────────────────────
 
 function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () => void }) {
   const [current, setCurrent] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  const [enterDir, setEnterDir] = useState(0); // 0=none, -1=from left, 1=from right
   const startRef = useRef({ x: 0, time: 0 });
-
   const THRESHOLD = 65;
 
   const handleStart = useCallback((cx: number) => {
@@ -129,55 +70,19 @@ function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () 
     if (!isDragging || isExiting) return;
     setIsDragging(false);
     const vel = Math.abs(dragX) / Math.max(1, Date.now() - startRef.current.time) * 1000;
-    const shouldSwipe = Math.abs(dragX) > THRESHOLD || vel > 500;
-
-    if (shouldSwipe) {
-      const dir = dragX > 0 ? 1 : -1; // 1 = swiped right, -1 = swiped left
-
-      // Swipe RIGHT → go BACK (if not first)
+    if (Math.abs(dragX) > THRESHOLD || vel > 500) {
+      const dir = dragX > 0 ? 1 : -1;
+      // Right = back, Left = forward
       if (dir === 1 && current > 0) {
-        setIsExiting(true);
-        setDragX(window.innerWidth * 1.5);
-        setTimeout(() => {
-          setCurrent(c => c - 1);
-          setEnterDir(-1); // enter from left
-          setDragX(0);
-          setIsExiting(false);
-        }, 300);
-        return;
-      }
-
-      // Swipe LEFT → go FORWARD
-      if (dir === -1) {
-        if (current >= items.length - 1) {
-          onComplete();
-          return;
-        }
-        setIsExiting(true);
-        setDragX(-window.innerWidth * 1.5);
-        setTimeout(() => {
-          setCurrent(c => c + 1);
-          setEnterDir(1); // enter from right
-          setDragX(0);
-          setIsExiting(false);
-        }, 300);
-        return;
-      }
-
-      // First card swiped right — snap back
-      setDragX(0);
-    } else {
-      setDragX(0);
-    }
+        setIsExiting(true); setDragX(window.innerWidth * 1.5);
+        setTimeout(() => { setCurrent(c => c - 1); setDragX(0); setIsExiting(false); }, 280);
+      } else if (dir === -1) {
+        if (current >= items.length - 1) { onComplete(); return; }
+        setIsExiting(true); setDragX(-window.innerWidth * 1.5);
+        setTimeout(() => { setCurrent(c => c + 1); setDragX(0); setIsExiting(false); }, 280);
+      } else { setDragX(0); }
+    } else { setDragX(0); }
   }, [isDragging, isExiting, dragX, current, items.length, onComplete]);
-
-  // Reset enter animation
-  useEffect(() => {
-    if (enterDir !== 0) {
-      const t = setTimeout(() => setEnterDir(0), 50);
-      return () => clearTimeout(t);
-    }
-  }, [enterDir]);
 
   const onTS = (e: React.TouchEvent) => handleStart(e.touches[0].clientX);
   const onTM = (e: React.TouchEvent) => handleMove(e.touches[0].clientX);
@@ -187,133 +92,114 @@ function SwipeStack({ items, onComplete }: { items: ViralItem[]; onComplete: () 
   const onMU = () => handleEnd();
   const onML = () => { if (isDragging) handleEnd(); };
 
-  const rot = dragX * 0.05;
+  const rot = dragX * 0.04;
   const item = items[current];
   const meta = VIRAL_META[item?.category] || FALLBACK_META;
   const Icon = meta.icon;
 
   return (
-    <div className="relative w-full flex-1 flex items-center justify-center">
-      {/* Background stacked cards */}
+    <div className="relative w-full" style={{ height: '440px' }}>
+
+      {/* Stacked cards behind */}
       {[2, 1].map(offset => {
         const idx = current + offset;
         if (idx >= items.length) return null;
         const m = VIRAL_META[items[idx].category] || FALLBACK_META;
         return (
-          <div key={`s${idx}`} className="absolute inset-x-0 mx-auto"
-            style={{ width: `calc(100% - ${offset * 16}px)`, height: 'calc(100% - 12px)', transform: `translateY(${offset * 8}px) scale(${1 - offset * 0.025})`, opacity: 0.5 - offset * 0.15, zIndex: 10 - offset }}>
-            <div className={cn("w-full h-full rounded-[24px] border shadow-lg", m.cardBg, m.cardBorder)} />
+          <div key={`s${idx}`} className="absolute inset-x-0 mx-auto rounded-[20px] overflow-hidden"
+            style={{
+              width: `calc(100% - ${offset * 20}px)`,
+              height: '420px',
+              transform: `translateY(${offset * 10}px)`,
+              opacity: 0.5 - offset * 0.15,
+              zIndex: 10 - offset,
+            }}>
+            <div className={cn("w-full h-full bg-gradient-to-br", m.gradient)} />
           </div>
         );
       })}
-
-      {/* Swipe direction hints */}
-      {current > 0 && !isExiting && (
-        <div className="absolute left-2 top-1/2 -translate-y-1/2 z-40 opacity-20 pointer-events-none">
-          <ChevronLeft size={20} className="text-white" />
-        </div>
-      )}
-      {current < items.length - 1 && !isExiting && (
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-40 opacity-20 pointer-events-none">
-          <ChevronRight size={20} className="text-white" />
-        </div>
-      )}
 
       {/* Active card */}
       {current < items.length && (
         <div
           className={cn(
-            "absolute inset-x-0 mx-auto z-30 select-none",
+            "absolute inset-x-0 top-0 mx-auto z-30 select-none",
             isDragging ? "cursor-grabbing" : "cursor-grab",
-            !isDragging && !isExiting && "transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
-            isExiting && "transition-all duration-300 ease-out pointer-events-none"
+            !isDragging && !isExiting && "transition-all duration-[450ms] ease-[cubic-bezier(0.23,1,0.32,1)]",
+            isExiting && "transition-all duration-[280ms] ease-out pointer-events-none"
           )}
           style={{
-            width: '100%',
-            height: 'calc(100% - 12px)',
-            transform: `translateX(${enterDir !== 0 && !isDragging ? enterDir * 300 : dragX}px) rotate(${rot}deg)`,
-            opacity: isExiting ? 0 : 1 - Math.min(Math.abs(dragX) * 0.0012, 0.4),
+            width: '100%', height: '420px',
+            transform: `translateX(${dragX}px) rotate(${rot}deg)`,
+            opacity: isExiting ? 0 : 1 - Math.min(Math.abs(dragX) * 0.001, 0.35),
           }}
           onTouchStart={onTS} onTouchMove={onTM} onTouchEnd={onTE}
           onMouseDown={onMD} onMouseMove={onMM} onMouseUp={onMU} onMouseLeave={onML}
         >
-          <div className={cn("w-full h-full rounded-[24px] overflow-hidden border shadow-[0_16px_80px_-12px_rgba(0,0,0,0.5)] flex flex-col", meta.cardBg, meta.cardBorder)}>
+          <div className={cn("w-full h-full rounded-[20px] overflow-hidden relative shadow-[0_20px_60px_-10px_rgba(0,0,0,0.4)]")}>
 
-            {/* Image area */}
+            {/* Full-bleed image or gradient background */}
             {item.image_url ? (
-              <div className="relative flex-[0_0_42%] overflow-hidden">
+              <>
                 <img src={item.image_url} alt={item.title} referrerPolicy="no-referrer"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).parentElement!.style.display = 'none'; }}
-                  className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-                {/* Category pill */}
-                <div className={cn("absolute top-4 left-4 flex items-center gap-2 backdrop-blur-xl rounded-full px-3 py-1.5 border border-white/10", meta.pillBg)}>
-                  <Icon size={11} className={meta.pillText} strokeWidth={2.5} />
-                  <span className={cn("text-[8px] font-bold tracking-[0.2em]", meta.pillText)}>{meta.label}</span>
-                </div>
-
-                {/* Counter pill */}
-                <div className="absolute top-4 right-4 backdrop-blur-xl bg-black/30 rounded-full px-2.5 py-1 border border-white/10">
-                  <span className="text-[9px] font-bold text-white/60">{current + 1}/{items.length}</span>
-                </div>
-
-                {/* Year watermark */}
-                {item.year && item.year !== "Unknown" && (
-                  <span className="absolute bottom-3 right-4 text-6xl font-serif font-light text-white/10 tracking-tighter leading-none">{item.year}</span>
-                )}
-              </div>
+                  onError={(e) => {
+                    const el = e.currentTarget as HTMLImageElement;
+                    el.style.display = 'none';
+                    el.parentElement!.classList.add('bg-gradient-to-br', ...meta.gradient.split(' '));
+                  }}
+                  className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
+              </>
             ) : (
-              /* No-image header */
-              <div className="flex-[0_0_28%] flex flex-col justify-between p-5">
-                <div className="flex items-center justify-between">
-                  <div className={cn("flex items-center gap-2 backdrop-blur-xl rounded-full px-3 py-1.5 border border-white/10", meta.pillBg)}>
-                    <Icon size={11} className={meta.pillText} strokeWidth={2.5} />
-                    <span className={cn("text-[8px] font-bold tracking-[0.2em]", meta.pillText)}>{meta.label}</span>
-                  </div>
-                  <span className="text-[9px] font-bold text-white/30">{current + 1}/{items.length}</span>
-                </div>
-                <div>
-                  {item.year && item.year !== "Unknown" && (
-                    <span className={cn("text-7xl font-serif font-light tracking-tighter leading-none", meta.yearColor)}>{item.year}</span>
-                  )}
-                </div>
-              </div>
+              <div className={cn("absolute inset-0 bg-gradient-to-br", meta.gradient)} />
             )}
 
-            {/* Text content */}
-            <div className="flex-1 flex flex-col justify-between p-5 md:p-6 min-h-0">
-              <div className="overflow-hidden">
-                {!item.image_url && item.year && item.year !== "Unknown" && (
-                  <span className={cn("text-[10px] font-bold tracking-[0.2em] uppercase block mb-1", meta.accent, "opacity-40")}>{item.year}</span>
-                )}
-                <h2 className={cn("font-serif text-[22px] md:text-[26px] leading-[1.15] tracking-tight mb-3", meta.accent)}>{item.title}</h2>
-                <p className="text-[14px] text-white/50 leading-relaxed mb-3 line-clamp-3">{item.short_explanation}</p>
-                {item.why_it_matters && (
-                  <p className="text-[13px] text-white/30 font-serif italic leading-relaxed line-clamp-3">{item.why_it_matters}</p>
-                )}
+            {/* Content overlay */}
+            <div className="absolute inset-0 flex flex-col justify-between p-5">
+              {/* Top row */}
+              <div className="flex items-start justify-between">
+                <div className={cn("flex items-center gap-1.5 rounded-full px-3 py-1 border border-white/15 backdrop-blur-md", meta.pillBg)}>
+                  <Icon size={10} className={meta.pillText} strokeWidth={2.5} />
+                  <span className={cn("text-[8px] font-bold tracking-[0.18em]", meta.pillText)}>{meta.label}</span>
+                </div>
+                <span className="text-[10px] font-bold text-white/40 backdrop-blur-md bg-black/20 rounded-full px-2.5 py-1 border border-white/10">
+                  {current + 1}/{items.length}
+                </span>
               </div>
 
-              {/* Dot indicators */}
-              <div className="flex items-center justify-center gap-2 pt-3">
-                {items.map((_, i) => (
-                  <div key={i} className={cn(
-                    "h-1 rounded-full transition-all duration-400",
-                    i === current ? cn("w-6", meta.dotActive) : i < current ? "w-1.5 bg-white/15" : "w-1.5 bg-white/8"
-                  )} />
-                ))}
+              {/* Bottom text block */}
+              <div>
+                {item.year && item.year !== "Unknown" && (
+                  <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-white/35 block mb-1">{item.year}</span>
+                )}
+                <h2 className="font-serif text-[28px] md:text-[34px] leading-[1.05] tracking-tight text-white font-medium mb-2.5 line-clamp-3 drop-shadow-lg">
+                  {item.title}
+                </h2>
+                <p className="text-[13px] text-white/60 leading-relaxed line-clamp-2 drop-shadow-md">
+                  {item.short_explanation}
+                </p>
               </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* Progress dots */}
+      <div className="absolute -bottom-6 left-0 right-0 flex justify-center gap-1.5">
+        {items.map((_, i) => (
+          <div key={i} className={cn(
+            "h-[3px] rounded-full transition-all duration-300",
+            i === current ? cn("w-5", meta.dotColor) : i < current ? "w-1.5 bg-ink-navy/15" : "w-1.5 bg-ink-navy/8"
+          )} />
+        ))}
+      </div>
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────
 // MAIN PAGE
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────
 
 export default function ViralPage() {
   const { language } = useLanguage();
@@ -349,89 +235,85 @@ export default function ViralPage() {
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-mist-white"><div className="w-6 h-6 border-t-2 border-ink-navy/30 rounded-full animate-spin" /></div>;
 
   return (
-    <div className="fixed inset-0 bg-mist-white flex flex-col pt-14 md:pt-20 pb-20 md:pb-6">
+    <div className="min-h-screen bg-mist-white pt-14 md:pt-20 pb-24 md:pb-8 flex flex-col">
       {/* Header */}
-      <header className="px-6 pb-3 shrink-0">
-        <div className="max-w-md mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Flame size={18} className="text-red-500" strokeWidth={2.2} />
-            <h1 className="font-serif text-xl text-ink-navy tracking-tight">Viral</h1>
+      <header className="px-6 md:px-16 pb-5 pt-2">
+        <div className="max-w-lg mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <Flame size={20} className="text-red-500" strokeWidth={2} />
+            <h1 className="font-serif text-2xl text-ink-navy tracking-tight">Viral</h1>
           </div>
           <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/20">{dateLabel}</span>
         </div>
       </header>
 
       {/* Card area */}
-      <div className="flex-1 flex flex-col px-4 md:px-16 min-h-0">
-        <div className="w-full max-w-md mx-auto flex-1 relative flex flex-col min-h-0">
+      <div className="flex-1 flex flex-col items-center justify-center px-5 md:px-16">
+        <div className="w-full max-w-sm md:max-w-md">
 
           {!showQuiz && items.length > 0 ? (
             <SwipeStack items={items} onComplete={() => setShowQuiz(true)} />
           ) : !showQuiz ? (
-            <div className="flex-1 flex items-center justify-center">
-              <div className="rounded-[24px] border border-ink-navy/8 bg-ink-navy/[0.02] p-10 text-center">
-                <Flame size={24} className="mx-auto text-ink-navy/10 mb-3" />
-                <p className="text-sm text-ink-navy/25 font-serif italic">Contenido viral generándose...</p>
-              </div>
+            <div className="rounded-[20px] border border-ink-navy/8 bg-ink-navy/[0.02] p-10 text-center">
+              <Flame size={24} className="mx-auto text-ink-navy/10 mb-3" />
+              <p className="text-sm text-ink-navy/25 font-serif italic">Contenido viral generándose...</p>
             </div>
           ) : null}
 
           {/* Quiz */}
           {showQuiz && quizQuestions.length > 0 && (
-            <div className="flex-1 flex items-center justify-center animate-fade-rise">
-              <div className="w-full">
-                <div className="text-center mb-4">
-                  <Brain size={18} className="mx-auto text-ink-navy/15 mb-1" />
-                  <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/25">Quiz del Día</span>
-                </div>
-                {quizDone ? (
-                  <div className="rounded-[24px] border border-ink-navy/8 bg-white p-8 text-center shadow-lg">
-                    <div className="w-16 h-16 rounded-full bg-ink-navy/5 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl font-serif font-bold text-ink-navy">{score}/{quizQuestions.length}</span>
-                    </div>
-                    <h3 className="font-serif text-xl text-ink-navy mb-1">{score === quizQuestions.length ? "Perfecto." : score >= quizQuestions.length / 2 ? "Bien hecho." : "A mejorar."}</h3>
-                    <p className="text-xs text-ink-navy/30 font-serif italic mb-5">{score}/{quizQuestions.length} correctas</p>
-                    <button onClick={() => { setShowQuiz(false); setCurrentQ(0); setScore(0); setQuizDone(false); setSelectedAnswer(null); setAnswered(false); }}
-                      className="bg-ink-navy text-mist-white px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">Reintentar</button>
-                  </div>
-                ) : (
-                  <div className="rounded-[24px] border border-ink-navy/8 bg-white overflow-hidden shadow-lg">
-                    <div className="h-1 bg-ink-navy/5"><div className="h-full bg-ink-navy transition-all duration-500" style={{ width: `${((currentQ + 1) / quizQuestions.length) * 100}%` }} /></div>
-                    <div className="p-5 md:p-7">
-                      <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/25 block mb-3">{currentQ + 1} / {quizQuestions.length}</span>
-                      <h3 className="font-serif text-base md:text-lg text-ink-navy mb-5 leading-snug">{quizQuestions[currentQ].question}</h3>
-                      <div className="flex flex-col gap-2">
-                        {quizQuestions[currentQ].options.map((opt, idx) => {
-                          const isC = idx === quizQuestions[currentQ].correctIndex;
-                          const isS = selectedAnswer === idx;
-                          return (
-                            <button key={idx} onClick={() => handleAnswer(idx)} disabled={answered}
-                              className={cn("flex items-center gap-3 p-3 rounded-xl border text-left transition-all",
-                                !answered && "hover:border-ink-navy/15 cursor-pointer border-ink-navy/8",
-                                answered && isC && "border-emerald-400 bg-emerald-50/60",
-                                answered && isS && !isC && "border-red-300 bg-red-50/60",
-                                answered && !isC && !isS && "opacity-30")}>
-                              <span className={cn("w-7 h-7 rounded-full border flex items-center justify-center shrink-0 text-xs font-bold",
-                                answered && isC ? "bg-emerald-500 border-emerald-500 text-white" : "",
-                                answered && isS && !isC ? "bg-red-400 border-red-400 text-white" : "",
-                                !answered ? "border-ink-navy/12 text-ink-navy/25" : "")}>
-                                {answered && isC ? <Check size={12} /> : answered && isS && !isC ? <X size={12} /> : String.fromCharCode(65 + idx)}
-                              </span>
-                              <span className={cn("font-bold text-sm", answered && isC ? "text-emerald-700" : "text-ink-navy/50")}>{opt}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                      {answered && (
-                        <button onClick={nextQ}
-                          className="w-full mt-4 flex items-center justify-center gap-2 bg-ink-navy text-mist-white py-2.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">
-                          {currentQ + 1 >= quizQuestions.length ? "Ver resultado" : "Siguiente"} <ChevronRight size={13} />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
+            <div className="animate-fade-rise mt-4">
+              <div className="text-center mb-4">
+                <Brain size={18} className="mx-auto text-ink-navy/15 mb-1" />
+                <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/25">Quiz del Día</span>
               </div>
+              {quizDone ? (
+                <div className="rounded-[20px] border border-ink-navy/8 bg-white p-8 text-center shadow-md">
+                  <div className="w-16 h-16 rounded-full bg-ink-navy/5 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl font-serif font-bold text-ink-navy">{score}/{quizQuestions.length}</span>
+                  </div>
+                  <h3 className="font-serif text-xl text-ink-navy mb-1">{score === quizQuestions.length ? "Perfecto." : score >= quizQuestions.length / 2 ? "Bien hecho." : "A mejorar."}</h3>
+                  <p className="text-xs text-ink-navy/30 font-serif italic mb-5">{score}/{quizQuestions.length} correctas</p>
+                  <button onClick={() => { setShowQuiz(false); setCurrentQ(0); setScore(0); setQuizDone(false); setSelectedAnswer(null); setAnswered(false); }}
+                    className="bg-ink-navy text-mist-white px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">Reintentar</button>
+                </div>
+              ) : (
+                <div className="rounded-[20px] border border-ink-navy/8 bg-white overflow-hidden shadow-md">
+                  <div className="h-1 bg-ink-navy/5"><div className="h-full bg-ink-navy transition-all duration-500" style={{ width: `${((currentQ + 1) / quizQuestions.length) * 100}%` }} /></div>
+                  <div className="p-5 md:p-6">
+                    <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-ink-navy/20 block mb-3">{currentQ + 1} / {quizQuestions.length}</span>
+                    <h3 className="font-serif text-base md:text-lg text-ink-navy mb-5 leading-snug">{quizQuestions[currentQ].question}</h3>
+                    <div className="flex flex-col gap-2">
+                      {quizQuestions[currentQ].options.map((opt, idx) => {
+                        const isC = idx === quizQuestions[currentQ].correctIndex;
+                        const isS = selectedAnswer === idx;
+                        return (
+                          <button key={idx} onClick={() => handleAnswer(idx)} disabled={answered}
+                            className={cn("flex items-center gap-3 p-3 rounded-xl border text-left transition-all",
+                              !answered && "hover:border-ink-navy/15 cursor-pointer border-ink-navy/8",
+                              answered && isC && "border-emerald-400 bg-emerald-50/60",
+                              answered && isS && !isC && "border-red-300 bg-red-50/60",
+                              answered && !isC && !isS && "opacity-30")}>
+                            <span className={cn("w-7 h-7 rounded-full border flex items-center justify-center shrink-0 text-xs font-bold",
+                              answered && isC ? "bg-emerald-500 border-emerald-500 text-white" : "",
+                              answered && isS && !isC ? "bg-red-400 border-red-400 text-white" : "",
+                              !answered ? "border-ink-navy/12 text-ink-navy/25" : "")}>
+                              {answered && isC ? <Check size={12} /> : answered && isS && !isC ? <X size={12} /> : String.fromCharCode(65 + idx)}
+                            </span>
+                            <span className={cn("font-bold text-sm", answered && isC ? "text-emerald-700" : "text-ink-navy/50")}>{opt}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {answered && (
+                      <button onClick={nextQ}
+                        className="w-full mt-4 flex items-center justify-center gap-2 bg-ink-navy text-mist-white py-2.5 text-[10px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors">
+                        {currentQ + 1 >= quizQuestions.length ? "Ver resultado" : "Siguiente"} <ChevronRight size={13} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

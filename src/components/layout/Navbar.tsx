@@ -96,8 +96,8 @@ export function Navbar() {
       </header>
 
       {/* Mobile Bottom Navigation — Modern, borderless, colored */}
-      <nav className="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-2xl bg-mist-white/70 px-2 pt-2 pb-safe">
-        <div className="flex justify-between items-center max-w-md mx-auto">
+      <nav className="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-2xl bg-mist-white/70 px-4 pt-3 pb-safe">
+        <div className="flex justify-around items-center max-w-lg mx-auto">
           {allNavItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -107,15 +107,15 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 py-2 px-3 rounded-xl transition-all duration-300",
+                  "flex flex-col items-center gap-1 py-2 px-4 rounded-2xl transition-all duration-300",
                   isActive
-                    ? cn(colors.active, "bg-current/[0.06]")
-                    : "text-ink-navy/25 hover:text-ink-navy/40"
+                    ? cn(colors.active)
+                    : "text-ink-navy/20"
                 )}
               >
-                <Icon size={20} strokeWidth={isActive ? 2.2 : 1.4} className={isActive ? colors.icon : ""} />
+                <Icon size={26} strokeWidth={isActive ? 2 : 1.3} className={isActive ? colors.icon : ""} />
                 <span className={cn(
-                  "text-[8px] uppercase tracking-[0.15em] font-semibold",
+                  "text-[7px] uppercase tracking-[0.12em] font-bold",
                   isActive ? colors.active : ""
                 )}>
                   {item.label}
