@@ -169,13 +169,13 @@ export default function TodayPage() {
             <div className={cn("absolute inset-0 flex flex-col items-center justify-center px-6 md:px-16 transition-opacity duration-700", currentSlide === 0 ? "opacity-100" : "opacity-0 pointer-events-none")}>
               
                {/* Mobile Logo Header */}
-               <div className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-4 md:hidden z-50 animate-fade-rise">
-                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-ink-navy">
+               <div className="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:hidden z-50 animate-fade-rise">
+                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-ink-navy">
                    <path d="M10 3 H 6a2 2 0 0 0 -2 2 v 14a2 2 0 0 0 2 2 h 12a2 2 0 0 0 2 -2 V 5a2 2 0 0 0 -2 -2 h -4" />
                    <path d="M 8 8 L 16 16" />
                    <path d="M 16 8 L 8 16" />
                  </svg>
-                 <span className="font-bold tracking-[0.25em] text-[18px] text-ink-navy pt-[2px]">HOXE</span>
+                 <span className="font-bold tracking-[0.3em] text-2xl text-ink-navy uppercase">HOXE</span>
                </div>
 
                <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -202,9 +202,9 @@ export default function TodayPage() {
                      {t("Pending")}
                    </h2>
 
-                   <div className="flex flex-col items-center md:items-start mt-12 md:mt-16 animate-fade-rise animate-delay-2 w-full pt-4 md:pt-0">
-                     <div className="w-10 h-[1px] bg-ink-navy/20 mb-6"></div>
-                     <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-ink-navy/70 overflow-hidden">
+                   <div className="flex flex-col items-center md:items-start mt-12 md:mt-16 animate-fade-rise animate-delay-2 w-full pt-8 md:pt-0">
+                     <div className="w-12 h-[1.5px] bg-ink-navy/30 mb-6"></div>
+                     <p className="text-sm md:text-base font-bold tracking-[0.3em] uppercase text-ink-navy/80 overflow-hidden text-center md:text-left leading-relaxed px-4 md:px-0">
                        <span className="inline-block animate-[slideUp_1s_ease-out_0.6s_both]">
                          What defined this day across time and space.
                        </span>
@@ -224,10 +224,10 @@ export default function TodayPage() {
                  {/* Mobile Chevron */}
                  <button 
                    onClick={goNext}
-                   className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 text-ink-navy/40 hover:text-ink-navy transition-colors focus:outline-none md:hidden"
+                   className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-1"
                    aria-label="Scroll down"
                  >
-                   <ChevronRight size={32} strokeWidth={1} className="rotate-90 animate-[bounce_2s_infinite]" />
+                   <ChevronRight size={48} strokeWidth={1.5} className="rotate-90 animate-bounce text-ink-navy/60" />
                  </button>
 
                  {/* Desktop Category Previews */}
