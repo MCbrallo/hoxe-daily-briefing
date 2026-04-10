@@ -12,6 +12,7 @@ interface LanguageContextType {
 const translations = {
   en: {
     Today: "Today",
+    Viral: "Viral",
     Archive: "Archive",
     Saved: "Saved",
     Settings: "Settings",
@@ -22,10 +23,13 @@ const translations = {
     ThePast: "The Past,",
     Present: "Present,",
     By: "Photo by",
-    AdminPreview: "Admin Preview"
+    AdminPreview: "Admin Preview",
+    QuizTitle: "Quiz of the Day",
+    QuizRetry: "Try Again",
   },
   es: {
     Today: "Hoy",
+    Viral: "Viral",
     Archive: "Archivo",
     Saved: "Guardados",
     Settings: "Ajustes",
@@ -36,10 +40,13 @@ const translations = {
     ThePast: "El Pasado,",
     Present: "Presente,",
     By: "Foto de",
-    AdminPreview: "Vista Admin"
+    AdminPreview: "Vista Admin",
+    QuizTitle: "Quiz del Día",
+    QuizRetry: "Reintentar",
   },
   gl: {
     Today: "Hoxe",
+    Viral: "Viral",
     Archive: "Arquivo",
     Saved: "Gardados",
     Settings: "Axustes",
@@ -50,7 +57,9 @@ const translations = {
     ThePast: "O Pasado,",
     Present: "Presente,",
     By: "Foto por",
-    AdminPreview: "Vista Admin"
+    AdminPreview: "Vista Admin",
+    QuizTitle: "Quiz do Día",
+    QuizRetry: "Reintentar",
   }
 };
 

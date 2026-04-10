@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Archive, Bookmark, Settings, User } from "lucide-react";
+import { Compass, Flame, Archive, Bookmark, Settings, User } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -12,6 +12,7 @@ export function Navbar() {
 
   const primaryNav = [
     { label: t("Today"), href: "/", icon: Compass },
+    { label: "Viral", href: "/viral", icon: Flame },
   ];
 
   const secondaryNav = [
