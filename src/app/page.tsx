@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Bookmark, Share } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { MusicPlayerCard } from "@/components/MusicPlayerCard";
 import { useSavedCards } from "@/hooks/useSavedCards";
+import { useLanguage } from "@/context/LanguageContext";
 
 const CATEGORY_COLORS = [
   { text: "text-[#7F1D1D]", border: "border-[#7F1D1D]" }, // dark red
@@ -19,6 +20,7 @@ const CATEGORY_COLORS = [
 ];
 
 export default function TodayPage() {
+  const { t, language } = useLanguage();
   const [briefing, setBriefing] = useState<any>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideContainerRef = useRef<HTMLDivElement>(null);
@@ -32,14 +34,17 @@ export default function TodayPage() {
       const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, culture: 4, people: 5, warfare: 6, sports: 7, curiosity: 8, local: 9, observance: 10, music: 11 };
 
       let query = supabase.from('daily_briefings').select(`*, briefing_items (*)`).order('created_at', { ascending: false });
+      
+      const locales: any = { en: "en-US", es: "es-ES", gl: "gl-ES" };
+      const fallbackLangCode = language === 'gl' ? 'es' : language; // fallback for DB fetch
 
       if (targetDate) {
-        // If an admin requests a specific pre-generated date
-        query = query.eq('date', targetDate);
+        // Admin preview passes explicit date
+        query = query.eq('date', targetDate).eq('language', fallbackLangCode);
       } else {
-        // Normal user logic: We need the briefing for exactly 'Today'
-        const todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
-        query = query.eq('date', todayStr);
+        // Normal user logic
+        const todayStr = new Date().toLocaleDateString(locales[language] || "en-US", { month: "long", day: "numeric" });
+        query = query.eq('date', todayStr).eq('language', fallbackLangCode);
       }
 
       const { data, error } = await query.limit(1).single();
@@ -182,6 +187,12 @@ export default function TodayPage() {
                      {briefing.date}
                    </h1>
 
+                   <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif text-ink-navy leading-tight tracking-tight mt-10 md:mt-12 font-medium animate-fade-rise animate-delay-2 hidden">
+                     {t("ThePast")}<br/>
+                     <span className="italic text-slate-blue font-light">{t("Present")}</span><br/>
+                     {t("Pending")}
+                   </h2>
+
                    <div className="flex flex-col items-center md:items-start mt-12 md:mt-16 animate-fade-rise animate-delay-2 w-full">
                      <div className="w-10 h-[1px] bg-ink-navy/20 mb-6"></div>
                      <p className="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-ink-navy/70 overflow-hidden">
@@ -309,6 +320,7 @@ export default function TodayPage() {
 }
 
 function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; index: number; isActive: boolean }) {
+  const { t } = useLanguage();
   const [expanded, setExpanded] = useState(false);
   const { toggleCard, isSaved } = useSavedCards();
   const saved = isSaved(item.id);
@@ -373,7 +385,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
               <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} className="w-full h-auto max-h-[60vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" />
               <div className="w-full relative mt-3">
                 <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
-                <span className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource}</span>
+                <span className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
               </div>
             </div>
           )}
@@ -400,7 +412,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
         >
           <span className="w-5 h-[1px] bg-ink-navy/30 group-hover:bg-slate-blue group-hover:w-7 transition-all" />
           <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em]">
-            {expanded ? "Close Context" : "Read Context"}
+            {expanded ? t("CloseContext") : t("ReadContext")}
           </span>
         </button>
 
@@ -434,7 +446,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
             <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" onError={(e) => { e.currentTarget.style.display = 'none'; }} className="w-full h-auto object-cover filter grayscale" />
             <div className="w-full relative mt-3 px-6 h-full flex flex-col pb-4">
               <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
-              <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource}</span>
+              <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
             </div>
           </div>
         )}

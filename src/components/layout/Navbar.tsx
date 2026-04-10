@@ -4,22 +4,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Compass, Archive, Bookmark, Settings, User } from "lucide-react";
 import { cn } from "@/utils/cn";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function Navbar() {
   const pathname = usePathname();
+  const { language, setLanguage, t } = useLanguage();
 
   const primaryNav = [
-    { label: "Today", href: "/", icon: Compass },
+    { label: t("Today"), href: "/", icon: Compass },
   ];
 
   const secondaryNav = [
-    { label: "Archive", href: "/archive", icon: Archive },
-    { label: "Saved", href: "/saved", icon: Bookmark },
+    { label: t("Archive"), href: "/archive", icon: Archive },
+    { label: t("Saved"), href: "/saved", icon: Bookmark },
   ];
 
   const utilityNav = [
-    { label: "Settings", href: "/settings", icon: Settings },
-    { label: "Profile", href: "/profile", icon: User },
+    { label: t("Settings"), href: "/settings", icon: Settings },
+    { label: t("Profile"), href: "/profile", icon: User },
   ];
 
   const allNavItems = [...primaryNav, ...secondaryNav, ...utilityNav];
@@ -103,9 +105,9 @@ export function Navbar() {
           
           {/* Languages */}
           <div className="flex items-center gap-4 text-[11px] font-bold tracking-widest text-ink-navy/30">
-             <button className="text-ink-navy underline underline-offset-4 decoration-[1.5px]">EN</button>
-             <button className="hover:text-ink-navy transition-colors">ES</button>
-             <button className="hover:text-ink-navy transition-colors">GL</button>
+             <button onClick={() => setLanguage('en')} className={cn("transition-colors", language === 'en' ? "text-ink-navy underline underline-offset-4 decoration-[1.5px]" : "hover:text-ink-navy")}>EN</button>
+             <button onClick={() => setLanguage('es')} className={cn("transition-colors", language === 'es' ? "text-ink-navy underline underline-offset-4 decoration-[1.5px]" : "hover:text-ink-navy")}>ES</button>
+             <button onClick={() => setLanguage('gl')} className={cn("transition-colors", language === 'gl' ? "text-ink-navy underline underline-offset-4 decoration-[1.5px]" : "hover:text-ink-navy")}>GL</button>
           </div>
         </div>
       </header>

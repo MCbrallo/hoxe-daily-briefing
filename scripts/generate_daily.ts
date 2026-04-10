@@ -33,95 +33,100 @@ function isValidImageFormat(url: string) {
   return lowerUrl.endsWith('.jpg') || lowerUrl.endsWith('.jpeg') || lowerUrl.endsWith('.png') || lowerUrl.endsWith('.webp');
 }
 
+async function generateLanguageDataset(targetDateObj: Date, languageCode: 'en' | 'es') {
+  const mm = String(targetDateObj.getMonth() + 1).padStart(2, '0');
+  const dd = String(targetDateObj.getDate()).padStart(2, '0');
+
+  const locales = {
+    'en': 'en-US',
+    'es': 'es-ES'
+  };
+
+  const dateString = targetDateObj.toLocaleDateString(locales[languageCode], { month: "long", day: "numeric" });
+  const dayOfWeek = targetDateObj.toLocaleDateString(locales[languageCode], { weekday: "long" });
+
+  // Idempotency Check
+  const { data: existingData } = await supabase
+    .from("daily_briefings")
+    .select("id")
+    .eq("date", dateString)
+    .eq("language", languageCode)
+    .limit(1)
+    .single();
+
+  if (existingData) {
+    console.log(`[SKIP] Briefing for ${dateString} (${languageCode}) already exists.`);
+    return;
+  }
+
+  console.log(`\n[GENERATE] Building briefing for ${dateString} [${languageCode.toUpperCase()}]...`);
+
+  try {
+    const wikiRes = await fetch(`https://${languageCode}.wikipedia.org/api/rest_v1/feed/onthisday/events/${mm}/${dd}`);
+    const wikiData = await wikiRes.json();
+    
+    let viableEvents = wikiData.events.filter((e: any) => 
+      e.pages && 
+      e.pages.length > 0 && 
+      e.pages[0].originalimage && 
+      e.pages[0].extract &&
+      isValidImageFormat(e.pages[0].originalimage.source)
+    );
+    
+    viableEvents = viableEvents.sort(() => 0.5 - Math.random()).slice(0, 6);
+
+    const { data: rootNode, error: rootError } = await supabase
+      .from("daily_briefings")
+      .insert([{ date: dateString, day_of_week: dayOfWeek, language: languageCode }])
+      .select()
+      .single();
+
+    if (rootError) throw rootError;
+
+    const preparedItems = viableEvents.map((event: any) => {
+      const page = event.pages[0];
+      const imageUrl = page.originalimage.source;
+      const title = page.normalizedtitle || page.title.replace(/_/g, ' ');
+      const shortExplanation = event.text; 
+      const whyItMatters = page.extract; 
+      const category = categorizeWikipediaArticle(whyItMatters);
+      const year = event.year ? String(event.year) : "Unknown";
+
+      return {
+        briefing_id: rootNode.id,
+        category: category,
+        title: title,
+        year: year,
+        short_explanation: shortExplanation,
+        why_it_matters: whyItMatters,
+        image_url: imageUrl,
+        image_source: "Photo by Wikimedia Commons",
+        metadata_spotify_track_id: null
+      };
+    });
+
+    const { error: itemsError } = await supabase
+      .from("briefing_items")
+      .insert(preparedItems);
+
+    if (itemsError) throw itemsError;
+
+    console.log(`✓ Successfully committed cards for ${dateString} [${languageCode}].`);
+
+  } catch (err) {
+    console.error(`Failure processing Wikipedia Automation for ${dateString} [${languageCode}]:`, err);
+  }
+}
+
 async function runAutomation() {
-  console.log("Starting HOXE 5-Day Forward Predictive Automation Pipeline...");
+  console.log("Starting HOXE Multilingual 5-Day Forward Predictive Automation Pipeline...");
   
-  // We want to generate today and the next 4 days (5 total)
   for (let offset = 0; offset < 5; offset++) {
     const targetDateObj = new Date();
     targetDateObj.setDate(targetDateObj.getDate() + offset);
     
-    const mm = String(targetDateObj.getMonth() + 1).padStart(2, '0');
-    const dd = String(targetDateObj.getDate()).padStart(2, '0');
-
-    const dateString = targetDateObj.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-    const dayOfWeek = targetDateObj.toLocaleDateString("en-US", { weekday: "long" });
-
-    // Idempotency Check: Don't overwrite if it already exists
-    const { data: existingData } = await supabase
-      .from("daily_briefings")
-      .select("id")
-      .eq("date", dateString)
-      .limit(1)
-      .single();
-
-    if (existingData) {
-      console.log(`[SKIP] Briefing for ${dateString} already exists.`);
-      continue;
-    }
-
-    console.log(`\n[GENERATE] Building briefing for ${dateString}...`);
-
-    try {
-      const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${mm}/${dd}`);
-      const wikiData = await wikiRes.json();
-      
-      // Filter events that have HIGH-RES SAFE imagery available (NO SVGs or TIFs)
-      let viableEvents = wikiData.events.filter((e: any) => 
-        e.pages && 
-        e.pages.length > 0 && 
-        e.pages[0].originalimage && 
-        e.pages[0].extract &&
-        isValidImageFormat(e.pages[0].originalimage.source)
-      );
-      
-      // Randomize slightly so if the script runs again it grabs different events from the same day
-      viableEvents = viableEvents.sort(() => 0.5 - Math.random()).slice(0, 6);
-
-      console.log(`Found ${viableEvents.length} viable historic events.`);
-
-      const { data: rootNode, error: rootError } = await supabase
-        .from("daily_briefings")
-        .insert([{ date: dateString, day_of_week: dayOfWeek }])
-        .select()
-        .single();
-
-      if (rootError) throw rootError;
-
-      const preparedItems = viableEvents.map((event: any) => {
-        const page = event.pages[0];
-        const imageUrl = page.originalimage.source;
-        const title = page.normalizedtitle || page.title.replace(/_/g, ' ');
-        const shortExplanation = event.text; // The punchy one-liner of what happened
-        const whyItMatters = page.extract; // The deep contextual article summary
-        const category = categorizeWikipediaArticle(whyItMatters);
-        const year = event.year ? String(event.year) : "Unknown";
-
-        return {
-          briefing_id: rootNode.id,
-          category: category,
-          title: title,
-          year: year,
-          short_explanation: shortExplanation,
-          why_it_matters: whyItMatters,
-          image_url: imageUrl,
-          image_source: "Photo by Wikimedia Commons",
-          metadata_spotify_track_id: null
-        };
-      });
-
-      const { error: itemsError } = await supabase
-        .from("briefing_items")
-        .insert(preparedItems);
-
-      if (itemsError) throw itemsError;
-
-      console.log(`Successfully committed cards for ${dateString}.`);
-
-    } catch (err) {
-      console.error(`Failure processing Wikipedia Automation for ${dateString}:`, err);
-      // We do not process.exit(1) here so that we can continue the loop for next days safely
-    }
+    await generateLanguageDataset(targetDateObj, 'en');
+    await generateLanguageDataset(targetDateObj, 'es');
   }
   
   console.log("\nPipeline Execution Complete.");
