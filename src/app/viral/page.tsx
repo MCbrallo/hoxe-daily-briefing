@@ -215,13 +215,27 @@ export default function ViralPage() {
 
   useEffect(() => {
     async function load() {
-      const todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
-      setDateLabel(todayStr);
+      const params = new URLSearchParams(window.location.search);
+      const targetDate = params.get('date');
+      const todayStr = targetDate || new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
+      
+      let finalRows = null;
       const { data: rows } = await supabase.from("daily_briefings").select("*, briefing_items (*)").eq("date", todayStr).limit(1);
-      if (rows && rows.length > 0 && rows[0].briefing_items) {
-        const viral = rows[0].briefing_items.filter((i: any) => i.category.startsWith("viral_"));
+      
+      if (rows && rows.length > 0) {
+        finalRows = rows[0];
+      } else {
+        const { data: fallbackRows } = await supabase.from('daily_briefings').select("*, briefing_items (*)").order('created_at', { ascending: true }).limit(1);
+        if (fallbackRows && fallbackRows.length > 0) finalRows = fallbackRows[0];
+      }
+
+      if (finalRows && finalRows.briefing_items) {
+        setDateLabel(finalRows.date);
+        const viral = finalRows.briefing_items.filter((i: any) => i.category.startsWith("viral_"));
         setItems(viral);
-        setQuizQuestions(generateQuiz(viral.length > 0 ? viral : rows[0].briefing_items));
+        setQuizQuestions(generateQuiz(viral.length > 0 ? viral : finalRows.briefing_items));
+      } else {
+        setDateLabel(todayStr);
       }
       setLoading(false);
     }
