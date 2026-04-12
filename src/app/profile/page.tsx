@@ -1,247 +1,171 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ArrowRight, User, Bookmark, Clock, LogOut, Settings2, Bell, Shield, Languages, Flame, Star } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { useRef, useState } from "react";
+import { ArrowRight, Settings2, Languages, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { cn } from "@/utils/cn";
 
-export default function ProfilePage() {
+export default function SettingsPage() {
   const { language, setLanguage, disabledCategories, toggleCategory, t } = useLanguage();
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState<any>(null);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const clickTracker = useRef(0);
+  const [showCipher, setShowCipher] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const [streak, setStreak] = useState(1);
-  const [points, setPoints] = useState(10);
-
-  useEffect(() => {
-    try {
-      const lastLoginStr = localStorage.getItem("hoxe_last_login");
-      const currentStreak = parseInt(localStorage.getItem("hoxe_streak") || "0", 10);
-      const currentPoints = parseInt(localStorage.getItem("hoxe_points") || "0", 10);
-      const today = new Date().toDateString();
-
-      if (lastLoginStr !== today) {
-        const lastLogin = new Date(lastLoginStr || 0);
-        const now = new Date(today);
-        const diffDays = Math.round(Math.abs((now.getTime() - lastLogin.getTime()) / (1000 * 3600 * 24)));
-        
-        let nextStreak = currentStreak;
-        if (diffDays === 1) nextStreak = currentStreak + 1;
-        else if (diffDays > 1) nextStreak = 1;
-
-        const nextPoints = currentPoints + 10;
-
-        localStorage.setItem("hoxe_streak", nextStreak.toString());
-        localStorage.setItem("hoxe_points", nextPoints.toString());
-        localStorage.setItem("hoxe_last_login", today);
-        
-        setStreak(nextStreak);
-        setPoints(nextPoints);
-      } else {
-        setStreak(currentStreak || 1);
-        setPoints(currentPoints || 10);
-      }
-    } catch(e) {}
-  }, []);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: window.location.origin + "/profile" }
-    });
-
-    if (error) {
-      alert("Error: " + error.message);
-      setStatus("error");
-    } else {
-      setStatus("success");
+  const EDITORIAL_CATS = [
+    "history", "science", "physics", "biology and medicine", "technology", "environment", 
+    "warfare", "politics and government", "law", "business and economy", 
+    "culture", "music", "film and television", "art and architecture", 
+    "literature", "philosophy", "religion", 
+    "sports", "exploration", "people"
+  ];
+  const handleHeaderClick = () => {
+    clickTracker.current += 1;
+    if (clickTracker.current >= 7) { 
+      clickTracker.current = 0;
+      setShowCipher(true);
     }
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setSession(null);
+  const handleCipherSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const p = fd.get("cipher") as string;
+    if (p) {
+      window.location.href = `/admin?key=${encodeURIComponent(p)}`;
+    }
   };
 
-  const EDITORIAL_CATS = ["history", "science", "warfare", "culture", "people", "space", "sports", "music"];
-
   return (
-    <div className="min-h-screen pt-16 md:pt-20 pb-24 px-6 md:px-12 bg-mist-white max-w-4xl mx-auto">
-      {/* Compact Header */}
-      <header className="mb-8 border-b border-ink-navy/15 pb-5">
-        <h1 className="font-serif text-4xl md:text-5xl text-ink-navy tracking-tight">{t("Profile")} & {t("Settings")}</h1>
-        <p className="font-serif italic text-base text-ink-navy/50 mt-1">Manage identity and algorithmic preferences.</p>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-
-        {/* Left Column: Auth & Preferences */}
-        <div className="md:col-span-7 flex flex-col gap-6">
-          <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-8 md:p-10 flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-full border border-ink-navy/15 bg-warm-white/40 flex items-center justify-center mb-5">
-              <User size={26} className="text-ink-navy/30" />
-            </div>
-            
-            {loading ? (
-              <div className="w-5 h-5 border-t-2 border-ink-navy rounded-full animate-spin my-8"></div>
-            ) : session ? (
-              <>
-                <p className="text-ink-navy text-sm font-serif italic mb-2">Authenticated terminal</p>
-                <p className="text-ink-navy text-base font-bold mb-6 font-sans">{session.user.email}</p>
-                <button onClick={handleLogout} className="w-full max-w-xs bg-ink-navy text-mist-white px-6 py-3.5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-slate-blue transition-colors focus:outline-none flex justify-center items-center gap-2.5">
-                  <LogOut size={14} /> Terminate Connection
-                </button>
-              </>
-            ) : status === "success" ? (
-              <>
-                <p className="text-[#14532D] text-sm font-serif italic mb-6 max-w-xs leading-relaxed">
-                  Verification protocol dispatched. Check your inbox to securely establish identity.
-                </p>
-              </>
-            ) : (
-              <form onSubmit={handleLogin} className="w-full flex flex-col items-center">
-                <p className="text-ink-navy/60 text-sm font-serif italic mb-8 max-w-xs leading-relaxed">
-                  Encrypt preferences and maintain your saved intellectual property across devices.
-                </p>
+    <div className="min-h-screen pt-12 md:pt-16 pb-20 px-4 md:px-12 bg-mist-white selection:bg-slate-blue/20 selection:text-ink-navy relative overflow-hidden flex flex-col items-center">
+      
+      {/* NATIVE CIPHER MODAL (Bypasses Browser Popup Blockers) */}
+      {showCipher && (
+        <div className="fixed inset-0 z-[999] bg-mist-white/80 backdrop-blur-3xl flex items-center justify-center p-6 animate-fade-in">
+           <div className="bg-white p-10 md:p-14 rounded-[40px] shadow-[0_20px_80px_-20px_rgba(27,46,75,0.15)] max-w-sm md:max-w-md w-full border border-ink-navy/5 relative overflow-hidden flex flex-col items-center text-center animate-fade-rise">
+              <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-slate-blue/15 rounded-full blur-[70px] pointer-events-none" />
+              
+              <button onClick={() => setShowCipher(false)} className="absolute top-6 right-6 text-ink-navy/30 hover:text-ink-navy transition-colors bg-mist-white w-8 h-8 flex items-center justify-center rounded-full">
+                <X size={16} />
+              </button>
+              
+              <div className="w-16 h-16 bg-ink-navy/5 border border-ink-navy/10 rounded-2xl flex items-center justify-center mb-6 relative z-10">
+                 <Settings2 size={28} className="text-slate-blue" strokeWidth={1.5} />
+              </div>
+              
+              <h3 className="font-serif text-4xl text-ink-navy tracking-tight leading-none mb-2 relative z-10">Admin Access</h3>
+              <p className="text-[10px] uppercase font-bold tracking-[0.25em] text-ink-navy/30 mb-8 relative z-10">Classified Override Area</p>
+              
+              <form onSubmit={handleCipherSubmit} className="flex flex-col gap-4 w-full relative z-10">
                 <input 
-                  type="email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@directive.com" 
-                  required
-                  className="w-full max-w-xs bg-transparent border-b border-ink-navy/30 pb-2 mb-6 text-center text-ink-navy font-serif outline-none focus:border-ink-navy transition-colors placeholder:text-ink-navy/20"
+                  type="password" 
+                  name="cipher"
+                  autoFocus
+                  placeholder="Cipher Code..."
+                  className="w-full bg-mist-white/50 border border-ink-navy/10 outline-none rounded-2xl px-6 py-4 text-center text-lg md:text-xl font-medium tracking-widest text-ink-navy placeholder:text-ink-navy/20 focus:bg-white focus:border-slate-blue/40 focus:ring-4 focus:ring-slate-blue/10 transition-all"
                 />
-                <button type="submit" disabled={status === "loading"} className="w-full max-w-xs bg-ink-navy text-mist-white px-6 py-3.5 text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-slate-blue transition-colors focus:outline-none flex justify-center items-center gap-2.5 disabled:opacity-50">
-                  {status === "loading" ? "Initializing..." : "Request Access"} <ArrowRight size={14} />
+                <button type="submit" className="w-full bg-ink-navy text-white px-6 py-4 rounded-2xl text-[11px] uppercase tracking-[0.25em] font-bold shadow-xl hover:bg-slate-blue hover:-translate-y-0.5 transition-all">
+                  Unlock System
                 </button>
               </form>
-            )}
-          </div>
+           </div>
+        </div>
+      )}
 
-          <section>
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 px-4">
-              Content Preferences
+      {/* Ambient glow */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-warm-white rounded-full blur-[120px] pointer-events-none mix-blend-multiply animate-pulse" style={{ animationDuration: '8s' }} />
+
+      <div className="w-full max-w-2xl z-10 relative mt-2">
+
+        <header className="mb-6 w-full flex justify-center">
+          {/* MASSIVE SECURE CLICK TARGET FOR EASTER EGG */}
+          <div 
+            onClick={handleHeaderClick} 
+            className="flex flex-col items-center cursor-pointer transition-transform active:scale-[0.98] hover:bg-ink-navy/5 p-4 rounded-3xl"
+          >
+            <Settings2 
+              size={24} 
+              className="text-ink-navy/60 mb-1" 
+              strokeWidth={1.5} 
+            />
+            
+            <h1 className="font-serif text-4xl md:text-5xl text-ink-navy tracking-tighter leading-none mb-2 select-none">
+              {t("Settings")}
+            </h1>
+          </div>
+        </header>
+
+        <div className="flex flex-col gap-4 w-full">
+
+          {/* CONTENT PREFERENCES */}
+          <section className="bg-white/80 backdrop-blur-xl rounded-[20px] border border-ink-navy/10 shadow-[0_4px_20px_-10px_rgba(27,46,75,0.06)] p-5">
+            <h2 className="text-[9px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 flex items-center gap-2 border-b border-ink-navy/10 pb-2">
+              Data Filtering Engine
             </h2>
-            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white overflow-hidden">
-              {EDITORIAL_CATS.map((cat, idx) => {
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+              {EDITORIAL_CATS.map((cat) => {
                 const isActive = !disabledCategories.includes(cat);
                 return (
-                  <div key={cat} className={cn("flex items-center justify-between p-4 px-5", idx !== EDITORIAL_CATS.length - 1 ? "border-b border-ink-navy/5" : "")}>
-                    <span className="text-sm font-medium text-ink-navy capitalize tracking-wide">{cat}</span>
-                    <button 
-                      onClick={() => toggleCategory(cat)}
-                      className={cn("w-11 h-6 rounded-full relative transition-colors duration-300", isActive ? "bg-emerald-500" : "bg-ink-navy/15")}
-                    >
-                      <div className={cn("absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300", isActive ? "left-6" : "left-1")}></div>
-                    </button>
-                  </div>
+                  <button 
+                    key={cat}
+                    onClick={() => toggleCategory(cat)}
+                    className={cn(
+                      "flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-300 border text-left",
+                      isActive 
+                        ? "bg-white text-ink-navy border-ink-navy/20 shadow-sm" 
+                        : "bg-transparent text-ink-navy/40 border-ink-navy/10 opacity-60"
+                    )}
+                  >
+                    <span className="text-[10px] font-bold tracking-[0.1em] uppercase">{cat}</span>
+                    <div className={cn("w-1.5 h-1.5 rounded-full transition-colors", isActive ? "bg-slate-blue/80" : "bg-ink-navy/20 border-transparent")} />
+                  </button>
                 );
               })}
             </div>
           </section>
 
-          <section>
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 px-4 mt-6">
-              Language / Idioma
-            </h2>
-            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white overflow-hidden p-2 flex gap-2">
-              {[
-                { id: "en", label: "Eng" },
-                { id: "es", label: "Esp" },
-                { id: "gl", label: "Gal" }
-              ].map((lang) => (
+          {/* LOCALIZATION & APP */}
+          <section className="bg-white/80 backdrop-blur-xl rounded-[20px] border border-ink-navy/10 shadow-[0_4px_20px_-10px_rgba(27,46,75,0.06)] p-5">
+            <div>
+              <h2 className="text-[9px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 flex items-center gap-2 border-b border-ink-navy/10 pb-2">
+                <Languages size={12} /> Global Language
+              </h2>
+              <div className="bg-mist-white/50 rounded-xl border border-ink-navy/5 p-1 flex shadow-inner">
+                {[
+                  { id: "en", label: "English" },
+                  { id: "es", label: "Español" },
+                  { id: "gl", label: "Galego" }
+                ].map((lang) => (
+                  <button 
+                    key={lang.id} 
+                    onClick={() => setLanguage(lang.id as any)}
+                    className={cn(
+                      "flex-1 py-2.5 text-[9px] font-bold tracking-[0.15em] uppercase transition-all rounded-lg",
+                      language === lang.id 
+                        ? "bg-white text-ink-navy shadow-sm border border-ink-navy/5 scale-100 z-10" 
+                        : "text-ink-navy/40 hover:bg-white/50"
+                    )}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <h2 className="text-[9px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-2 px-1">
+                Legal
+              </h2>
+              <div className="bg-mist-white/50 rounded-xl border border-ink-navy/5 overflow-hidden flex flex-col shadow-inner">
                 <button 
-                  key={lang.id} 
-                  onClick={() => setLanguage(lang.id as any)}
-                  className={cn(
-                    "flex-1 py-3 text-xs md:text-sm font-bold tracking-[0.1em] uppercase transition-all rounded-2xl",
-                    language === lang.id 
-                      ? "bg-ink-navy text-white shadow-md" 
-                      : "text-ink-navy/40 hover:bg-ink-navy/5"
-                  )}
+                  onClick={() => alert("Hoxe Protocol - Strictly Private")}
+                  className="text-left text-[9px] font-bold uppercase tracking-[0.2em] text-ink-navy/60 hover:bg-white/80 transition-colors px-4 py-3 flex items-center justify-between group"
                 >
-                  {lang.label}
+                  Privacy Policy <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform opacity-30" />
                 </button>
-              ))}
+              </div>
             </div>
           </section>
 
         </div>
-
-        {/* Right Column: Stats & Secondary */}
-        <div className="md:col-span-5 flex flex-col gap-6">
-          
-          <div className="flex flex-col gap-4">
-            
-            <div className="flex gap-4">
-              <div className="flex-1 bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 flex flex-col justify-between relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/5 rounded-full blur-2xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
-                <div>
-                  <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block relative z-10">{streak}</span>
-                  <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/40 relative z-10">Day Streak</p>
-                </div>
-                <div className="absolute bottom-4 right-4 text-orange-500/80">
-                  <Flame size={24} strokeWidth={1.5} />
-                </div>
-              </div>
-
-              <div className="flex-1 bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 flex flex-col justify-between relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/10 rounded-full blur-2xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
-                <div>
-                  <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block relative z-10">{points}</span>
-                  <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/40 relative z-10">Total Points</p>
-                </div>
-                <div className="absolute bottom-4 right-4 text-amber-500/80">
-                  <Star size={24} strokeWidth={1.5} />
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white p-5 md:p-6 flex items-center justify-between">
-              <div>
-                <span className="text-3xl font-serif text-ink-navy leading-none mb-1 block">{session ? "0" : "--"}</span>
-                <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-ink-navy/35">Saved Contexts</p>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-slate-blue/10 flex items-center justify-center shrink-0">
-                <Bookmark size={20} className="text-slate-blue" strokeWidth={2} />
-              </div>
-            </div>
-          </div>
-
-          <section>
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-navy/40 mb-3 px-4 mt-2">
-              Application
-            </h2>
-            <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-[0_4px_24px_-10px_rgba(27,46,75,0.05)] border border-white overflow-hidden flex flex-col">
-              <button className="text-left text-xs font-bold uppercase tracking-widest text-ink-navy/70 hover:bg-ink-navy/5 transition-colors p-5 border-b border-ink-navy/5 flex items-center justify-between group">
-                Privacy Policy <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform opacity-50" />
-              </button>
-              <button className="text-left text-xs font-bold uppercase tracking-widest text-red-500 hover:bg-red-50 transition-colors p-5 flex items-center justify-between group">
-                Delete Account <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform opacity-30" />
-              </button>
-            </div>
-          </section>
-
-        </div>
-
       </div>
     </div>
   );

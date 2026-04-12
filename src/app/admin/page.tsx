@@ -1,243 +1,167 @@
-"use client";
+import { notFound } from 'next/navigation';
+import { Shield, Database, Calendar, Trash2, Zap, Fingerprint } from "lucide-react";
+import { createClient } from "@supabase/supabase-js";
+import { revalidatePath } from 'next/cache';
 
-import { useState, useEffect } from "react";
-import { Shield, Calendar, Trash2, ChevronLeft, ChevronRight, Eye, Lock } from "lucide-react";
-import { cn } from "@/utils/cn";
-import { supabase } from "@/lib/supabase";
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
-const ADMIN_PASSWORD = "hoxe2026";
-
-interface BriefingDay {
-  id: string;
-  date: string;
-  day_of_week: string;
-  briefing_items: any[];
+async function deleteItem(formData: FormData) {
+  "use server";
+  const id = formData.get("id") as string;
+  if (!id) return;
+  await supabase.from("briefing_items").delete().eq("id", id);
+  revalidatePath('/admin');
 }
 
-export default function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [days, setDays] = useState<BriefingDay[]>([]);
-  const [selectedDay, setSelectedDay] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [genDate, setGenDate] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [genMsg, setGenMsg] = useState("");
-
-  const handleLogin = () => {
-    if (password === ADMIN_PASSWORD) {
-      setAuthed(true);
-      setError("");
-      loadDays();
-    } else {
-      setError("Contraseña incorrecta");
-    }
-  };
-
-  const loadDays = async () => {
-    setLoading(true);
-    const { data } = await supabase
-      .from("daily_briefings")
-      .select("*, briefing_items (*)")
-      .order("created_at", { ascending: true });
-    if (data) {
-      setDays(data);
-      if (data.length > 0 && !selectedDay) setSelectedDay(data[0].date);
-    }
-    setLoading(false);
-  };
-
-  const deleteItem = async (itemId: string) => {
-    await supabase.from("briefing_items").delete().eq("id", itemId);
-    loadDays();
-  };
-
-  const handleGenerate = async () => {
-    if (!genDate) return;
-    setIsGenerating(true);
-    setGenMsg("Generando... Esto tomará entre 15 y 30 segundos.");
-    try {
-      const res = await fetch("/api/admin/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: ADMIN_PASSWORD, date: genDate })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setGenMsg("¡Extraordinario! Contenido generado con éxito.");
-        await loadDays();
-      } else {
-        setGenMsg(`Error: ${data.error}`);
-      }
-    } catch (err: any) {
-      setGenMsg(`Error inyectando: ${err.message}`);
-    }
-    setIsGenerating(false);
-  };
-
-  const currentDay = days.find(d => d.date === selectedDay);
-  const todayStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
-
-  // Group items by category
-  const grouped: Record<string, any[]> = {};
-  if (currentDay?.briefing_items) {
-    for (const item of currentDay.briefing_items) {
-      if (!grouped[item.category]) grouped[item.category] = [];
-      grouped[item.category].push(item);
-    }
+export default async function AdminPage(props: { searchParams: Promise<{ key?: string }> }) {
+  const searchParams = await props.searchParams;
+  
+  if (searchParams.key !== "hoxe2026") {
+    notFound();
   }
 
-  if (!authed) {
-    return (
-      <div className="min-h-screen bg-mist-white flex items-center justify-center px-6">
-        <div className="w-full max-w-sm">
-          <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-ink-navy/5 flex items-center justify-center mx-auto mb-4">
-              <Shield size={24} className="text-ink-navy/40" />
-            </div>
-            <h1 className="font-serif text-3xl text-ink-navy mb-1">Admin</h1>
-            <p className="text-sm text-ink-navy/30 font-serif italic">Panel de administración HOXE</p>
-          </div>
-          <div className="space-y-3">
-            <input
-              type="password"
-              placeholder="Contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-              className="w-full px-4 py-3 rounded-xl border border-ink-navy/10 bg-white text-ink-navy text-sm focus:outline-none focus:border-ink-navy/30 transition-colors"
-            />
-            {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
-            <button
-              onClick={handleLogin}
-              className="w-full bg-ink-navy text-mist-white py-3 text-[11px] font-bold tracking-[0.2em] uppercase rounded-xl hover:bg-slate-blue transition-colors"
-            >
-              Acceder
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const { data: days } = await supabase
+    .from("daily_briefings")
+    .select("*, briefing_items (*)")
+    .order("created_at", { ascending: true });
+
+  const safeDays = days || [];
+  const totalCards = safeDays.reduce((acc, curr) => acc + (curr.briefing_items?.length || 0), 0);
 
   return (
-    <div className="min-h-screen bg-mist-white pt-6 pb-20 px-4 md:px-12">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <header className="flex items-center justify-between mb-8 border-b border-ink-navy/10 pb-5">
-          <div className="flex items-center gap-3">
-            <Shield size={20} className="text-ink-navy/40" />
-            <h1 className="font-serif text-2xl text-ink-navy">Admin Panel</h1>
+    <div className="min-h-screen bg-mist-white text-ink-navy font-sans selection:bg-slate-blue/30 selection:text-ink-navy flex flex-col items-center">
+      
+      {/* ── Fixed Mobile Header (Light) ── */}
+      <div className="fixed top-0 left-0 right-0 h-24 bg-mist-white/80 backdrop-blur-3xl border-b border-ink-navy/10 z-50 flex items-center justify-between px-6 pt-2">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-ink-navy/5 border border-ink-navy/10 rounded-full flex items-center justify-center">
+            <Fingerprint size={22} className="text-slate-blue" />
           </div>
-          <button onClick={() => setAuthed(false)} className="text-[10px] font-bold tracking-[0.2em] uppercase text-ink-navy/30 hover:text-ink-navy transition-colors">
-            Cerrar sesión
-          </button>
-        </header>
-
-        {/* Generator */}
-        <div className="mb-8 p-6 bg-white border border-ink-navy/10 rounded-2xl flex flex-col gap-4">
-          <h2 className="font-serif text-lg text-ink-navy">Pre-generar Contenido Futuro</h2>
-          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-            <input 
-              type="date" 
-              value={genDate} 
-              onChange={(e) => setGenDate(e.target.value)} 
-              className="px-4 py-2 border border-ink-navy/20 rounded-xl bg-mist-white text-ink-navy focus:outline-none"
-            />
-            <button 
-              onClick={handleGenerate}
-              disabled={isGenerating || !genDate}
-              className="px-6 py-2 bg-slate-blue text-white tracking-[0.1em] font-bold text-[11px] rounded-xl hover:bg-ink-navy transition-colors disabled:opacity-50"
-            >
-              {isGenerating ? "GENERANDO..." : "GENERAR DÍA"}
-            </button>
+          <div className="flex flex-col">
+            <h1 className="font-serif text-3xl md:text-4xl tracking-tight leading-none text-ink-navy">Director's Cut</h1>
+            <span className="text-[9px] uppercase tracking-widest text-slate-blue/80 font-bold mt-1">Classified Access</span>
           </div>
-          {genMsg && <p className={cn("text-xs font-bold", genMsg.includes('Error') ? "text-red-500" : "text-emerald-600")}>{genMsg}</p>}
         </div>
-
-        {/* Day selector */}
-        <div className="flex gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
-          {days.map((day) => {
-            const isToday = day.date === todayStr;
-            const isFuture = days.indexOf(day) > days.findIndex(d => d.date === todayStr);
-            const isSelected = day.date === selectedDay;
-            return (
-              <button
-                key={day.id}
-                onClick={() => setSelectedDay(day.date)}
-                className={cn(
-                  "shrink-0 px-4 py-2.5 rounded-xl border text-left transition-all",
-                  isSelected ? "bg-ink-navy text-white border-ink-navy" : "bg-white border-ink-navy/8 hover:border-ink-navy/20"
-                )}
-              >
-                <span className={cn("text-[9px] font-bold tracking-[0.2em] uppercase block", isSelected ? "text-white/50" : "text-ink-navy/25")}>
-                  {isToday ? "HOY" : isFuture ? "PRÓXIMO" : "PASADO"}
-                </span>
-                <span className={cn("text-sm font-bold", isSelected ? "text-white" : "text-ink-navy/70")}>{day.date}</span>
-                <span className={cn("text-[10px] block", isSelected ? "text-white/40" : "text-ink-navy/20")}>{day.day_of_week}</span>
-              </button>
-            );
-          })}
+        <div className="bg-ink-navy/5 border border-ink-navy/10 px-5 py-2.5 rounded-full flex items-center gap-2">
+          <Database size={14} className="text-ink-navy/40" />
+          <span className="text-xs font-bold tracking-widest text-ink-navy/80">{safeDays.length}</span>
         </div>
+      </div>
 
-        {/* Preview link */}
-        {currentDay && (
-          <div className="mb-6 flex items-center gap-2">
-            <Eye size={14} className="text-ink-navy/25" />
-            <a href={`/?date=${encodeURIComponent(currentDay.date)}`} target="_blank"
-              className="text-xs text-ink-navy/40 hover:text-ink-navy underline underline-offset-2 transition-colors">
-              Vista previa pública: /?date={currentDay.date}
-            </a>
-          </div>
-        )}
+      <div className="pt-36 pb-32 w-full max-w-4xl relative px-4 md:px-12">
+        
+        {/* Background Ambient (Light) */}
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-slate-blue/5 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Content grid */}
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="w-6 h-6 border-t-2 border-ink-navy rounded-full animate-spin mx-auto" />
-          </div>
-        ) : currentDay ? (
-          <div className="space-y-6">
-            {Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([category, items]) => (
-              <div key={category}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-ink-navy/35">{category}</span>
-                  <span className="text-[10px] text-ink-navy/15 font-bold">{items.length}</span>
-                  <div className="flex-1 h-[1px] bg-ink-navy/5" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {items.map((item: any) => (
-                    <div key={item.id} className="flex items-start gap-3 p-3 rounded-xl border border-ink-navy/6 bg-white group">
-                      {item.image_url && (
-                        <img src={item.image_url} referrerPolicy="no-referrer" className="w-12 h-12 rounded-lg object-cover shrink-0" alt=""
-                          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <span className="text-[9px] font-bold text-ink-navy/20">{item.year}</span>
-                        <p className="text-sm text-ink-navy font-medium truncate">{item.title}</p>
-                        <p className="text-[11px] text-ink-navy/35 truncate">{item.short_explanation?.substring(0, 60)}...</p>
-                      </div>
-                      <button onClick={() => deleteItem(item.id)}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-red-50 text-red-400">
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div className="text-center pt-4 border-t border-ink-navy/5">
-              <span className="text-xs text-ink-navy/20">{currentDay.briefing_items?.length || 0} items totales para {currentDay.date}</span>
+        {/* ── KPI SECTION ── */}
+        <section className="mb-12 w-full">
+          <div className="bg-white/80 border border-ink-navy/10 rounded-[28px] p-8 flex flex-row items-center justify-between shadow-[0_4px_30px_-10px_rgba(27,46,75,0.08)] relative overflow-hidden w-full box-border">
+            {/* Subtle glow inside card */}
+            <div className="absolute -right-10 -top-10 w-40 h-40 bg-slate-blue/10 rounded-full blur-[40px]" />
+            
+            <div className="flex flex-col relative z-10 w-full ml-2">
+              <p className="text-[10px] uppercase font-bold tracking-[0.3em] text-ink-navy/40 mb-1">System Health</p>
+              <h2 className="text-5xl font-serif text-ink-navy tracking-tight leading-none">{totalCards}</h2>
+              <p className="text-[9px] uppercase tracking-widest text-ink-navy/30 mt-2">Active Loaded Cards</p>
+            </div>
+            <div className="w-16 h-16 rounded-full border border-slate-blue/20 bg-slate-blue/10 flex items-center justify-center shrink-0 relative z-10 mr-2">
+              <Zap size={24} className="text-slate-blue" />
             </div>
           </div>
-        ) : (
-          <div className="text-center py-12">
-            <Calendar size={28} className="mx-auto text-ink-navy/10 mb-3" />
-            <p className="text-sm text-ink-navy/25 font-serif italic">Selecciona un día para ver su contenido</p>
-          </div>
-        )}
+        </section>
+
+        {/* ── DAYS STREAM ── */}
+        <div className="space-y-16 w-full">
+          {safeDays.map((day) => {
+            const items = day.briefing_items || [];
+            
+            return (
+              <section key={day.id} className="relative w-full overflow-hidden">
+                {/* Date Header */}
+                <div className="px-2 md:px-0 flex items-end justify-between mb-6">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-ink-navy/40 font-bold mb-1">{day.day_of_week}</p>
+                    <h3 className="font-serif text-4xl text-ink-navy tracking-tighter leading-none">{day.date}</h3>
+                  </div>
+                  <div className="bg-ink-navy/5 px-3 py-1.5 rounded-full flex gap-2 items-center">
+                    <div className="w-1.5 h-1.5 bg-slate-blue rounded-full animate-pulse" />
+                    <span className="text-[9px] uppercase font-bold tracking-widest text-ink-navy/60">{items.length} ITMS</span>
+                  </div>
+                </div>
+
+                 {/* Horizontal Scroll Cards array */}
+                 <div className="w-[100vw] relative left-1/2 -translate-x-1/2 md:w-full md:left-0 md:translate-x-0 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide">
+                    {/* Add generous padding to the flex container so first card aligns visually or is just scrollable */}
+                    <div className="flex gap-4 px-6 md:px-0 inline-flex min-w-max">
+                      {items.length === 0 ? (
+                         <div className="w-[85vw] md:w-[320px] shrink-0 snap-center bg-white/50 border border-dashed border-ink-navy/10 rounded-3xl h-64 flex flex-col items-center justify-center">
+                           <Calendar className="text-ink-navy/20 mb-4" size={32} />
+                           <p className="font-serif text-ink-navy/40 italic text-sm">Sin tarjetas cargadas.</p>
+                         </div>
+                      ) : (
+                        items.map((item: any) => (
+                          <div key={item.id} className="w-[85vw] md:w-[320px] shrink-0 snap-center bg-white border border-ink-navy/10 rounded-[32px] overflow-hidden flex flex-col shadow-lg relative group pb-16">
+                            
+                            {/* Card Visual Header */}
+                            <div className="h-44 w-full relative bg-ink-navy/5 border-b border-ink-navy/5">
+                                {item.image_url ? (
+                                  <>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10" />
+                                    <img src={item.image_url} alt="" className="w-full h-full object-cover mix-blend-multiply opacity-90" />
+                                  </>
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center opacity-10">
+                                    <Database size={40} className="text-ink-navy" />
+                                  </div>
+                                )}
+                                
+                                <div className="absolute top-4 left-4 z-20 bg-white/80 backdrop-blur-md border border-ink-navy/10 px-3 py-1.5 rounded-full shadow-sm">
+                                  <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy">{item.year}</span>
+                                </div>
+                                <div className="absolute top-4 right-4 z-20 bg-slate-blue text-white shadow-md border border-slate-blue/50 px-3 py-1.5 rounded-full">
+                                  <span className="text-[8px] uppercase tracking-widest font-bold">{item.category}</span>
+                                </div>
+                            </div>
+
+                            {/* Card Body */}
+                            <div className="p-6 flex-1 flex flex-col relative z-20">
+                              <h4 className="font-serif text-lg leading-tight text-ink-navy mb-3">{item.title}</h4>
+                              <p className="text-ink-navy/60 text-[11px] leading-relaxed line-clamp-4">{item.short_explanation}</p>
+                            </div>
+
+                            {/* Form Delete Action docked bottom */}
+                            <form action={deleteItem} className="absolute bottom-0 left-0 right-0 p-3 pt-0">
+                               <input type="hidden" name="id" value={item.id} />
+                               <button 
+                                 type="submit" 
+                                 className="w-full bg-red-50 hover:bg-red-100 border border-red-500/10 rounded-2xl py-3.5 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                               >
+                                 <Trash2 size={12} className="text-red-500/80" />
+                                 <span className="text-[9px] font-bold uppercase tracking-widest text-red-500/80">Destruir Target</span>
+                               </button>
+                            </form>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                 </div>
+              </section>
+            );
+          })}
+
+          {safeDays.length === 0 && (
+             <div className="pt-20 text-center w-full">
+                <Database size={40} className="text-ink-navy/10 mx-auto mb-6" />
+                <h2 className="font-serif text-2xl text-ink-navy/50 mb-2">Ausencia de Datos</h2>
+                <p className="text-ink-navy/40 text-xs">Usa el importador de CSV local.</p>
+             </div>
+          )}
+        </div>
       </div>
+      
     </div>
   );
 }

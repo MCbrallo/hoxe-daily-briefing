@@ -91,3 +91,83 @@ body {
 .atlantic-shadow {
   box-shadow: 0 10px 40px -10px rgba(29, 53, 87, 0.08), 0 1px 3px rgba(29, 53, 87, 0.05);
 }
+
+/* ── Vintage Photo Frame ── */
+.vintage-frame {
+  position: relative;
+  padding: 10px;
+  background: linear-gradient(135deg, #E8E4D4 0%, #DDD9C8 50%, #E2DED0 100%);
+  border: 1px solid rgba(29, 47, 56, 0.12);
+  box-shadow:
+    inset 0 0 12px rgba(139, 119, 80, 0.08),
+    0 4px 20px -4px rgba(29, 47, 56, 0.10),
+    0 1px 3px rgba(29, 47, 56, 0.06);
+}
+
+.vintage-frame::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(29, 47, 56, 0.06);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vintage-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 30%, transparent 70%, rgba(139,119,80,0.04) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vintage-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 0;
+}
+
+/* Corner accents */
+.vintage-corners {
+  position: relative;
+}
+.vintage-corners::before,
+.vintage-corners::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(29, 47, 56, 0.15);
+  border-style: solid;
+  z-index: 2;
+  pointer-events: none;
+}
+.vintage-corners::before {
+  top: 3px;
+  left: 3px;
+  border-width: 1px 0 0 1px;
+}
+.vintage-corners::after {
+  bottom: 3px;
+  right: 3px;
+  border-width: 0 1px 1px 0;
+}
+
+/* ── Glass Breathing Border Animation ── */
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.6;
+    width: 5px;
+  }
+  50% {
+    opacity: 1;
+    width: 7px;
+  }
+}
+
+.animate-breathe {
+  animation: breathe 3.5s ease-in-out infinite;
+}

@@ -41,6 +41,11 @@ export function Onboarding() {
     }
   };
 
+  const handleSkip = () => {
+    localStorage.setItem("hoxe_has_onboarded", "true");
+    setHasSeen(true);
+  };
+
   // Language Selection Screen
   if (step === -1) {
     return (
@@ -48,6 +53,11 @@ export function Onboarding() {
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div className="absolute w-[400px] h-[400px] rounded-full bg-slate-blue/[0.04] blur-[80px] -top-20 -right-20 animate-[drift_20s_ease-in-out_infinite]" />
         </div>
+        
+        {/* Skip button */}
+        <button onClick={handleSkip} className="absolute top-8 right-8 z-20 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-navy/30 hover:text-ink-navy transition-colors">
+          {t("Skip")}
+        </button>
         
         <div className="relative z-10 max-w-sm mx-auto w-full flex flex-col items-center">
           <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink-navy mb-12">
@@ -94,6 +104,11 @@ export function Onboarding() {
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute w-[400px] h-[400px] rounded-full bg-slate-blue/[0.04] blur-[80px] -top-20 -right-20 animate-[drift_20s_ease-in-out_infinite]" />
       </div>
+
+      {/* Skip button on slides */}
+      <button onClick={handleSkip} className="absolute top-8 right-8 z-20 text-[10px] font-bold tracking-[0.2em] uppercase text-ink-navy/30 hover:text-ink-navy transition-colors">
+        {t("Skip")}
+      </button>
 
       <div className="relative z-10">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink-navy mb-16">

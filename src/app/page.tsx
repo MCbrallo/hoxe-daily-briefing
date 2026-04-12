@@ -9,21 +9,31 @@ import { MusicPlayerCard } from "@/components/MusicPlayerCard";
 import { useSavedCards } from "@/hooks/useSavedCards";
 import { useLanguage } from "@/context/LanguageContext";
 
-const CATEGORY_COLOR_MAP: Record<string, { text: string; border: string }> = {
-  history:      { text: "text-[#7F1D1D]", border: "border-[#7F1D1D]" }, // dark red
-  science:      { text: "text-[#1E3A8A]", border: "border-[#1E3A8A]" }, // dark blue
-  space:        { text: "text-[#0F766E]", border: "border-[#0F766E]" }, // teal
-  warfare:      { text: "text-[#162740]", border: "border-[#162740]" }, // slate
-  culture:      { text: "text-[#701A75]", border: "border-[#701A75]" }, // fuchsia
-  people:       { text: "text-[#9A3412]", border: "border-[#9A3412]" }, // rust
-  sports:       { text: "text-[#14532D]", border: "border-[#14532D]" }, // dark green
-  viral_quote:  { text: "text-[#475569]", border: "border-[#475569]" }, // stone
-  music:        { text: "text-[#6D28D9]", border: "border-[#6D28D9]" }, // violet
-  local:        { text: "text-[#B45309]", border: "border-[#B45309]" }, // amber
-  observance:   { text: "text-[#0369A1]", border: "border-[#0369A1]" }, // sky
-  curiosity:    { text: "text-[#9A3412]", border: "border-[#9A3412]" }, // rust
+const CATEGORY_COLOR_MAP: Record<string, { text: string; border: string; hex: string }> = {
+  history:                   { text: "text-[#7F1D1D]", border: "border-[#7F1D1D]", hex: "#7F1D1D" },
+  science:                   { text: "text-[#1E3A8A]", border: "border-[#1E3A8A]", hex: "#1E3A8A" },
+  physics:                   { text: "text-[#312E81]", border: "border-[#312E81]", hex: "#312E81" },
+  "biology and medicine":    { text: "text-[#14532D]", border: "border-[#14532D]", hex: "#14532D" },
+  environment:               { text: "text-[#064E3B]", border: "border-[#064E3B]", hex: "#064E3B" },
+  technology:                { text: "text-[#0F766E]", border: "border-[#0F766E]", hex: "#0F766E" },
+  space:                     { text: "text-[#1E1B4B]", border: "border-[#1E1B4B]", hex: "#1E1B4B" },
+  warfare:                   { text: "text-[#162740]", border: "border-[#162740]", hex: "#162740" },
+  "politics and government": { text: "text-[#831843]", border: "border-[#831843]", hex: "#831843" },
+  law:                       { text: "text-[#451A03]", border: "border-[#451A03]", hex: "#451A03" },
+  "business and economy":    { text: "text-[#14532D]", border: "border-[#14532D]", hex: "#14532D" },
+  culture:                   { text: "text-[#701A75]", border: "border-[#701A75]", hex: "#701A75" },
+  music:                     { text: "text-[#6D28D9]", border: "border-[#6D28D9]", hex: "#6D28D9" },
+  "film and television":     { text: "text-[#4C1D95]", border: "border-[#4C1D95]", hex: "#4C1D95" },
+  "art and architecture":    { text: "text-[#9F1239]", border: "border-[#9F1239]", hex: "#9F1239" },
+  literature:                { text: "text-[#581C87]", border: "border-[#581C87]", hex: "#581C87" },
+  philosophy:                { text: "text-[#0F172A]", border: "border-[#0F172A]", hex: "#0F172A" },
+  religion:                  { text: "text-[#78350F]", border: "border-[#78350F]", hex: "#78350F" },
+  exploration:               { text: "text-[#1E40AF]", border: "border-[#1E40AF]", hex: "#1E40AF" },
+  people:                    { text: "text-[#9A3412]", border: "border-[#9A3412]", hex: "#9A3412" },
+  sports:                    { text: "text-[#B45309]", border: "border-[#B45309]", hex: "#B45309" },
+  viral_quote:               { text: "text-[#475569]", border: "border-[#475569]", hex: "#475569" },
 };
-const DEFAULT_CAT_COLOR = { text: "text-[#334155]", border: "border-[#334155]" };
+const DEFAULT_CAT_COLOR = { text: "text-[#334155]", border: "border-[#334155]", hex: "#334155" };
 
 export default function TodayPage() {
   const { t, language, disabledCategories } = useLanguage();
@@ -37,7 +47,12 @@ export default function TodayPage() {
       const params = new URLSearchParams(window.location.search);
       const targetDate = params.get('date');
       
-      const CATEGORY_ORDER: Record<string, number> = { history: 1, science: 2, space: 3, warfare: 4, culture: 5, people: 6, viral_quote: 7, sports: 8, curiosity: 9, local: 10, observance: 11, music: 12 };
+      const CATEGORY_ORDER: Record<string, number> = { 
+        history: 1, warfare: 2, "politics and government": 3, law: 4, "business and economy": 5, 
+        science: 6, physics: 7, "biology and medicine": 8, environment: 9, technology: 10, space: 11, exploration: 12,
+        culture: 13, "art and architecture": 14, literature: 15, "film and television": 16, music: 17, philosophy: 18, religion: 19,
+        people: 20, sports: 21, viral_quote: 22 
+      };
 
       // CANONICAL DATE: Always en-US for DB matching
       const todayStr = targetDate || new Date().toLocaleDateString("en-US", { month: "long", day: "numeric" });
@@ -51,13 +66,17 @@ export default function TodayPage() {
             .map((it: any) => ({
               id: it.id,
               category: it.category,
-              title: it.title,
+              title: (language === 'es' ? it.title_es : language === 'gl' ? it.title_gl : null) || it.title,
               year: it.year,
-              shortExplanation: it.short_explanation,
-              whyItMatters: it.why_it_matters,
+              shortExplanation: (language === 'es' ? it.short_explanation_es : language === 'gl' ? it.short_explanation_gl : null) || it.short_explanation,
+              whyItMatters: (language === 'es' ? it.why_it_matters_es : language === 'gl' ? it.why_it_matters_gl : null) || it.why_it_matters,
               imageUrl: it.image_url,
               imageSource: it.image_source,
-              metadata: it.metadata_spotify_track_id ? { spotifyTrackId: it.metadata_spotify_track_id } : undefined
+              metadata: (() => {
+                const raw = it.metadata_spotify_track_id;
+                if (!raw) return undefined;
+                try { return JSON.parse(raw); } catch { return { spotifyTrackId: raw }; }
+              })()
             })).sort((a: any, b: any) => (CATEGORY_ORDER[a.category] || 99) - (CATEGORY_ORDER[b.category] || 99))
         }
       }
@@ -214,11 +233,11 @@ export default function TodayPage() {
                      {t("Pending")}
                    </h2>
 
-                   <div className="flex flex-col items-center md:items-start mt-6 md:mt-8 animate-fade-rise animate-delay-2 w-full pt-4 md:pt-0">
+                   <div className="flex flex-col items-center md:items-start mt-8 md:mt-8 animate-fade-rise animate-delay-2 w-full pt-4 md:pt-0">
                      <div className="w-12 h-[1.5px] bg-ink-navy/30 mb-6"></div>
                      <p className="text-sm md:text-base font-bold tracking-[0.3em] uppercase text-ink-navy/80 overflow-hidden text-center md:text-left leading-relaxed px-4 md:px-0">
                        <span className="inline-block animate-[slideUp_1s_ease-out_0.6s_both]">
-                         What defined this day across time and space.
+                         {t("Tagline")}
                        </span>
                      </p>
                    </div>
@@ -228,7 +247,7 @@ export default function TodayPage() {
                      onClick={goNext}
                      className="mt-8 md:mt-12 hidden md:flex group items-center gap-3 bg-ink-navy text-mist-white px-8 py-4 text-[11px] font-bold tracking-[0.25em] uppercase hover:bg-slate-blue transition-all duration-300 focus:outline-none animate-fade-rise animate-delay-4"
                    >
-                     Explore the day
+                     {t("ExploreDay")}
                      <ChevronRight size={14} strokeWidth={2} className="group-hover:translate-x-1 transition-transform" />
                    </button>
                  </div>
@@ -236,7 +255,7 @@ export default function TodayPage() {
                  {/* Mobile Chevron */}
                  <button 
                    onClick={goNext}
-                   className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-2"
+                   className="absolute bottom-36 md:bottom-32 left-1/2 -translate-x-1/2 animate-fade-rise animate-delay-4 transition-colors focus:outline-none md:hidden flex flex-col items-center gap-2"
                    aria-label="Scroll down"
                  >
                    <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-ink-navy/40 mb-[-10px]">{t("ScrollDown")}</span>
@@ -299,10 +318,27 @@ export default function TodayPage() {
               <section 
                 data-index={slideIndex} 
                 key={item.id} 
-                className="hoxe-slide min-h-[100dvh] w-full h-full shrink-0 snap-center relative flex flex-col px-10 md:px-20 lg:px-28 pt-28 md:pt-[68px]"
+                className="hoxe-slide min-h-[100dvh] w-full h-full shrink-0 snap-center relative flex flex-col pt-28 md:pt-[68px] transition-colors duration-500"
               >
+                {/* Glass breathing borders */}
+                <div 
+                  className="absolute inset-y-0 left-0 w-[6px] animate-breathe pointer-events-none z-40" 
+                  style={{ 
+                    background: `linear-gradient(180deg, ${getCategoryColor(item.category).hex}00 0%, ${getCategoryColor(item.category).hex}CC 15%, ${getCategoryColor(item.category).hex} 50%, ${getCategoryColor(item.category).hex}CC 85%, ${getCategoryColor(item.category).hex}00 100%)`,
+                    boxShadow: `4px 0 20px ${getCategoryColor(item.category).hex}30, 2px 0 8px ${getCategoryColor(item.category).hex}20`
+                  }}
+                />
+                <div 
+                  className="absolute inset-y-0 right-0 w-[6px] animate-breathe pointer-events-none z-40" 
+                  style={{ 
+                    background: `linear-gradient(180deg, ${getCategoryColor(item.category).hex}00 0%, ${getCategoryColor(item.category).hex}CC 15%, ${getCategoryColor(item.category).hex} 50%, ${getCategoryColor(item.category).hex}CC 85%, ${getCategoryColor(item.category).hex}00 100%)`,
+                    boxShadow: `-4px 0 20px ${getCategoryColor(item.category).hex}30, -2px 0 8px ${getCategoryColor(item.category).hex}20`
+                  }}
+                />
+                <div className="px-10 md:px-20 lg:px-28 h-full">
                 <div className={cn("w-full h-full transition-opacity duration-700", isActive ? "opacity-100" : "opacity-0 pointer-events-none")}>
                  <CategorySlideContent item={item} index={idx} isActive={isActive} />
+                </div>
                 </div>
               </section>
             );
@@ -313,13 +349,13 @@ export default function TodayPage() {
       {/* Category Navigation (Dots on Mobile, Text Bar on Desktop) */}
       <div className={cn(
         "absolute z-50 flex transition-all duration-1000 ease-in-out pointer-events-none",
-        currentSlide > 0 ? "opacity-100 pointer-events-auto" : "opacity-0",
+        currentSlide > 0 ? "opacity-100" : "opacity-0",
         // Mobile style: right aligned dots at 50% height
         "right-4 top-1/2 -translate-y-1/2 flex-col",
         // Desktop style: bottom aligned centered bar
         "md:right-auto md:top-auto md:bottom-0 md:transform-none md:w-full md:flex-row md:justify-center md:pb-5 md:pt-10 md:bg-gradient-to-t md:from-mist-white md:via-mist-white/80 md:to-transparent"
       )}>
-        <nav className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-3 md:gap-10 md:px-6">
+        <nav className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-3 md:gap-10 md:px-6 pointer-events-auto">
            {uniqueCategories.map((catLabel: any) => {
               const currentCategoryName = currentSlide > 0 ? briefing.items[currentSlide - 1].category : '';
               const isActive = currentCategoryName === catLabel;
@@ -358,8 +394,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
   const { toggleCard, isSaved } = useSavedCards();
   const saved = isSaved(item.id);
   const isMusic = item.category === "music";
-  const hasSpotify = isMusic && item.metadata?.spotifyTrackId;
-  const showImage = !isMusic && item.imageUrl;
+  const showImage = item.imageUrl;
 
   const catColor = CATEGORY_COLOR_MAP[item.category] || DEFAULT_CAT_COLOR;
   
@@ -404,7 +439,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
   };
 
   return (
-    <div ref={cardRef} className="w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 h-full relative" style={{ gridTemplateRows: 'auto auto 1fr' }}>
+    <div ref={cardRef} className="w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 h-full relative" style={{ gridTemplateRows: expanded ? 'auto 1fr' : 'auto 1fr auto' }}>
       
       {/* Share Overlay */}
       {showShareMenu && (
@@ -445,94 +480,126 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
         </div>
       </div>
 
-      <div className={cn("col-span-full self-start", (hasSpotify || showImage) ? "md:col-span-7" : "")}>
+      <div className={cn(
+        "col-span-full flex flex-col items-center text-center transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]",
+        expanded ? "justify-start pt-2" : "justify-center",
+        showImage ? "md:col-span-7 md:items-start md:text-left" : ""
+      )}>
         <h2 className={cn(
-          "font-serif text-ink-navy leading-[1.05] tracking-tight transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] origin-left",
-          expanded ? "text-2xl md:text-3xl" : "text-[2rem] md:text-[3rem]"
+          "font-serif text-ink-navy tracking-tight transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]",
+          expanded ? "text-xl md:text-2xl leading-[1.15]" : "text-[2.75rem] md:text-[4.5rem] leading-[1.12]"
         )}>
           {item.title}
         </h2>
-      </div>
-
-      {(hasSpotify || showImage) && (
-        <div className="col-span-full md:col-span-5 md:row-span-2 md:col-start-8 md:row-start-2 mb-4 md:mb-0 pt-2 z-10 hidden md:block">
-          {hasSpotify && (
-            <MusicPlayerCard
-              title={item.title}
-              artist={item.metadata!.artist || "Unknown Artist"}
-              spotifyTrackId={item.metadata!.spotifyTrackId!}
-            />
-          )}
-          {showImage && (
-            <div className="relative w-full flex flex-col group mt-1">
-              <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} className="w-full h-auto max-h-[60vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" />
-              <div className="w-full relative mt-3">
-                <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
-                <span className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className={cn(
-        "col-span-full gap-4 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pb-16 md:pb-14 items-start",
-        (hasSpotify || showImage) ? "md:col-span-7" : "grid grid-cols-1"
-      )}>
-        <div className="flex flex-col">
-          {hasSpotify && (
-            <div className="col-span-full mb-6 md:hidden">
-              <MusicPlayerCard
-                title={item.title}
-                artist={item.metadata!.artist || "Unknown Artist"}
-                spotifyTrackId={item.metadata!.spotifyTrackId!}
-              />
-            </div>
-          )}
-        <button 
-          onClick={() => setExpanded(!expanded)}
-          className="group flex items-center gap-2.5 mb-3 text-ink-navy hover:text-slate-blue transition-all focus:outline-none"
-        >
-          <span className="w-5 h-[1px] bg-ink-navy/30 group-hover:bg-slate-blue group-hover:w-7 transition-all" />
-          <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em]">
-            {expanded ? t("CloseContext") : t("ReadContext")}
-          </span>
-        </button>
-
         <div className={cn(
-          "grid transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+          "grid transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] w-full",
           expanded ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"
         )}>
           <div className="overflow-hidden min-h-0">
-            <p className="text-ink-navy/75 text-base md:text-lg leading-relaxed md:leading-[1.65] font-medium">
+            <p className="text-ink-navy/55 text-lg md:text-xl leading-relaxed md:leading-[1.65] font-medium mt-5">
               {item.shortExplanation}
             </p>
           </div>
         </div>
 
+      </div>
+
+      {showImage && (
+        <div className="col-span-full md:col-span-5 md:row-span-2 md:col-start-8 md:row-start-2 mb-4 md:mb-0 pt-2 z-10 hidden md:block">
+          <div className="relative w-full flex flex-col group mt-1 vintage-frame vintage-corners">
+            <img 
+              src={item.imageUrl!.includes('wiki') ? `https://wsrv.nl/?url=${item.imageUrl!.replace('https://', '')}&w=800` : item.imageUrl!} 
+              alt={item.title} 
+              loading="lazy" 
+              referrerPolicy="no-referrer" 
+              crossOrigin="anonymous" 
+              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} 
+              className="w-full h-auto max-h-[45vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" 
+            />
+            <div className="w-full relative mt-3">
+              <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
+              <span className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className={cn(
+        "col-span-full gap-4 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pb-28 md:pb-24 relative z-[55]",
+        showImage ? "md:col-span-7" : "md:col-span-12 md:pr-12 lg:pr-24"
+      )}>
+        <div className="flex flex-col items-center md:items-start w-full">
+          {(isMusic || item.category === 'viral_music') && (item.metadata?.spotifyId || item.metadata?.deezerId) && (
+            <div className="w-full mb-6 relative z-[60]">
+              <MusicPlayerCard
+                trackTitle={item.metadata.spotifyTitle || item.metadata.deezerTitle || item.title}
+                artistName={item.metadata.spotifyArtist || item.metadata.deezerArtist || ''}
+                albumCover={item.metadata.spotifyCover || item.metadata.deezerCover || ''}
+                spotifyId={(item.metadata.spotifyId || item.metadata.deezerId) as string}
+              />
+            </div>
+          )}
+
+        {/* Mobile Image Layer (parte baja --> Moved Up) */}
+        {showImage && (
+          <div className="col-span-full mt-4 mb-2 md:hidden mx-auto w-[90%] flex flex-col items-end vintage-frame vintage-corners transition-all duration-500">
+            <img 
+              src={item.imageUrl!.includes('wiki') ? `https://wsrv.nl/?url=${item.imageUrl!.replace('https://', '')}&w=800` : item.imageUrl!}
+              alt={item.title} 
+              loading="lazy" 
+              referrerPolicy="no-referrer" 
+              crossOrigin="anonymous" 
+              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} 
+              className="w-full h-auto max-h-[35vh] object-cover filter grayscale" 
+            />
+            <div className="w-full relative mt-3 px-4 h-full flex flex-col pb-4">
+              <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
+              <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
+            </div>
+          </div>
+        )}
+
+        <button 
+          onClick={() => setExpanded(!expanded)}
+          className={cn(
+            "group flex items-center gap-3 focus:outline-none transition-all duration-500",
+            expanded ? "self-start mb-5 mt-0" : "self-center mt-6 mb-4"
+          )}
+        >
+          <div className={cn(
+            "w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300",
+            expanded 
+              ? "bg-ink-navy/10 border border-ink-navy/20" 
+              : "border-2 group-hover:scale-110",
+            !expanded && catColor.border
+          )}>
+            <span className={cn(
+              "transition-all text-sm font-light leading-none",
+              expanded ? "text-ink-navy/60" : "text-ink-navy/50"
+            )}>
+              {expanded ? "×" : "+"}
+            </span>
+          </div>
+          <span className={cn(
+            "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] transition-all",
+            expanded ? "text-ink-navy/40" : "text-ink-navy/50 group-hover:text-ink-navy/80"
+          )}>
+            {expanded ? t("CloseContext") : t("ReadContext")}
+          </span>
+        </button>
+
         <div className={cn(
-          "grid transition-all duration-[800ms] delay-100 ease-[cubic-bezier(0.23,1,0.32,1)]",
-          expanded ? "grid-rows-[1fr] opacity-100 mt-1" : "grid-rows-[0fr] opacity-0 mt-0 pointer-events-none"
+          "grid transition-all duration-[800ms] delay-100 ease-[cubic-bezier(0.23,1,0.32,1)] w-full text-left",
+          expanded ? "grid-rows-[1fr] opacity-100 mt-0" : "grid-rows-[0fr] opacity-0 mt-0 pointer-events-none"
         )}>
           <div className="overflow-hidden min-h-0">
-            <div className="text-sm md:text-base text-ink-navy/85 leading-[1.7] md:leading-[1.75] font-serif space-y-4 text-justify">
+            <div className="text-sm md:text-base text-ink-navy/85 leading-[1.7] md:leading-[1.75] font-serif space-y-4">
               {item.whyItMatters.split('\n\n').map((paragraph: any, i: number) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
           </div>
         </div>
-
-        {/* Mobile Image Layer (parte baja) */}
-        {showImage && (
-          <div className="col-span-full mt-10 mb-8 md:hidden relative left-1/2 -ml-[50vw] w-screen flex flex-col items-end">
-            <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" crossOrigin="anonymous" onError={(e) => { e.currentTarget.style.display = 'none'; }} className="w-full h-auto object-cover filter grayscale" />
-            <div className="w-full relative mt-3 px-6 h-full flex flex-col pb-4">
-              <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
-              <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
-            </div>
-          </div>
-        )}
 
         </div>
       </div>

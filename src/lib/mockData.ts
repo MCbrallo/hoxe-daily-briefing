@@ -1,6 +1,6 @@
 export interface BriefingItem {
   id: string;
-  category: "history" | "local" | "music" | "science" | "observance" | "people" | "curiosity" | "warfare" | "sports" | "space" | "culture" | "viral_quote";
+  category: string;
   title: string;
   year?: string;
   shortExplanation: string;
@@ -14,6 +14,15 @@ export interface BriefingItem {
     spotifyTrackId?: string;
     youtubeVideoId?: string;
     albumArt?: string;
+    deezerId?: string;
+    deezerTitle?: string;
+    deezerArtist?: string;
+    deezerCover?: string;
+    deezerPreview?: string;
+    spotifyId?: string;
+    spotifyTitle?: string;
+    spotifyArtist?: string;
+    spotifyCover?: string;
   };
 }
 

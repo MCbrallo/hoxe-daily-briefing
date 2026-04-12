@@ -38,7 +38,14 @@ const translations = {
     ObNext: "NEXT",
     SelectLang: "Choose your language",
     SelectLangDesc: "Select your preferred context language.",
-    ScrollDown: "Scroll down to explore"
+    ScrollDown: "Scroll down to explore",
+    Tagline: "What defined this day across time and space.",
+    ExploreDay: "Explore the day",
+    ArchiveTitle: "Archive",
+    ArchiveSubtitle: "An index of past contexts.",
+    EndOfArchive: "You've reached the end of the archive.",
+    ArchiveFullBriefing: "Full briefing available",
+    Skip: "Skip",
   },
   es: {
     Today: "Hoy",
@@ -66,7 +73,14 @@ const translations = {
     ObNext: "SIGUIENTE",
     SelectLang: "Elige tu idioma",
     SelectLangDesc: "Selecciona tu idioma preferido para el contexto.",
-    ScrollDown: "Desliza para explorar"
+    ScrollDown: "Desliza para explorar",
+    Tagline: "Lo que definió este día a través del tiempo y el espacio.",
+    ExploreDay: "Explorar el día",
+    ArchiveTitle: "Archivo",
+    ArchiveSubtitle: "Un índice de contextos pasados.",
+    EndOfArchive: "Has llegado al final del archivo.",
+    ArchiveFullBriefing: "Briefing completo disponible",
+    Skip: "Saltar",
   },
   gl: {
     Today: "Hoxe",
@@ -94,7 +108,14 @@ const translations = {
     ObNext: "SEGUINTE",
     SelectLang: "Escolle o teu idioma",
     SelectLangDesc: "Selecciona o teu idioma preferido para o contexto.",
-    ScrollDown: "Desliza para explorar"
+    ScrollDown: "Desliza para explorar",
+    Tagline: "O que definiu este día a través do tempo e do espazo.",
+    ExploreDay: "Explorar o día",
+    ArchiveTitle: "Arquivo",
+    ArchiveSubtitle: "Un índice de contextos pasados.",
+    EndOfArchive: "Chegaches ao final do arquivo.",
+    ArchiveFullBriefing: "Briefing completo dispoñible",
+    Skip: "Saltar",
   }
 };
 
