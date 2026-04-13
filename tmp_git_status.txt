@@ -1,0 +1,76 @@
+﻿ M next.config.ts
+ M package-lock.json
+ M package.json
+ M scripts/generate_daily.ts
+ M src/app/admin/page.tsx
+ M src/app/archive/page.tsx
+ M src/app/globals.css
+ M src/app/page.tsx
+ M src/app/profile/page.tsx
+ M src/app/viral/page.tsx
+ M src/components/MusicPlayerCard.tsx
+ M src/components/layout/Navbar.tsx
+ M src/components/layout/Onboarding.tsx
+ M src/context/LanguageContext.tsx
+ M src/lib/mockData.ts
+?? check_music_out.txt
+?? check_music_out2.txt
+?? hoxe_plantilla.csv
+?? may11_music.json
+?? music_error.txt
+?? "scripts/ migrate_to_spotify_ddg.ts"
+?? scripts/audit_final.ts
+?? scripts/audit_images.ts
+?? scripts/audit_music.ts
+?? scripts/check_data.ts
+?? scripts/delete_old_dates.ts
+?? scripts/expand_context.ts
+?? scripts/find_dead_images.ts
+?? scripts/fix_april20_context.ts
+?? scripts/fix_last6.ts
+?? scripts/fix_may_images.ts
+?? scripts/fix_spotify_final.ts
+?? scripts/fix_spotify_ids.ts
+?? scripts/import_april_20_26.ts
+?? scripts/import_csv.ts
+?? scripts/import_excel.ts
+?? scripts/import_excel_v3.ts
+?? scripts/migrate_to_spotify.ts
+?? scripts/normalize_categories.ts
+?? scripts/patch_images.ts
+?? scripts/prune_images.ts
+?? scripts/purge_broken_images.ts
+?? scripts/remove_generic_text.ts
+?? scripts/resolve_images_final.ts
+?? scripts/resolve_images_pass2.ts
+?? scripts/resolve_images_v2.ts
+?? scripts/resolve_music.ts
+?? scripts/resolve_recent_music.ts
+?? scripts/set_may_images.ts
+?? scripts/translate_existing.ts
+?? src/components/MediaEmbed.tsx
+?? src/components/SoundCloudEmbed.tsx
+?? tmp_apr20_out.txt
+?? tmp_audit.ts
+?? tmp_audit_out.txt
+?? tmp_bad_images.json
+?? tmp_check_music.ts
+?? tmp_check_san_remo.ts
+?? tmp_deezer.ts
+?? tmp_git_status.txt
+?? tmp_inspect.py
+?? tmp_may11.txt
+?? tmp_may4.txt
+?? tmp_may_img_out.txt
+?? tmp_music.ts
+?? tmp_music_audit.txt
+?? tmp_music_audit2.txt
+?? tmp_music_counts.txt
+?? tmp_out.txt
+?? tmp_out2.txt
+?? tmp_output.txt
+?? tmp_set_img_out.txt
+?? tmp_spotify.out
+?? tmp_test_dates.ts
+?? tmp_verify.ts
+?? tmp_verify_out.txt

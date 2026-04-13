@@ -1,0 +1,43 @@
+HOXE MAY 18-24 AUDIT
+====================
+
+== May 18 (Monday) == 17 cards ==
+   Editorial: 12 | Viral: 5
+   Images: 12/17 | ES: 17 | GL: 17 | Music: 1
+   Categories: history, warfare, people, music, viral_scandal, viral_record
+   MUSIC: W. G. Sebald [music] HAS_YT
+
+== May 19 (Tuesday) == 16 cards ==
+   Editorial: 11 | Viral: 5
+   Images: 12/16 | ES: 16 | GL: 16 | Music: 1
+   Categories: history, warfare, space, music, viral_scandal, viral_record, people
+   MUSIC: Sam Smith [music] HAS_YT
+
+== May 20 (Wednesday) == 17 cards ==
+   Editorial: 12 | Viral: 5
+   Images: 12/17 | ES: 17 | GL: 17 | Music: 1
+   Categories: history, science, warfare, culture, people, music, viral_scandal, viral_record
+   MUSIC: Dave Thomas (actor) [music] HAS_YT
+
+== May 21 (Thursday) == 18 cards ==
+   Editorial: 13 | Viral: 5
+   Images: 13/18 | ES: 18 | GL: 18 | Music: 1
+   Categories: warfare, culture, people, music, viral_scandal, viral_movie, viral_record, history, science
+   MUSIC: Park So-jin [music] HAS_YT
+
+== May 22 (Friday) == 19 cards ==
+   Editorial: 14 | Viral: 5
+   Images: 15/19 | ES: 19 | GL: 19 | Music: 1
+   Categories: space, history, music, viral_scandal, people, science, warfare, viral_record
+   MUSIC: Requiem (Verdi) [music] HAS_YT
+
+== May 23 (Saturday) == 0 cards ==
+   Editorial: 0 | Viral: 0
+   Images: 0/0 | ES: 0 | GL: 0 | Music: 0
+   Categories: 
+
+== May 24 (Sunday) == 19 cards ==
+   Editorial: 14 | Viral: 5
+   Images: 15/19 | ES: 19 | GL: 19 | Music: 1
+   Categories: people, history, warfare, culture, space, music, viral_scandal, viral_record, viral_moment
+   MUSIC: Rodrigo (musician) [music] HAS_YT

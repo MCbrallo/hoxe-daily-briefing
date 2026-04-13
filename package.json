@@ -11,6 +11,9 @@
     "import-excel": "npx tsx scripts/import_excel.ts"
   },
   "dependencies": {
+    "@capacitor/core": "^8.3.0",
+    "@capacitor/local-notifications": "^8.0.2",
+    "@capacitor/share": "^8.0.1",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.103.0",
@@ -22,12 +25,16 @@
     "html-to-image": "^1.11.13",
     "lucide-react": "^1.8.0",
     "next": "16.2.3",
+    "puppeteer": "^24.40.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tailwind-merge": "^3.5.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "yt-search": "^2.13.1"
   },
   "devDependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,0 +1,17 @@
+﻿Ôùç injected env (2) from .env.local // tip: Ôîÿ custom filepath { path: '/custom/path/.env' }
+Total music cards: 14
+
+[viral_music    ] MONTERO Rules The UK Singles Chart            | spotifyId: 67BtfxlNbhBmCDR2L2l8qd | deezerId: NONE
+[viral_music    ] Crazy What Love Can Do Reaches The Top        | spotifyId: 2vIe3r96JEMy02YgCPWXrX | deezerId: NONE
+[viral_music    ] Prince Tops Britain Under A Symbol            | spotifyId: NONE | deezerId: 536618412
+[music          ] La Marseillaise Is Written                    | spotifyId: NONE | deezerId: 3451265261
+[viral_music    ] Fortnight Debuts At The Top In Britain        | spotifyId: NONE | deezerId: 2753115381
+[viral_music    ] Make Luv Sits At Number One In Britain        | spotifyId: NONE | deezerId: 57840351
+[music          ] Tito Puente Is Born                           | spotifyId: NONE | deezerId: 765802852
+[music          ] Randall Thompson Is Born                      | spotifyId: NONE | deezerId: 1532680312
+[music          ] Yehudi Menuhin Is Born                        | spotifyId: NONE | deezerId: 63344756
+[music          ] Harold Arlen Dies                             | spotifyId: NONE | deezerId: 908144
+[viral_music    ] Ordinary Opens At Number One                  | spotifyId: NONE | deezerId: 3210709941
+[viral_music    ] We Are The World Tops The UK Chart            | spotifyId: NONE | deezerId: 11118881
+[music          ] Johnny Griffin Is Born                        | spotifyId: NONE | deezerId: 1435439
+[music          ] Count Basie Dies                              | spotifyId: NONE | deezerId: 610397

@@ -1,0 +1,86 @@
+﻿Ôùç injected env (4) from .env.local // tip: Ôîÿ multiple files { path: ['.env.local', '.env'] }
+
+ÔòÉÔòÉ May 1 ÔòÉÔòÉ
+  Ô£à The Empire State Building Is Dedicated ÔåÆ image set
+  Ô£à Citizen Kane Premieres ÔåÆ image set
+  Ô£à The U 2 Incident Begins ÔåÆ image set
+
+ÔòÉÔòÉ May 2 ÔòÉÔòÉ
+  Ô£à Leonardo Da Vinci Dies ÔåÆ image set
+  Ô£à Berlin Surrenders To The Red Army ÔåÆ image set
+  Ô£à Lou Gehrig Ends His Streak ÔåÆ image set
+
+ÔòÉÔòÉ May 3 ÔòÉÔòÉ
+  Ô£à Margaret Thatcher Becomes Prime Minister ÔåÆ image set
+  Ô£à The Anne Frank House Opens To The Public ÔåÆ image set
+  Ô£à Poland Adopts The Constitution Of May 3 ÔåÆ image set
+
+ÔòÉÔòÉ May 4 ÔòÉÔòÉ
+  Ô£à Audrey Hepburn Is Born ÔåÆ image set
+  Ô£à National Guardsmen Kill Students At Kent State ÔåÆ image set
+  Ô£à The May Fourth Movement Begins ÔåÆ image set
+
+ÔòÉÔòÉ May 5 ÔòÉÔòÉ
+  Ô£à Karl Marx Is Born ÔåÆ image set
+  Ô£à Alan Shepard Flies Into Space ÔåÆ image set
+  Ô£à Napoleon Dies On Saint Helena ÔåÆ image set
+
+ÔòÉÔòÉ May 6 ÔòÉÔòÉ
+  Ô£à The Hindenburg Burns At Lakehurst ÔåÆ image set
+  Ô£à Roger Bannister Breaks The Four Minute Barrier ÔåÆ image set
+  Ô£à The Channel Tunnel Officially Opens ÔåÆ image set
+
+ÔòÉÔòÉ May 7 ÔòÉÔòÉ
+  Ô£à A U Boat Sinks The Lusitania ÔåÆ image set
+  Ô£à Beethoven'S Ninth Symphony Premieres ÔåÆ image set
+  Ô£à Germany Signs Surrender At Reims ÔåÆ image set
+
+ÔòÉÔòÉ May 8 ÔòÉÔòÉ
+  Ô£à Victory In Europe Day Is Declared ÔåÆ image set
+  Ô£à The Beatles Release Let It Be ÔåÆ image set
+  Ô£à Mount Pel├®E Destroys Saint Pierre ÔåÆ image set
+
+ÔòÉÔòÉ May 9 ÔòÉÔòÉ
+  Ô£à Aldo Moro Is Found Dead In Rome ÔåÆ image set
+  Ô£à Billy Joel Is Born ÔåÆ image set
+  Ô£à Thomas Blood Tries To Steal The Crown Jewels ÔåÆ image set
+
+ÔòÉÔòÉ May 10 ÔòÉÔòÉ
+  Ô£à Nelson Mandela Is Inaugurated President ÔåÆ image set
+  Ô£à Richard Feynman Is Born ÔåÆ image set
+  Ô£à The Transcontinental Railroad Is Completed ÔåÆ image set
+
+ÔòÉÔòÉ May 11 ÔòÉÔòÉ
+  Ô£à Bob Marley Dies ÔåÆ image set
+  Ô£à Salvador Dal├¡ Is Born ÔåÆ image set
+  Ô£à Deep Blue Beats Garry Kasparov ÔåÆ image set
+
+ÔòÉÔòÉ May 12 ÔòÉÔòÉ
+  Ô£à Florence Nightingale Is Born ÔåÆ image set
+  Ô£à Katharine Hepburn Is Born ÔåÆ image set
+
+ÔòÉÔòÉ May 13 ÔòÉÔòÉ
+  Ô£à Stevie Wonder Is Born ÔåÆ image set
+  Ô£à Churchill Delivers Blood, Toil, Tears And Sweat ÔåÆ image set
+
+ÔòÉÔòÉ May 14 ÔòÉÔòÉ
+  Ô£à Israel Declares Statehood ÔåÆ image set
+  Ô£à Frank Sinatra Dies ÔåÆ image set
+  Ô£à Skylab Is Launched ÔåÆ image set
+
+ÔòÉÔòÉ May 15 ÔòÉÔòÉ
+  Ô£à Emily Dickinson Dies ÔåÆ image set
+  Ô£à Pierre Curie Is Born ÔåÆ image set
+  Ô£à Mickey Mouse Appears In Plane Crazy ÔåÆ image set
+
+ÔòÉÔòÉ May 16 ÔòÉÔòÉ
+  Ô£à The Warsaw Ghetto Uprising Is Crushed ÔåÆ image set
+  Ô£à Top Gun Opens In Theaters ÔåÆ image set
+  Ô£à Pet Sounds Is Released ÔåÆ image set
+
+ÔòÉÔòÉ May 17 ÔòÉÔòÉ
+  Ô£à Brown V. Board Is Decided ÔåÆ image set
+  Ô£à The First Kentucky Derby Is Run ÔåÆ image set
+  Ô£à The Wonderful Wizard Of Oz Is Published ÔåÆ image set
+
+Ô£à Done. Curated Wikipedia images set for May 1ÔÇô17.

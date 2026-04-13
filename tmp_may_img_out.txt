@@ -1,0 +1,887 @@
+﻿Ôùç injected env (4) from .env.local // tip: Ôîÿ multiple files { path: ['.env.local', '.env'] }
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 1 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: The Bavarian Illuminati Is Founded
+  Ô¼Ü Cleared: The Penny Black Goes On Sale
+  Ô¼Ü Cleared: The Great Exhibition Opens
+  Ô¼Ü Cleared: Alexander William Williamson Is Born
+  Ô¼Ü Cleared: May Day Is First Observed As A Workers' Holiday
+  Ô¼Ü Cleared: The World'S Columbian Exposition Opens
+  Ô¼Ü Cleared: Gersh Budker Is Born
+  Ô¼Ü Cleared: Scott Carpenter Is Born
+  ­ƒôÀ PICK: Citizen Kane Premieres...
+  Wiki search error for "Citizen Kane Premieres": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: The U 2 Incident Begins...
+  Wiki search error for "U 2 Incident Begins": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Aram Khachaturian Dies
+  Ô¼Ü Cleared: Kim Soon Kwon Is Born
+  Ô¼Ü Cleared: Ayrton Senna Dies At Imola
+  Ô¼Ü Cleared: Tony Blair Wins A Landslide
+  Ô¼Ü Cleared: The European Union Expands Dramatically
+  Ô¼Ü Cleared: Osama Bin Laden Is Killed
+  Ô¼Ü Cleared: Great Britain Comes Into Being
+  Ô¼Ü Cleared: Santiago Ram├│N Y Cajal Is Born
+  ­ƒôÀ PICK: The Empire State Building Is Dedicated...
+  Wiki search error for "Empire State Building Dedicated": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Empire State Building": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Eight Hour Day Strikes Begin
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 2 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: John Cabot Sails From Bristol
+  Ô¼Ü Cleared: The King James Bible Is First Published
+  Ô¼Ü Cleared: Madrid Rises Against Napoleon
+  Ô¼Ü Cleared: D'Arcy Wentworth Thompson Is Born
+  Ô¼Ü Cleared: Ki Hadjar Dewantoro Is Born
+  Ô¼Ü Cleared: Theodore Bikel Is Born
+  ­ƒôÀ PICK: Lou Gehrig Ends His Streak...
+  Wiki search error for "Lou Gehrig Ends His Streak": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Lou Gehrig Ends": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: Berlin Surrenders To The Red Army...
+  Wiki search error for "Berlin Surrenders Red Army": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Berlin Surrenders Red": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Caryl Chessman Is Executed
+  Ô¼Ü Cleared: Giacomo Meyerbeer Dies
+  Ô¼Ü Cleared: Giulio Natta Dies
+  Ô¼Ü Cleared: The ARA General Belgrano Is Sunk
+  Ô¼Ü Cleared: Pridi Phanomyong Dies
+  Ô¼Ü Cleared: Tina Maze Is Born
+  Ô¼Ü Cleared: The Yongle Emperor Is Born
+  Ô¼Ü Cleared: Ruth Rendell Dies
+  ­ƒôÀ PICK: Leonardo Da Vinci Dies...
+  Wiki search error for "Leonardo Da Vinci": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Robert W. Wood Is Born
+  Ô¼Ü Cleared: Ernest Starling Dies
+  Ô¼Ü Cleared: Jacques Rogge Is Born
+  Ô¼Ü Cleared: Hungary Starts Dismantling Its Border Fence With A
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 3 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Columbus Reaches Jamaica
+  Ô¼Ü Cleared: The Executions After The Madrid Uprising Become Hi
+  Ô¼Ü Cleared: Japan'S Postwar Constitution Takes Effect
+  ­ƒôÀ PICK: The Anne Frank House Opens To The Public...
+  Wiki search error for "Anne Frank House Opens Public": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Anne Frank House": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Sorbonne Protests Ignite The Paris Revolt
+  ­ƒôÀ PICK: Margaret Thatcher Becomes Prime Minister...
+  Wiki search error for "Margaret Thatcher Becomes Prime Minister": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Margaret Thatcher Becomes": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Christine Jorgensen Dies
+  Ô¼Ü Cleared: World Press Freedom Day Is Proclaimed
+  Ô¼Ü Cleared: Steven Weinberg Is Born
+  Ô¼Ü Cleared: George Paget Thomson Is Born
+  Ô¼Ü Cleared: Alfred Kastler Is Born
+  Ô¼Ü Cleared: Lloyd Price Dies
+  Ô¼Ü Cleared: V─øRa ─î├íSlavsk├í Is Born
+  Ô¼Ü Cleared: Aldo Rossi Is Born
+  Ô¼Ü Cleared: Emmanuel Joseph Siey├¿S Is Born
+  Ô¼Ü Cleared: The Oklahoma Outbreak Devastates The Region
+  ­ƒôÀ PICK: Poland Adopts The Constitution Of May 3...
+  Wiki search error for "Poland Adopts Constitution May 3": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Poland Adopts Constitution": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Battle Of The Coral Sea Begins
+  Ô¼Ü Cleared: The Tokyo Tribunal Opens Hearings
+  Ô¼Ü Cleared: The Old Man Of The Mountain Collapses
+  Ô¼Ü Cleared: Daniel Sickles Dies
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 4 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: The Augustinian Order Is Formed
+  Ô¼Ü Cleared: Inter Caetera Redraws Overseas Claims
+  Ô¼Ü Cleared: Jean Charles De Borda Is Born
+  Ô¼Ü Cleared: Tipu Sultan Falls At Seringapatam
+  Ô¼Ü Cleared: Napoleon Reaches Elba
+  Ô¼Ü Cleared: The Panama Canal Project Changes Hands
+  Ô¼Ü Cleared: Eugenie Clark Is Born
+  ­ƒôÀ PICK: Audrey Hepburn Is Born...
+  Wiki search error for "Audrey Hepburn": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The First Grammy Awards Are Presented
+  Ô¼Ü Cleared: The Freedom Riders Set Out
+  Ô¼Ü Cleared: Margaret Thatcher Enters Downing Street
+  Ô¼Ü Cleared: HMS Sheffield Is Lost In The Falklands War
+  Ô¼Ü Cleared: Magellan Heads For Venus
+  Ô¼Ü Cleared: Rhode Island Breaks With George III
+  Ô¼Ü Cleared: Yorkists Win At Tewkesbury
+  Ô¼Ü Cleared: Thomas Henry Huxley Is Born
+  ­ƒôÀ PICK: The May Fourth Movement Begins...
+  Wiki search error for "May Fourth Movement Begins": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "May Fourth Movement": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Hollywood Creates The Academy
+  ­ƒôÀ PICK: National Guardsmen Kill Students At Kent State...
+  Wiki search error for "National Guardsmen Kill Students Kent State": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "National Guardsmen Kill": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Christian De Duve Dies
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 5 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Kublai Khan Becomes Great Khan
+  Ô¼Ü Cleared: Satsuma Subdues The Ryukyu Kingdom
+  Ô¼Ü Cleared: Russia And Prussia Sign The Treaty Of Saint Peters
+  Ô¼Ü Cleared: S├©Ren Kierkegaard Is Born
+  ­ƒôÀ PICK: Karl Marx Is Born...
+  Wiki search error for "Karl Marx": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Estates General Meets At Versailles
+  Ô¼Ü Cleared: Sitting Bull Leads Lakota Followers Into Canada
+  Ô¼Ü Cleared: August Wilhelm Von Hofmann Dies
+  Ô¼Ü Cleared: Helen Redfield Is Born
+  Ô¼Ü Cleared: The Prague Uprising Begins
+  Ô¼Ü Cleared: Carnegie Hall Opens
+  Ô¼Ü Cleared: The Council Of Europe Is Founded
+  Ô¼Ü Cleared: Bobby Sands Dies After Hunger Strike
+  Ô¼Ü Cleared: The Second Council Of Constantinople Opens
+  Ô¼Ü Cleared: The Bay View Massacre Shocks Labor America
+  Ô¼Ü Cleared: Arthur Leonard Schawlow Is Born
+  Ô¼Ü Cleared: John L. Leal Is Born
+  ­ƒôÀ PICK: Napoleon Dies On Saint Helena...
+  Wiki search error for "Napoleon Saint Helena": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Liberation Day Is Celebrated In The Netherlands
+  ­ƒôÀ PICK: Alan Shepard Flies Into Space...
+  Wiki search error for "Alan Shepard Flies Into Space": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Alan Shepard Flies": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 6 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Rome Is Sacked By Imperial Troops
+  Ô¼Ü Cleared: Francis Xavier Reaches Goa
+  Ô¼Ü Cleared: Louis XIV Settles At Versailles
+  Ô¼Ü Cleared: The Penny Black Enters Use
+  Ô¼Ü Cleared: Victor Grignard Is Born
+  Ô¼Ü Cleared: Willem De Sitter Is Born
+  Ô¼Ü Cleared: The Chinese Exclusion Act Is Signed
+  Ô¼Ü Cleared: Robert H. Dicke Is Born
+  Ô¼Ü Cleared: Paul Lauterbur Is Born
+  ­ƒôÀ PICK: The Hindenburg Burns At Lakehurst...
+  Wiki search error for "Hindenburg Burns Lakehurst": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Bob Seger Is Born
+  ­ƒôÀ PICK: Roger Bannister Breaks The Four Minute Barrier...
+  Wiki search error for "Roger Bannister Breaks Four Minute Barrier": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Roger Bannister Breaks": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: The Channel Tunnel Officially Opens...
+  Wiki search error for "Channel Tunnel Officially Opens": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Channel Tunnel Officially": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: SpaceX Is Founded
+  Ô¼Ü Cleared: The Flash Crash Shakes Wall Street
+  Ô¼Ü Cleared: The Siege Of Cuzco Begins
+  Ô¼Ü Cleared: Henry VIII Orders English Bibles In Churches
+  Ô¼Ü Cleared: Frederick The Great Wins At Prague
+  Ô¼Ü Cleared: Corregidor Falls In The Philippines
+  Ô¼Ü Cleared: Three Kidnapped Women Are Found Alive In Cleveland
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 7 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: The Dome Of Hagia Sophia Collapses
+  Ô¼Ü Cleared: The Second Council Of Lyon Opens
+  Ô¼Ü Cleared: The Siege Of M├íLaga Begins
+  Ô¼Ü Cleared: New Orleans Is Founded
+  Ô¼Ü Cleared: Pontiac'S War Begins At Detroit
+  Ô¼Ü Cleared: Robespierre Promotes The Cult Of The Supreme Being
+  ­ƒôÀ PICK: Beethoven'S Ninth Symphony Premieres...
+  Wiki search error for "Beethoven'S Ninth Symphony Premieres": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Beethoven'S Ninth Symphony": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Great Natchez Tornado Devastates The Mississip
+  Ô¼Ü Cleared: Popov Demonstrates An Early Radio Receiver
+  Ô¼Ü Cleared: Ishir┼ì Honda Is Born
+  ­ƒôÀ PICK: A U Boat Sinks The Lusitania...
+  Wiki search error for "U Boat Sinks Lusitania": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Sidney Altman Is Born
+  ­ƒôÀ PICK: Germany Signs Surrender At Reims...
+  Wiki search error for "Germany Signs Surrender Reims": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Germany Signs Surrender": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Company That Becomes Sony Is Founded
+  Ô¼Ü Cleared: Dien Bien Phu Falls
+  Ô¼Ü Cleared: The Twenty Seventh Amendment Is Ratified
+  Ô¼Ü Cleared: Allan McLeod Cormack Dies
+  Ô¼Ü Cleared: Daimler And Chrysler Announce A Merger
+  Ô¼Ü Cleared: Greek Independence Is Recognized
+  Ô¼Ü Cleared: Simon Ramo Is Born
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 8 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: The Treaty Of Br├®Tigny Is Signed
+  Ô¼Ü Cleared: Joan Of Arc Lifts The Siege Of Orl├®Ans
+  Ô¼Ü Cleared: Antoine Lavoisier Is Executed
+  Ô¼Ü Cleared: Coca Cola Is First Sold
+  ­ƒôÀ PICK: Mount Pel├®E Destroys Saint Pierre...
+  Wiki search error for "Mount Pel├®E Destroys Saint Pierre": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Mount Pel├®E Destroys": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: David Attenborough Is Born
+  Ô¼Ü Cleared: The Battle Of The Coral Sea Ends
+  ­ƒôÀ PICK: Victory In Europe Day Is Declared...
+  Wiki search error for "Victory Europe Day Declared": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Victory Europe Day": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: H. Robert Horvitz Is Born
+  Ô¼Ü Cleared: The Asian Football Confederation Is Founded
+  ­ƒôÀ PICK: The Beatles Release Let It Be...
+  Wiki search error for "Beatles Release Let It Be": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Everest Is Climbed Without Supplemental Oxygen
+  Ô¼Ü Cleared: WHO Declares Smallpox Eradicated
+  Ô¼Ü Cleared: The Soviet Union Announces An Olympic Boycott
+  Ô¼Ü Cleared: The Thames Barrier Is Officially Opened
+  Ô¼Ü Cleared: Roger L. Easton Dies
+  Ô¼Ü Cleared: The Third Council Of Toledo Opens
+  Ô¼Ü Cleared: Andr├® Lwoff Is Born
+  Ô¼Ü Cleared: World Red Cross Day Takes Shape Around Henry Dunan
+  Ô¼Ü Cleared: De Soto Reaches The Mississippi
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 9 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Mr Punch Is First Recorded In England
+  ­ƒôÀ PICK: Thomas Blood Tries To Steal The Crown Jewels...
+  Wiki search error for "Thomas Blood Tries Steal Crown Jewels": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Thomas Blood Tries": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Society Of Artists Opens Its First Exhibition
+  Ô¼Ü Cleared: Nathan Bedford Forrest Surrenders
+  Ô¼Ü Cleared: The Vienna Stock Market Crashes
+  Ô¼Ü Cleared: Byrd Claims A Flight Over The North Pole
+  Ô¼Ü Cleared: Albert A. Michelson Dies
+  Ô¼Ü Cleared: U 110 And An Enigma Machine Are Captured
+  ­ƒôÀ PICK: Billy Joel Is Born...
+  Wiki search error for "Billy Joel": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Esteban Terradas Dies
+  Ô¼Ü Cleared: The Schuman Declaration Is Issued
+  Ô¼Ü Cleared: The First Oral Contraceptive Is Approved In The Un
+  Ô¼Ü Cleared: Nixon Impeachment Hearings Begin In The House Judi
+  ­ƒôÀ PICK: Aldo Moro Is Found Dead In Rome...
+  Wiki search error for "Aldo Moro Found Dead Rome": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Aldo Moro Found": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: England And Portugal Sign The Treaty Of Windsor
+  Ô¼Ü Cleared: Romania Proclaims Independence
+  Ô¼Ü Cleared: Ernst Bresslau Dies
+  Ô¼Ü Cleared: Austria And Denmark Clash At Heligoland
+  Ô¼Ü Cleared: Australia Opens Its First Federal Parliament
+  Ô¼Ü Cleared: Victory Day Takes Shape In The Soviet Sphere
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 10 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Columbus Reaches The Cayman Islands
+  Ô¼Ü Cleared: Britain Passes The Tea Act
+  Ô¼Ü Cleared: The Second Continental Congress Convenes
+  Ô¼Ü Cleared: Augustin Jean Fresnel Is Born
+  Ô¼Ü Cleared: Jefferson Davis Is Captured
+  ­ƒôÀ PICK: The Transcontinental Railroad Is Completed...
+  Wiki search error for "Transcontinental Railroad Completed": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Treaty Of Frankfurt Ends The Franco Prussian W
+  Ô¼Ü Cleared: The U.S. Supreme Court Rules That A Tomato Is A Ve
+  Ô¼Ü Cleared: Cecilia Payne Gaposchkin Is Born
+  Ô¼Ü Cleared: Shackleton Reaches South Georgia
+  ­ƒôÀ PICK: Richard Feynman Is Born...
+  Wiki search error for "Richard Feynman": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: J. Edgar Hoover Becomes Head Of The Bureau Of Inve
+  Ô¼Ü Cleared: Nazi Book Burnings Sweep Germany
+  Ô¼Ü Cleared: Germany Launches Its Western Offensive
+  Ô¼Ü Cleared: Rudolf Hess Flies To Scotland
+  Ô¼Ü Cleared: Birut─ù Galdikas Is Born
+  Ô¼Ü Cleared: Bono Is Born
+  ­ƒôÀ PICK: Nelson Mandela Is Inaugurated President...
+  Wiki search error for "Nelson Mandela Inaugurated President": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Nelson Mandela Inaugurated": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Robert Hanssen Is Sentenced
+  Ô¼Ü Cleared: The First Mother'S Day Observance Is Held In Graft
+  Ô¼Ü Cleared: George E. Smith Is Born
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 11 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Spencer Perceval Is Assassinated
+  Ô¼Ü Cleared: U.S. Forces Land On Attu
+  Ô¼Ü Cleared: The Pullman Strike Begins
+  Ô¼Ü Cleared: Glacier Becomes A National Park
+  Ô¼Ü Cleared: A Dust Bowl Storm Turns The Sky Dark
+  Ô¼Ü Cleared: Gordon Brown Resigns
+  ­ƒôÀ PICK: Bob Marley Dies...
+  Wiki search error for "Bob Marley": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Richard Feynman Is Born
+  Ô¼Ü Cleared: Edsger Dijkstra Is Born
+  Ô¼Ü Cleared: Chang And Eng Bunker Are Born
+  ­ƒôÀ PICK: Salvador Dal├¡ Is Born...
+  Wiki search error for "Salvador Dal├¡": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Martha Graham Is Born
+  Ô¼Ü Cleared: Jean L├®On G├®R├┤Me Is Born
+  Ô¼Ü Cleared: King Oliver Is Born
+  Ô¼Ü Cleared: Irving Berlin Is Born
+  Ô¼Ü Cleared: Antony Hewish Is Born
+  Ô¼Ü Cleared: Constantine Dedicates New Rome
+  Ô¼Ü Cleared: Polk Asks For War With Mexico
+  ­ƒôÀ PICK: Deep Blue Beats Garry Kasparov...
+  Wiki search error for "Deep Blue Beats Garry Kasparov": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Deep Blue Beats": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Alvar Aalto Dies
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 12 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: The Sichuan Earthquake Devastates Western China
+  Ô¼Ü Cleared: The Soviet Blockade Of Berlin Ends
+  Ô¼Ü Cleared: The Donner Party Heads West
+  Ô¼Ü Cleared: Charleston Falls To The British
+  Ô¼Ü Cleared: Yogi Berra Is Born
+  Ô¼Ü Cleared: Burt Bacharach Is Born
+  Ô¼Ü Cleared: Gabriel Faur├® Is Born
+  Ô¼Ü Cleared: Bed┼ÖIch Smetana Dies
+  Ô¼Ü Cleared: Lincoln Ellsworth Is Born
+  Ô¼Ü Cleared: Maurice Ewing Is Born
+  Ô¼Ü Cleared: Joseph Beuys Is Born
+  Ô¼Ü Cleared: Sam Nujoma Is Born
+  Ô¼Ü Cleared: The Norge Crosses The North Pole
+  ­ƒôÀ PICK: Exile On Main St. Is Released...
+  Wiki search error for "Exile Main St. Released": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Exile Main St.": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: George VI Is Crowned
+  ­ƒôÀ PICK: Florence Nightingale Is Born...
+  Wiki search error for "Florence Nightingale": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: Katharine Hepburn Is Born...
+  Wiki search error for "Katharine Hepburn": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: J.E.B. Stuart Dies From Battle Wounds
+  Ô¼Ü Cleared: Anselme Payen Is Born
+  Ô¼Ü Cleared: Frank Stella Is Born
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 13 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Italy Passes The Law Of Guarantees
+  Ô¼Ü Cleared: Congress Approves War On Mexico
+  Ô¼Ü Cleared: The MOVE House Is Bombed
+  Ô¼Ü Cleared: John Paul II Survives An Attack
+  ­ƒôÀ PICK: Churchill Delivers Blood, Toil, Tears And Sweat...
+  Wiki search error for "Churchill Delivers Blood, Toil, Tears Sweat": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Churchill Delivers Blood,": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The First F├íTima Vision Is Reported
+  ­ƒôÀ PICK: Georges Braque Is Born...
+  Wiki search error for "Georges Braque": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: Stevie Wonder Is Born...
+  Wiki search error for "Stevie Wonder": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Ritchie Valens Is Born
+  Ô¼Ü Cleared: Fridtjof Nansen Dies
+  Ô¼Ü Cleared: Joseph Henry Dies
+  Ô¼Ü Cleared: Ronald Ross Is Born
+  Ô¼Ü Cleared: Doris Day Dies
+  Ô¼Ü Cleared: Pete Rose And Shoeless Joe Are Reinstated
+  Ô¼Ü Cleared: Takeda Shingen Dies
+  Ô¼Ü Cleared: Arthur Sullivan Is Born
+  Ô¼Ü Cleared: Alice Munro Dies
+  Ô¼Ü Cleared: Apolinario Mabini Dies
+  Ô¼Ü Cleared: Dhaulagiri Is Climbed For The First Time
+  Ô¼Ü Cleared: Stanislaw Ulam Dies
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 14 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  ­ƒôÀ PICK: Israel Declares Statehood...
+  Wiki search error for "Israel Declares Statehood": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Edward Jenner Gives The First Smallpox Vaccine
+  ­ƒôÀ PICK: Frank Sinatra Dies...
+  Wiki search error for "Frank Sinatra": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Mark Zuckerberg Is Born
+  Ô¼Ü Cleared: The U.S. Supreme Court Opens The Door To Legal Spo
+  ­ƒôÀ PICK: Skylab Is Launched...
+  Wiki search error for "Skylab Launched": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Louis XIV Becomes King
+  Ô¼Ü Cleared: Jamestown Is Founded
+  Ô¼Ü Cleared: B.B. King Dies
+  Ô¼Ü Cleared: Seinfeld Ends Its Run
+  Ô¼Ü Cleared: Robert Owen Is Born
+  Ô¼Ü Cleared: Magnus Hirschfeld Dies
+  Ô¼Ü Cleared: Georg Ernst Stahl Dies
+  Ô¼Ü Cleared: George Lucas Is Born
+  Ô¼Ü Cleared: David Byrne Is Born
+  Ô¼Ü Cleared: Daniel Libeskind Is Born
+  Ô¼Ü Cleared: Field Marshal Allenby Dies
+  Ô¼Ü Cleared: Lewis And Clark Set Out West
+  Ô¼Ü Cleared: Christian B. Anfinsen Dies
+  Ô¼Ü Cleared: Magnus Hirschfeld Is Born
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 15 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  Ô¼Ü Cleared: Abe Fortas Resigns From The Supreme Court
+  Ô¼Ü Cleared: The First Regular U.S. Airmail Route Opens
+  ­ƒôÀ PICK: Emily Dickinson Dies...
+  Wiki search error for "Emily Dickinson": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Edith Cresson Becomes Premier
+  Ô¼Ü Cleared: George Wallace Is Shot On The Campaign Trail
+  Ô¼Ü Cleared: The McDonald Brothers Open Their Restaurant
+  Ô¼Ü Cleared: Nylon Stockings Reach The Public
+  ­ƒôÀ PICK: Mickey Mouse Appears In Plane Crazy...
+  Wiki search error for "Mickey Mouse Appears Plane Crazy": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Mickey Mouse Appears": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Tenzing Norgay Is Born
+  Ô¼Ü Cleared: Louis Riel Surrenders
+  Ô¼Ü Cleared: Madeleine Albright Is Born
+  Ô¼Ü Cleared: Frank Wilczek Is Born
+  Ô¼Ü Cleared: ├ëTienne Jules Marey Dies
+  Ô¼Ü Cleared: K.M. Cariappa Dies
+  Ô¼Ü Cleared: June Carter Cash Dies
+  Ô¼Ü Cleared: Jasper Johns Is Born
+  ­ƒôÀ PICK: Pierre Curie Is Born...
+  Wiki search error for "Pierre Curie": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Brian Eno Is Born
+  Ô¼Ü Cleared: Carl Wernicke Is Born
+  Ô¼Ü Cleared: Vauban Is Born
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 16 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  ­ƒôÀ PICK: The Warsaw Ghetto Uprising Is Crushed...
+  Wiki search error for "Warsaw Ghetto Uprising Crushed": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Warsaw Ghetto Uprising": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: Top Gun Opens In Theaters...
+  Wiki search error for "Top Gun Opens Theaters": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "Top Gun Opens": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  ­ƒôÀ PICK: Pet Sounds Is Released...
+  Wiki search error for "Pet Sounds Released": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The First Academy Awards Are Held
+  Ô¼Ü Cleared: Andrew Johnson Faces A Crucial Impeachment Vote
+  Ô¼Ü Cleared: William H. Seward Is Born
+  Ô¼Ü Cleared: Samuel Johnson Meets James Boswell
+  Ô¼Ü Cleared: Marie Antoinette Marries The Future Louis XVI
+  Ô¼Ü Cleared: Joseph Fourier Dies
+  Ô¼Ü Cleared: Ivan Sutherland Is Born
+  Ô¼Ü Cleared: Woody Herman Is Born
+  Ô¼Ü Cleared: I.M. Pei Dies
+  Ô¼Ü Cleared: Maria Gaetana Agnesi Is Born
+  Ô¼Ü Cleared: Nicolas Sarkozy Is Sworn In
+  Ô¼Ü Cleared: Junko Tabei Reaches Everest
+  Ô¼Ü Cleared: Park Chung Hee Seizes Power
+  Ô¼Ü Cleared: Joan Of Arc Is Canonized
+  Ô¼Ü Cleared: Congress Authorizes The Nickel
+  Ô¼Ü Cleared: Olga Korbut Is Born
+  Ô¼Ü Cleared: John Stevens Henslow Dies
+
+ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ May 17 ÔòÉÔòÉÔòÉÔòÉÔòÉÔòÉ
+  ­ƒôÀ PICK: Brown V. Board Is Decided...
+  Wiki search error for "Brown V. Board Decided": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Clinton Signs Megan'S Law
+  ­ƒôÀ PICK: The Wonderful Wizard Of Oz Is Published...
+  Wiki search error for "Wonderful Wizard Oz Published": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: The Buttonwood Meeting Sets Wall Street On Its Pat
+  Ô¼Ü Cleared: Edward Jenner Is Born
+  Ô¼Ü Cleared: Erik Satie Is Born
+  Ô¼Ü Cleared: Alan Kay Is Born
+  Ô¼Ü Cleared: Taj Mahal Is Born
+  Ô¼Ü Cleared: Jorge Rafael Videla Dies
+  Ô¼Ü Cleared: John C. Breckinridge Dies
+  Ô¼Ü Cleared: Alfonso XIII Is Born
+  Ô¼Ü Cleared: Joseph Norman Lockyer Is Born
+  Ô¼Ü Cleared: Takasugi Shinsaku Dies
+  Ô¼Ü Cleared: Gerald Edelman Dies
+  Ô¼Ü Cleared: Massachusetts Begins Same Sex Marriages
+  Ô¼Ü Cleared: The First Televised U.S. Sports Event Airs
+  ­ƒôÀ PICK: The First Kentucky Derby Is Run...
+  Wiki search error for "First Kentucky Derby Run": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+  Wiki search error for "First Kentucky Derby": SyntaxError: Unexpected token 'Y', "You are ma"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:6433:19)
+    at successSteps (node:internal/deps/undici/undici:6414:27)
+    at readAllBytes (node:internal/deps/undici/undici:5380:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    ÔÜá´©Å No Wiki image found ÔÇö cleared
+  Ô¼Ü Cleared: Sandro Botticelli Dies
+  Ô¼Ü Cleared: Herman Wouk Dies
+  Ô¼Ü Cleared: Sugar Ray Leonard Is Born
+
+Ô£à Done. May 1ÔÇô17 images cleaned up.

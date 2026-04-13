@@ -1,0 +1,31 @@
+﻿Ôùç injected env (4) from .env.local // tip: Ôîÿ suppress logs { quiet: true }
+1. [history] Portugal'S Carnation Revolution Begins
+2. [science] Michael Smith Is Born
+3. [viral_scandal] Operation Eagle Claw Ends In Desert Disaster
+4. [art and architecture] K├ñThe Kollwitz Dies
+5. [warfare] Marks' Mills Becomes A Confederate Victory
+6. [history] Spain And Portugal Divide The East Again
+7. [technology] Robert Noyce Receives An Integrated Circuit Patent
+8. [exploration and discovery] Joshua Slocum Sets Sail Alone
+9. [culture] Sapienza Takes Shape In Rome
+10. [science] Arno Penzias Is Born
+11. [history] Gambia Becomes A Republic
+12. [history] The Easter Rising Begins In Dublin
+13. [warfare] Tanks Fight Tanks For The First Time
+14. [business and economy] Est├®E Lauder Dies
+15. [physics] Max Von Laue Dies
+16. [environment] Chernobyl Explodes
+17. [history] Cort├®S Establishes Veracruz
+18. [viral_record] Scientists Unveil An Extraordinarily Tiny Weather Station
+19. [viral_record] A Speed Eater Downs Anchovies At Record Pace
+20. [viral_record] A Comedian Performs The Longest Solo Stand Up Show
+21. [history] France Opens The Revolutionary Wars
+22. [viral_music] Ordinary Opens At Number One
+23. [law and society] Columbia Students Seize Campus Buildings
+24. [viral_record] A Six Person Relay Team Circles Bahrain At Record Pace
+25. [history] The Geneva Conference Opens
+26. [literature] Henry Fielding Is Born
+27. [science] A Failed Satellite Spreads Plutonium On Reentry
+28. [politics and government] A Military Junta Seizes Greece
+29. [warfare] Charles V Triumphs At M├╝Hlberg
+30. [law and society] Workers Demand The Eight Hour Day In Melbourne

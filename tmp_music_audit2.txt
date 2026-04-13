@@ -1,0 +1,17 @@
+﻿Ôùç injected env (2) from .env.local // tip: Ôùê encrypted .env [www.dotenvx.com]
+Total music cards: 14
+
+[viral_music    ] MONTERO Rules The UK Singles Chart            | spotifyId: 67BtfxlNbhBmCDR2L2l8qd | deezerId: NONE
+[viral_music    ] Crazy What Love Can Do Reaches The Top        | spotifyId: 2vIe3r96JEMy02YgCPWXrX | deezerId: NONE
+[viral_music    ] Prince Tops Britain Under A Symbol            | spotifyId: 4CeeEOM32jQcH3eN9Q2dGj | deezerId: NONE
+[music          ] La Marseillaise Is Written                    | spotifyId: 1cWNidb20KMpfnYHEInlx6 | deezerId: NONE
+[viral_music    ] Fortnight Debuts At The Top In Britain        | spotifyId: 6WzRpISELf3YglGAh7TXcG | deezerId: NONE
+[viral_music    ] Make Luv Sits At Number One In Britain        | spotifyId: 5u1n1kITHCxxp8mqqKDEAR | deezerId: NONE
+[music          ] Tito Puente Is Born                           | spotifyId: 5b0HAhGuZqNOee1gnBV7cf | deezerId: NONE
+[music          ] Randall Thompson Is Born                      | spotifyId: 43bRXsFDwMDV50uLwJL4D7 | deezerId: NONE
+[music          ] Yehudi Menuhin Is Born                        | spotifyId: 1VBzg54hgjyfJ3WVJBvefy | deezerId: NONE
+[music          ] Harold Arlen Dies                             | spotifyId: 2A3FnYEjHqHIoGMBbHy9Gn | deezerId: NONE
+[viral_music    ] Ordinary Opens At Number One                  | spotifyId: 2Oa48TFMqxuQ151OZBjS3B | deezerId: NONE
+[viral_music    ] We Are The World Tops The UK Chart            | spotifyId: 7oYnS94MSLkKPMdkBiPJuP | deezerId: NONE
+[music          ] Johnny Griffin Is Born                        | spotifyId: 6rn1Cj1TUZRN2tWzc4GCBA | deezerId: NONE
+[music          ] Count Basie Dies                              | spotifyId: 4oVGDmYSaIQflzuEQ3lfhR | deezerId: NONE

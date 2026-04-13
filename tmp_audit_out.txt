@@ -1,0 +1,431 @@
+﻿Ôùç injected env (4) from .env.local // tip: Ôîÿ override existing { override: true }
+
+=== May 1 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | Great Britain Comes Into Being
+  ­ƒö┤ GENERIC | religion and philosophy   | The Bavarian Illuminati Is Founded
+  ­ƒö┤ GENERIC | technology                | The Penny Black Goes On Sale
+  ­ƒö┤ GENERIC | history                   | The Great Exhibition Opens
+  ­ƒö┤ GENERIC | science                   | Alexander William Williamson Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | Santiago Ram├│N Y Cajal Is Born
+  ­ƒö┤ GENERIC | history                   | The Eight Hour Day Strikes Begin
+  ­ƒö┤ GENERIC | observance                | May Day Is First Observed As A Workers' Holiday
+  ­ƒö┤ GENERIC | culture                   | The World'S Columbian Exposition Opens
+  ­ƒö┤ GENERIC | physics                   | Gersh Budker Is Born
+  ­ƒö┤ GENERIC | space                     | Scott Carpenter Is Born
+  ­ƒö┤ GENERIC | art and architecture      | The Empire State Building Is Dedicated
+  ­ƒö┤ GENERIC | film and television       | Citizen Kane Premieres
+  ­ƒö┤ GENERIC | warfare                   | The U 2 Incident Begins
+  ­ƒö┤ GENERIC | music                     | Aram Khachaturian Dies
+  ­ƒö┤ GENERIC | science                   | Kim Soon Kwon Is Born
+  ­ƒö┤ GENERIC | sports                    | Ayrton Senna Dies At Imola
+  ­ƒö┤ GENERIC | politics and government   | Tony Blair Wins A Landslide
+  ­ƒö┤ GENERIC | history                   | The European Union Expands Dramatically
+  ­ƒö┤ GENERIC | warfare                   | Osama Bin Laden Is Killed
+
+=== May 2 (21 cards) ===
+  ­ƒö┤ GENERIC | history                   | John Cabot Sails From Bristol
+  ­ƒö┤ GENERIC | culture                   | Leonardo Da Vinci Dies
+  ­ƒö┤ GENERIC | literature                | The King James Bible Is First Published
+  ­ƒö┤ GENERIC | warfare                   | Madrid Rises Against Napoleon
+  ­ƒö┤ GENERIC | science                   | D'Arcy Wentworth Thompson Is Born
+  ­ƒö┤ GENERIC | physics                   | Robert W. Wood Is Born
+  ­ƒö┤ GENERIC | culture                   | Ki Hadjar Dewantoro Is Born
+  ­ƒö┤ GENERIC | music                     | Theodore Bikel Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | Ernest Starling Dies
+  ­ƒö┤ GENERIC | sports                    | Lou Gehrig Ends His Streak
+  ­ƒö┤ GENERIC | biology and medicine      | Jacques Rogge Is Born
+  ­ƒö┤ GENERIC | history                   | Berlin Surrenders To The Red Army
+  ­ƒö┤ GENERIC | law and society           | Caryl Chessman Is Executed
+  ­ƒö┤ GENERIC | music                     | Giacomo Meyerbeer Dies
+  ­ƒö┤ GENERIC | science                   | Giulio Natta Dies
+  ­ƒö┤ GENERIC | warfare                   | The ARA General Belgrano Is Sunk
+  ­ƒö┤ GENERIC | politics and government   | Pridi Phanomyong Dies
+  ­ƒö┤ GENERIC | sports                    | Tina Maze Is Born
+  ­ƒö┤ GENERIC | history                   | Hungary Starts Dismantling Its Border Fence With Austria
+  ­ƒö┤ GENERIC | history                   | The Yongle Emperor Is Born
+  ­ƒö┤ GENERIC | literature                | Ruth Rendell Dies
+
+=== May 3 (21 cards) ===
+  ­ƒö┤ GENERIC | exploration and discovery | Columbus Reaches Jamaica
+  ­ƒö┤ GENERIC | history                   | Poland Adopts The Constitution Of May 3
+  ­ƒö┤ GENERIC | warfare                   | The Executions After The Madrid Uprising Become History
+  ­ƒö┤ GENERIC | warfare                   | The Battle Of The Coral Sea Begins
+  ­ƒö┤ GENERIC | history                   | Japan'S Postwar Constitution Takes Effect
+  ­ƒö┤ GENERIC | law and society           | The Tokyo Tribunal Opens Hearings
+  ­ƒö┤ GENERIC | culture                   | The Anne Frank House Opens To The Public
+  ­ƒö┤ GENERIC | history                   | Sorbonne Protests Ignite The Paris Revolt
+  ­ƒö┤ GENERIC | history                   | Margaret Thatcher Becomes Prime Minister
+  ­ƒö┤ GENERIC | biology and medicine      | Christine Jorgensen Dies
+  ­ƒö┤ GENERIC | environment               | The Oklahoma Outbreak Devastates The Region
+  ­ƒö┤ GENERIC | culture                   | The Old Man Of The Mountain Collapses
+  ­ƒö┤ GENERIC | observance                | World Press Freedom Day Is Proclaimed
+  ­ƒö┤ GENERIC | physics                   | Steven Weinberg Is Born
+  ­ƒö┤ GENERIC | science                   | George Paget Thomson Is Born
+  ­ƒö┤ GENERIC | science                   | Alfred Kastler Is Born
+  ­ƒö┤ GENERIC | music                     | Lloyd Price Dies
+  ­ƒö┤ GENERIC | sports                    | V─øRa ─î├íSlavsk├í Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Aldo Rossi Is Born
+  ­ƒö┤ GENERIC | politics and government   | Emmanuel Joseph Siey├¿S Is Born
+  ­ƒö┤ GENERIC | history                   | Daniel Sickles Dies
+
+=== May 4 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | The Augustinian Order Is Formed
+  ­ƒö┤ GENERIC | warfare                   | Yorkists Win At Tewkesbury
+  ­ƒö┤ GENERIC | history                   | Inter Caetera Redraws Overseas Claims
+  ­ƒö┤ GENERIC | physics                   | Jean Charles De Borda Is Born
+  ­ƒö┤ GENERIC | history                   | Rhode Island Breaks With George III
+  ­ƒö┤ GENERIC | warfare                   | Tipu Sultan Falls At Seringapatam
+  ­ƒö┤ GENERIC | people                    | Napoleon Reaches Elba
+  ­ƒö┤ GENERIC | science                   | Thomas Henry Huxley Is Born
+  ­ƒö┤ GENERIC | technology                | The Panama Canal Project Changes Hands
+  ­ƒö┤ GENERIC | history                   | The May Fourth Movement Begins
+  ­ƒö┤ GENERIC | biology and medicine      | Eugenie Clark Is Born
+  ­ƒö┤ GENERIC | film and television       | Hollywood Creates The Academy
+  ­ƒö┤ GENERIC | people                    | Audrey Hepburn Is Born
+  ­ƒö┤ GENERIC | music                     | The First Grammy Awards Are Presented
+  ­ƒö┤ GENERIC | law and society           | The Freedom Riders Set Out
+  ­ƒö┤ GENERIC | history                   | National Guardsmen Kill Students At Kent State
+  ­ƒö┤ GENERIC | politics and government   | Margaret Thatcher Enters Downing Street
+  ­ƒö┤ GENERIC | warfare                   | HMS Sheffield Is Lost In The Falklands War
+  ­ƒö┤ GENERIC | space                     | Magellan Heads For Venus
+  ­ƒö┤ GENERIC | science                   | Christian De Duve Dies
+
+=== May 5 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | The Second Council Of Constantinople Opens
+  ­ƒö┤ GENERIC | history                   | Kublai Khan Becomes Great Khan
+  ­ƒö┤ GENERIC | warfare                   | Satsuma Subdues The Ryukyu Kingdom
+  ­ƒö┤ GENERIC | history                   | Russia And Prussia Sign The Treaty Of Saint Petersburg
+  ­ƒö┤ GENERIC | religion and philosophy   | S├©Ren Kierkegaard Is Born
+  ­ƒö┤ GENERIC | people                    | Karl Marx Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | John L. Leal Is Born
+  ­ƒö┤ GENERIC | history                   | The Estates General Meets At Versailles
+  ­ƒö┤ GENERIC | history                   | Sitting Bull Leads Lakota Followers Into Canada
+  ­ƒö┤ GENERIC | law and society           | The Bay View Massacre Shocks Labor America
+  ­ƒö┤ GENERIC | people                    | Napoleon Dies On Saint Helena
+  ­ƒö┤ GENERIC | science                   | August Wilhelm Von Hofmann Dies
+  ­ƒö┤ GENERIC | science                   | Helen Redfield Is Born
+  ­ƒö┤ GENERIC | physics                   | Arthur Leonard Schawlow Is Born
+  ­ƒö┤ GENERIC | observance                | Liberation Day Is Celebrated In The Netherlands
+  ­ƒö┤ GENERIC | warfare                   | The Prague Uprising Begins
+  ­ƒö┤ GENERIC | music                     | Carnegie Hall Opens
+  ­ƒö┤ GENERIC | politics and government   | The Council Of Europe Is Founded
+  ­ƒö┤ GENERIC | space                     | Alan Shepard Flies Into Space
+  ­ƒö┤ GENERIC | law and society           | Bobby Sands Dies After Hunger Strike
+
+=== May 6 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | Rome Is Sacked By Imperial Troops
+  ­ƒö┤ GENERIC | warfare                   | The Siege Of Cuzco Begins
+  ­ƒö┤ GENERIC | history                   | Henry VIII Orders English Bibles In Churches
+  ­ƒö┤ GENERIC | history                   | Francis Xavier Reaches Goa
+  ­ƒö┤ GENERIC | history                   | Louis XIV Settles At Versailles
+  ­ƒö┤ GENERIC | warfare                   | Frederick The Great Wins At Prague
+  ­ƒö┤ GENERIC | technology                | The Penny Black Enters Use
+  ­ƒö┤ GENERIC | science                   | Victor Grignard Is Born
+  ­ƒö┤ GENERIC | science                   | Willem De Sitter Is Born
+  ­ƒö┤ GENERIC | law and society           | The Chinese Exclusion Act Is Signed
+  ­ƒö┤ GENERIC | physics                   | Robert H. Dicke Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | Paul Lauterbur Is Born
+  ­ƒö┤ GENERIC | technology                | The Hindenburg Burns At Lakehurst
+  ­ƒö┤ GENERIC | warfare                   | Corregidor Falls In The Philippines
+  ­ƒö┤ GENERIC | music                     | Bob Seger Is Born
+  ­ƒö┤ GENERIC | sports                    | Roger Bannister Breaks The Four Minute Barrier
+  ­ƒö┤ GENERIC | technology                | The Channel Tunnel Officially Opens
+  ­ƒö┤ GENERIC | technology                | SpaceX Is Founded
+  ­ƒö┤ GENERIC | business and economy      | The Flash Crash Shakes Wall Street
+  ­ƒö┤ GENERIC | law and society           | Three Kidnapped Women Are Found Alive In Cleveland
+
+=== May 7 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | The Dome Of Hagia Sophia Collapses
+  ­ƒö┤ GENERIC | history                   | The Second Council Of Lyon Opens
+  ­ƒö┤ GENERIC | warfare                   | The Siege Of M├íLaga Begins
+  ­ƒö┤ GENERIC | history                   | New Orleans Is Founded
+  ­ƒö┤ GENERIC | warfare                   | Pontiac'S War Begins At Detroit
+  ­ƒö┤ GENERIC | history                   | Robespierre Promotes The Cult Of The Supreme Being
+  ­ƒö┤ GENERIC | music                     | Beethoven'S Ninth Symphony Premieres
+  ­ƒö┤ GENERIC | history                   | Greek Independence Is Recognized
+  ­ƒö┤ GENERIC | environment               | The Great Natchez Tornado Devastates The Mississippi
+  ­ƒö┤ GENERIC | science                   | Popov Demonstrates An Early Radio Receiver
+  ­ƒö┤ GENERIC | film and television       | Ishir┼ì Honda Is Born
+  ­ƒö┤ GENERIC | physics                   | Simon Ramo Is Born
+  ­ƒö┤ GENERIC | warfare                   | A U Boat Sinks The Lusitania
+  ­ƒö┤ GENERIC | biology and medicine      | Sidney Altman Is Born
+  ­ƒö┤ GENERIC | warfare                   | Germany Signs Surrender At Reims
+  ­ƒö┤ GENERIC | technology                | The Company That Becomes Sony Is Founded
+  ­ƒö┤ GENERIC | warfare                   | Dien Bien Phu Falls
+  ­ƒö┤ GENERIC | politics and government   | The Twenty Seventh Amendment Is Ratified
+  ­ƒö┤ GENERIC | science                   | Allan McLeod Cormack Dies
+  ­ƒö┤ GENERIC | business and economy      | Daimler And Chrysler Announce A Merger
+
+=== May 8 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | The Third Council Of Toledo Opens
+  ­ƒö┤ GENERIC | history                   | The Treaty Of Br├®Tigny Is Signed
+  ­ƒö┤ GENERIC | warfare                   | Joan Of Arc Lifts The Siege Of Orl├®Ans
+  ­ƒö┤ GENERIC | history                   | De Soto Reaches The Mississippi
+  ­ƒö┤ GENERIC | science                   | Antoine Lavoisier Is Executed
+  ­ƒö┤ GENERIC | business and economy      | Coca Cola Is First Sold
+  ­ƒö┤ GENERIC | science                   | Andr├® Lwoff Is Born
+  ­ƒö┤ GENERIC | environment               | Mount Pel├®E Destroys Saint Pierre
+  ­ƒö┤ GENERIC | people                    | David Attenborough Is Born
+  ­ƒö┤ GENERIC | warfare                   | The Battle Of The Coral Sea Ends
+  ­ƒö┤ GENERIC | history                   | Victory In Europe Day Is Declared
+  ­ƒö┤ GENERIC | biology and medicine      | H. Robert Horvitz Is Born
+  ­ƒö┤ GENERIC | observance                | World Red Cross Day Takes Shape Around Henry Dunant'S Birthd
+  ­ƒö┤ GENERIC | sports                    | The Asian Football Confederation Is Founded
+  ­ƒö┤ GENERIC | music                     | The Beatles Release Let It Be
+  ­ƒö┤ GENERIC | exploration and discovery | Everest Is Climbed Without Supplemental Oxygen
+  ­ƒö┤ GENERIC | biology and medicine      | WHO Declares Smallpox Eradicated
+  ­ƒö┤ GENERIC | politics and government   | The Soviet Union Announces An Olympic Boycott
+  ­ƒö┤ GENERIC | technology                | The Thames Barrier Is Officially Opened
+  ­ƒö┤ GENERIC | physics                   | Roger L. Easton Dies
+
+=== May 9 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | England And Portugal Sign The Treaty Of Windsor
+  ­ƒö┤ GENERIC | culture                   | Mr Punch Is First Recorded In England
+  ­ƒö┤ GENERIC | law and society           | Thomas Blood Tries To Steal The Crown Jewels
+  ­ƒö┤ GENERIC | art and architecture      | The Society Of Artists Opens Its First Exhibition
+  ­ƒö┤ GENERIC | warfare                   | Austria And Denmark Clash At Heligoland
+  ­ƒö┤ GENERIC | warfare                   | Nathan Bedford Forrest Surrenders
+  ­ƒö┤ GENERIC | business and economy      | The Vienna Stock Market Crashes
+  ­ƒö┤ GENERIC | history                   | Romania Proclaims Independence
+  ­ƒö┤ GENERIC | history                   | Australia Opens Its First Federal Parliament
+  ­ƒö┤ GENERIC | exploration and discovery | Byrd Claims A Flight Over The North Pole
+  ­ƒö┤ GENERIC | physics                   | Albert A. Michelson Dies
+  ­ƒö┤ GENERIC | science                   | Ernst Bresslau Dies
+  ­ƒö┤ GENERIC | warfare                   | U 110 And An Enigma Machine Are Captured
+  ­ƒö┤ GENERIC | observance                | Victory Day Takes Shape In The Soviet Sphere
+  ­ƒö┤ GENERIC | music                     | Billy Joel Is Born
+  ­ƒö┤ GENERIC | science                   | Esteban Terradas Dies
+  ­ƒö┤ GENERIC | politics and government   | The Schuman Declaration Is Issued
+  ­ƒö┤ GENERIC | biology and medicine      | The First Oral Contraceptive Is Approved In The United State
+  ­ƒö┤ GENERIC | law and society           | Nixon Impeachment Hearings Begin In The House Judiciary Comm
+  ­ƒö┤ GENERIC | history                   | Aldo Moro Is Found Dead In Rome
+
+=== May 10 (21 cards) ===
+  ­ƒö┤ GENERIC | exploration and discovery | Columbus Reaches The Cayman Islands
+  ­ƒö┤ GENERIC | history                   | Britain Passes The Tea Act
+  ­ƒö┤ GENERIC | history                   | The Second Continental Congress Convenes
+  ­ƒö┤ GENERIC | physics                   | Augustin Jean Fresnel Is Born
+  ­ƒö┤ GENERIC | history                   | Jefferson Davis Is Captured
+  ­ƒö┤ GENERIC | technology                | The Transcontinental Railroad Is Completed
+  ­ƒö┤ GENERIC | warfare                   | The Treaty Of Frankfurt Ends The Franco Prussian War
+  ­ƒö┤ GENERIC | law and society           | The U.S. Supreme Court Rules That A Tomato Is A Vegetable
+  ­ƒö┤ GENERIC | science                   | Cecilia Payne Gaposchkin Is Born
+  ­ƒö┤ GENERIC | observance                | The First Mother'S Day Observance Is Held In Grafton
+  ­ƒö┤ GENERIC | exploration and discovery | Shackleton Reaches South Georgia
+  ­ƒö┤ GENERIC | physics                   | Richard Feynman Is Born
+  ­ƒö┤ GENERIC | politics and government   | J. Edgar Hoover Becomes Head Of The Bureau Of Investigation
+  ­ƒö┤ GENERIC | science                   | George E. Smith Is Born
+  ­ƒö┤ GENERIC | culture                   | Nazi Book Burnings Sweep Germany
+  ­ƒö┤ GENERIC | warfare                   | Germany Launches Its Western Offensive
+  ­ƒö┤ GENERIC | warfare                   | Rudolf Hess Flies To Scotland
+  ­ƒö┤ GENERIC | biology and medicine      | Birut─ù Galdikas Is Born
+  ­ƒö┤ GENERIC | music                     | Bono Is Born
+  ­ƒö┤ GENERIC | history                   | Nelson Mandela Is Inaugurated President
+  ­ƒö┤ GENERIC | law and society           | Robert Hanssen Is Sentenced
+
+=== May 11 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | Constantine Dedicates New Rome
+  ­ƒö┤ GENERIC | history                   | Spencer Perceval Is Assassinated
+  ­ƒö┤ GENERIC | warfare                   | Polk Asks For War With Mexico
+  ­ƒö┤ GENERIC | warfare                   | U.S. Forces Land On Attu
+  ­ƒö┤ GENERIC | history                   | The Pullman Strike Begins
+  ­ƒôÀ WIKI | history                   | Glacier Becomes A National Park
+  ­ƒö┤ GENERIC | history                   | A Dust Bowl Storm Turns The Sky Dark
+  ­ƒö┤ GENERIC | history                   | Gordon Brown Resigns
+  ­ƒö┤ GENERIC | science                   | Deep Blue Beats Garry Kasparov
+  ­ƒö┤ GENERIC | music                     | Bob Marley Dies
+  ­ƒö┤ GENERIC | physics                   | Richard Feynman Is Born
+  ­ƒö┤ GENERIC | science                   | Edsger Dijkstra Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | Chang And Eng Bunker Are Born
+  ­ƒö┤ GENERIC | music                     | Irving Berlin Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Salvador Dal├¡ Is Born
+  ­ƒö┤ GENERIC | culture                   | Martha Graham Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Alvar Aalto Dies
+  ­ƒö┤ GENERIC | physics                   | Antony Hewish Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Jean L├®On G├®R├┤Me Is Born
+  ­ƒö┤ GENERIC | music                     | King Oliver Is Born
+
+=== May 12 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | The Norge Crosses The North Pole
+  ­ƒö┤ GENERIC | environment               | The Sichuan Earthquake Devastates Western China
+  ­ƒôÀ WIKI | music                     | Exile On Main St. Is Released
+  ­ƒö┤ GENERIC | history                   | The Soviet Blockade Of Berlin Ends
+  ­ƒö┤ GENERIC | history                   | George VI Is Crowned
+  ­ƒö┤ GENERIC | history                   | The Donner Party Heads West
+  ­ƒö┤ GENERIC | biology and medicine      | Florence Nightingale Is Born
+  ­ƒö┤ GENERIC | warfare                   | Charleston Falls To The British
+  ­ƒö┤ GENERIC | film and television       | Katharine Hepburn Is Born
+  ­ƒö┤ GENERIC | sports                    | Yogi Berra Is Born
+  ­ƒö┤ GENERIC | music                     | Burt Bacharach Is Born
+  ­ƒôÀ WIKI | music                     | Gabriel Faur├® Is Born
+  ­ƒö┤ GENERIC | music                     | Bed┼ÖIch Smetana Dies
+  ­ƒö┤ GENERIC | warfare                   | J.E.B. Stuart Dies From Battle Wounds
+  ­ƒö┤ GENERIC | science                   | Lincoln Ellsworth Is Born
+  ­ƒö┤ GENERIC | science                   | Anselme Payen Is Born
+  ­ƒö┤ GENERIC | physics                   | Maurice Ewing Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Frank Stella Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Joseph Beuys Is Born
+  ­ƒö┤ GENERIC | politics and government   | Sam Nujoma Is Born
+
+=== May 13 (20 cards) ===
+  ­ƒö┤ GENERIC | warfare                   | Congress Approves War On Mexico
+  ­ƒö┤ GENERIC | history                   | The MOVE House Is Bombed
+  ­ƒö┤ GENERIC | history                   | John Paul II Survives An Attack
+  ­ƒö┤ GENERIC | exploration and discovery | Dhaulagiri Is Climbed For The First Time
+  ­ƒö┤ GENERIC | history                   | Churchill Delivers Blood, Toil, Tears And Sweat
+  ­ƒö┤ GENERIC | religion and philosophy   | The First F├íTima Vision Is Reported
+  ­ƒö┤ GENERIC | history                   | Apolinario Mabini Dies
+  ­ƒö┤ GENERIC | art and architecture      | Georges Braque Is Born
+  ­ƒö┤ GENERIC | music                     | Stevie Wonder Is Born
+  ­ƒö┤ GENERIC | music                     | Ritchie Valens Is Born
+  ­ƒö┤ GENERIC | science                   | Fridtjof Nansen Dies
+  ­ƒö┤ GENERIC | physics                   | Stanislaw Ulam Dies
+  ­ƒö┤ GENERIC | science                   | Joseph Henry Dies
+  ­ƒö┤ GENERIC | biology and medicine      | Ronald Ross Is Born
+  ­ƒö┤ GENERIC | film and television       | Doris Day Dies
+  ­ƒö┤ GENERIC | sports                    | Pete Rose And Shoeless Joe Are Reinstated
+  ­ƒö┤ GENERIC | history                   | Italy Passes The Law Of Guarantees
+  ­ƒö┤ GENERIC | warfare                   | Takeda Shingen Dies
+  ­ƒö┤ GENERIC | music                     | Arthur Sullivan Is Born
+  ­ƒö┤ GENERIC | literature                | Alice Munro Dies
+
+=== May 14 (20 cards) ===
+  ­ƒö┤ GENERIC | warfare                   | Israel Declares Statehood
+  ­ƒö┤ GENERIC | law and society           | The U.S. Supreme Court Opens The Door To Legal Sports Bettin
+  ­ƒö┤ GENERIC | physics                   | Skylab Is Launched
+  ­ƒö┤ GENERIC | history                   | Lewis And Clark Set Out West
+  ­ƒö┤ GENERIC | biology and medicine      | Edward Jenner Gives The First Smallpox Vaccine
+  ­ƒö┤ GENERIC | history                   | Louis XIV Becomes King
+  ­ƒö┤ GENERIC | history                   | Jamestown Is Founded
+  ­ƒö┤ GENERIC | music                     | B.B. King Dies
+  ­ƒö┤ GENERIC | music                     | Frank Sinatra Dies
+  ­ƒö┤ GENERIC | film and television       | Seinfeld Ends Its Run
+  ­ƒö┤ GENERIC | technology                | Mark Zuckerberg Is Born
+  ­ƒö┤ GENERIC | history                   | Robert Owen Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | Magnus Hirschfeld Is Born
+  ­ƒö┤ GENERIC | law and society           | Magnus Hirschfeld Dies
+  ­ƒö┤ GENERIC | science                   | Georg Ernst Stahl Dies
+  ­ƒö┤ GENERIC | film and television       | George Lucas Is Born
+  ­ƒö┤ GENERIC | music                     | David Byrne Is Born
+  ­ƒö┤ GENERIC | art and architecture      | Daniel Libeskind Is Born
+  ­ƒö┤ GENERIC | warfare                   | Field Marshal Allenby Dies
+  ­ƒö┤ GENERIC | science                   | Christian B. Anfinsen Dies
+
+=== May 15 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | Edith Cresson Becomes Premier
+  ­ƒö┤ GENERIC | music                     | June Carter Cash Dies
+  ­ƒö┤ GENERIC | history                   | George Wallace Is Shot On The Campaign Trail
+  ­ƒö┤ GENERIC | history                   | Abe Fortas Resigns From The Supreme Court
+  ­ƒö┤ GENERIC | business and economy      | The McDonald Brothers Open Their Restaurant
+  ­ƒö┤ GENERIC | science                   | Nylon Stockings Reach The Public
+  ­ƒö┤ GENERIC | film and television       | Mickey Mouse Appears In Plane Crazy
+  ­ƒö┤ GENERIC | history                   | The First Regular U.S. Airmail Route Opens
+  ­ƒö┤ GENERIC | exploration and discovery | Tenzing Norgay Is Born
+  ­ƒö┤ GENERIC | literature                | Emily Dickinson Dies
+  ­ƒö┤ GENERIC | history                   | Louis Riel Surrenders
+  ­ƒö┤ GENERIC | physics                   | Pierre Curie Is Born
+  ­ƒö┤ GENERIC | politics and government   | Madeleine Albright Is Born
+  ­ƒö┤ GENERIC | music                     | Brian Eno Is Born
+  ­ƒö┤ GENERIC | physics                   | Frank Wilczek Is Born
+  ­ƒö┤ GENERIC | biology and medicine      | Carl Wernicke Is Born
+  ­ƒö┤ GENERIC | science                   | ├ëTienne Jules Marey Dies
+  ­ƒö┤ GENERIC | warfare                   | K.M. Cariappa Dies
+  ­ƒö┤ GENERIC | art and architecture      | Jasper Johns Is Born
+  ­ƒö┤ GENERIC | warfare                   | Vauban Is Born
+
+=== May 16 (20 cards) ===
+  ­ƒö┤ GENERIC | warfare                   | The Warsaw Ghetto Uprising Is Crushed
+  ­ƒö┤ GENERIC | history                   | Nicolas Sarkozy Is Sworn In
+  ­ƒö┤ GENERIC | film and television       | Top Gun Opens In Theaters
+  ­ƒö┤ GENERIC | exploration and discovery | Junko Tabei Reaches Everest
+  ­ƒö┤ GENERIC | music                     | Pet Sounds Is Released
+  ­ƒö┤ GENERIC | warfare                   | Park Chung Hee Seizes Power
+  ­ƒö┤ GENERIC | culture                   | The First Academy Awards Are Held
+  ­ƒö┤ GENERIC | history                   | Joan Of Arc Is Canonized
+  ­ƒö┤ GENERIC | history                   | Andrew Johnson Faces A Crucial Impeachment Vote
+  ­ƒö┤ GENERIC | business and economy      | Congress Authorizes The Nickel
+  ­ƒö┤ GENERIC | politics and government   | William H. Seward Is Born
+  ­ƒö┤ GENERIC | literature                | Samuel Johnson Meets James Boswell
+  ­ƒö┤ GENERIC | history                   | Marie Antoinette Marries The Future Louis XVI
+  ­ƒö┤ GENERIC | physics                   | Joseph Fourier Dies
+  ­ƒö┤ GENERIC | science                   | Ivan Sutherland Is Born
+  ­ƒö┤ GENERIC | music                     | Woody Herman Is Born
+  ­ƒö┤ GENERIC | science                   | Maria Gaetana Agnesi Is Born
+  ­ƒö┤ GENERIC | sports                    | Olga Korbut Is Born
+  ­ƒö┤ GENERIC | art and architecture      | I.M. Pei Dies
+  ­ƒö┤ GENERIC | biology and medicine      | John Stevens Henslow Dies
+
+=== May 17 (20 cards) ===
+  ­ƒö┤ GENERIC | history                   | Brown V. Board Is Decided
+  ­ƒö┤ GENERIC | history                   | Massachusetts Begins Same Sex Marriages
+  ­ƒö┤ GENERIC | history                   | Clinton Signs Megan'S Law
+  ­ƒö┤ GENERIC | sports                    | The First Televised U.S. Sports Event Airs
+  ­ƒö┤ GENERIC | literature                | The Wonderful Wizard Of Oz Is Published
+  ­ƒö┤ GENERIC | sports                    | The First Kentucky Derby Is Run
+  ­ƒö┤ GENERIC | history                   | The Buttonwood Meeting Sets Wall Street On Its Path
+  ­ƒö┤ GENERIC | art and architecture      | Sandro Botticelli Dies
+  ­ƒö┤ GENERIC | biology and medicine      | Edward Jenner Is Born
+  ­ƒö┤ GENERIC | music                     | Erik Satie Is Born
+  ­ƒö┤ GENERIC | science                   | Alan Kay Is Born
+  ­ƒö┤ GENERIC | music                     | Taj Mahal Is Born
+  ­ƒö┤ GENERIC | science                   | Gerald Edelman Dies
+  ­ƒö┤ GENERIC | history                   | Jorge Rafael Videla Dies
+  ­ƒö┤ GENERIC | literature                | Herman Wouk Dies
+  ­ƒö┤ GENERIC | warfare                   | John C. Breckinridge Dies
+  ­ƒö┤ GENERIC | sports                    | Sugar Ray Leonard Is Born
+  ­ƒö┤ GENERIC | politics and government   | Alfonso XIII Is Born
+  ­ƒö┤ GENERIC | physics                   | Joseph Norman Lockyer Is Born
+  ­ƒö┤ GENERIC | warfare                   | Takasugi Shinsaku Dies
+
+
+========== APRIL 20 ==========
+  ÔÜ¬ NONE | history                   | Wisconsin Territory Is Created
+    Context (first 120 chars): History is the systematic study of the past, focusing primarily on the human past. As an academic discipline, it analyse
+  ÔÜ¬ NONE | warfare                   | Blake Smashes The Fleet At Santa Cruz
+    Context (first 120 chars): War is an armed conflict between the armed forces of states, or between governmental forces and armed groups that are or
+  ÔÜ¬ NONE | history                   | France Opens The Revolutionary Wars
+    Context (first 120 chars): History is the systematic study of the past, focusing primarily on the human past. As an academic discipline, it analyse
+  ÔÜ¬ NONE | people                    | John Paul Stevens Is Born
+    Context (first 120 chars): The term "the people" refers to the public or common mass of people of a polity. As such it is a concept of human rights
+  ÔÜ¬ NONE | culture                   | Sapienza Takes Shape In Rome
+    Context (first 120 chars): Culture ( KUL ch╔Ör or  KUUL ch╔Ör) is a concept that encompasses the social behavior, institutions, and norms found in hu
+  ÔÜ¬ NONE | viral_record              | Danica Patrick Breaks IndyCar'S Biggest Gender Bar
+    Context (first 120 chars): By winning the Indy Japan 300, Patrick became the first woman to win a top level open wheel race in IndyCar history.
+  ÔÜ¬ NONE | viral_record              | Oil Futures Close Below Zero For The First Time
+    Context (first 120 chars): US crude contracts for May 2020 settled at negative 37.63 dollars a barrel in an unprecedented market collapse.
+  ÔÜ¬ NONE | viral_scandal             | Powell Delivers The Rivers Of Blood Speech
+    Context (first 120 chars): Enoch Powell's anti immigration speech in Birmingham triggered outrage, support marches, and a lasting political taboo.
+  ÔÜ¬ NONE | viral_music               | Make Luv Sits At Number One In Britain
+    Context (first 120 chars): Room 5 featuring Oliver Cheatham led the UK singles chart dated April 20, 2003.
+  ÔÜ¬ NONE | history                   | Cromwell Clears The Rump Parliament
+    Context (first 120 chars): History is the systematic study of the past, focusing primarily on the human past. As an academic discipline, it analyse
+  ÔÜ¬ NONE | viral_scandal             | Columbine Shocks The United States
+    Context (first 120 chars): Two students carried out a mass shooting at Columbine High School, transforming debates on guns, bullying, and media cul
+  ÔÜ¬ NONE | science                   | Thaddeus Lowe Lifts Off On A Record Balloon Trip
+    Context (first 120 chars): Science is a systematic discipline that builds and organises knowledge in the form of testable hypotheses and prediction
+  ÔÜ¬ NONE | music                     | Tito Puente Is Born
+    Context (first 120 chars): Music is the arrangement of sound to create some combination of form, harmony, melody, rhythm, or otherwise expressive c
+  ÔÜ¬ NONE | history                   | The April Uprising Begins In Bulgaria
+    Context (first 120 chars): History is the systematic study of the past, focusing primarily on the human past. As an academic discipline, it analyse
+  ­ƒôÀ WIKI | science                   | A Simple Ocean Science Tool Gets Its Name
+    Context (first 120 chars): Science is a systematic discipline that builds and organises knowledge in the form of testable hypotheses and prediction
+  ÔÜ¬ NONE | biology and medicine      | Pasteur And Bernard Strike At Spontaneous Generati
+    Context (first 120 chars): Their sealed flask work helped show that microbial life did not simply arise from sterile matter.
+  ÔÜ¬ NONE | physics                   | The Curies Refine Radium Chloride
+    Context (first 120 chars): Physics is the scientific study of matter, its fundamental constituents, its motion and behavior through space and time,
+  ÔÜ¬ NONE | warfare                   | The Bay Of Pigs Invasion Collapses
+    Context (first 120 chars): War is an armed conflict between the armed forces of states, or between governmental forces and armed groups that are or
+  ÔÜ¬ NONE | people                    | Cantinflas Dies
+    Context (first 120 chars): The term "the people" refers to the public or common mass of people of a polity. As such it is a concept of human rights
+  ÔÜ¬ NONE | observance                | Chinese Language Day Enters The UN Calendar
+    Context (first 120 chars): The annual observance honors one of the United Nations' official languages and the cultural worlds carried by written an
+  ÔÜ¬ NONE | environment               | Deepwater Horizon Explodes In The Gulf
+    Context (first 120 chars): Natural environment, refers to all living and non living things occurring naturally and the physical and biological fact
+  ÔÜ¬ NONE | space                     | Apollo 16 Touches Down On The Moon
+    Context (first 120 chars): Space is a three dimensional continuum containing positions and directions. In classical physics, physical space is ofte
+  ­ƒôÀ WIKI | art and architecture      | Odilon Redon Is Born
+    Context (first 120 chars): The French symbolist artist would become famous for dreamlike imagery that linked drawing, printmaking, and modern paint
+  ÔÜ¬ NONE | law and society           | The Ludlow Massacre Shocks Industrial America
+    Context (first 120 chars): The sociology of law, legal sociology, or law and society, is often described as a sub discipline of sociology or an int
+  ÔÜ¬ NONE | exploration and discovery | Ren├® Cailli├® Enters Timbuktu
+    Context (first 120 chars): The French traveler reached the city after disguising himself and crossing regions that had defeated many European exped

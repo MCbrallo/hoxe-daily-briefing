@@ -1,0 +1,20 @@
+[warfare] : The Lebanese Civil War Begins -> Has ID: false
+[sports] : Tiger Woods Wins The Masters In Record Breaking Style -> Has ID: false
+[film and television] : Sidney Poitier Wins Best Actor -> Has ID: false
+[music] : Handel'S Messiah Premieres In Dublin -> Has ID: false
+[history] : Constantinople Falls To The Fourth Crusade -> Has ID: false
+[history] : Henry IV Signs The Edict Of Nantes -> Has ID: false
+[warfare] : Fort Sumter Surrenders -> Has ID: false
+[science] : Robert Watson Watt Is Born -> Has ID: false
+[literature] : Samuel Beckett Is Born -> Has ID: false
+[history] : The Jallianwala Bagh Massacre Shocks British India -> Has ID: false
+[biology and medicine] : Michael Brown Is Born -> Has ID: false
+[warfare] : The Soviet Union And Japan Sign A Neutrality Pact -> Has ID: false
+[art and architecture] : The Jefferson Memorial Is Dedicated -> Has ID: false
+[warfare] : Soviet And Bulgarian Forces Take Vienna -> Has ID: false
+[warfare] : The Hadassah Medical Convoy Is Massacred In Jerusalem -> Has ID: false
+[literature] : Casino Royale Is Published -> Has ID: false
+[science] : Transit 1B Launches The First Operational Navigation Satellite System -> Has ID: false
+[physics] : Apollo 13 Suffers Its Life Threatening Oxygen Tank Explosion -> Has ID: false
+[history] : China And Portugal Sign The Macau Handover Agreement -> Has ID: false
+[environment] : The Great Chicago Flood Engulfs Downtown Tunnels And Basements -> Has ID: false

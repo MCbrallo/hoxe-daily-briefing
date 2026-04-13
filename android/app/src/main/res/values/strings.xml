@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HOXE</string>
+    <string name="title_activity_main">HOXE</string>
+    <string name="package_name">com.vestauth.hoxe</string>
+    <string name="custom_url_scheme">com.vestauth.hoxe</string>
+</resources>

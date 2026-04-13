@@ -1,0 +1,30 @@
+﻿Ôùç injected env (4) from .env.local // tip: Ôîÿ override existing { override: true }
+ÔòÉÔòÉÔòÉ Fixing April 20 context ÔòÉÔòÉÔòÉ
+
+Ô£à France Opens The Revolutionary Wars
+Ô£à Sapienza Takes Shape In Rome
+Ô£à Oil Futures Close Below Zero For The First Time
+Ô£à Cromwell Clears The Rump Parliament
+Ô£à Thaddeus Lowe Lifts Off On A Record Balloon Trip
+Ô£à Tito Puente Is Born
+Ô£à A Simple Ocean Science Tool Gets Its Name
+Ô£à The Curies Refine Radium Chloride
+Ô£à The Bay Of Pigs Invasion Collapses
+Ô£à Wisconsin Territory Is Created
+Ô£à Make Luv Sits At Number One In Britain
+Ô£à Columbine Shocks The United States
+Ô£à Ren├® Cailli├® Enters Timbuktu
+Ô£à Blake Smashes The Fleet At Santa Cruz
+Ô£à Cantinflas Dies
+Ô£à John Paul Stevens Is Born
+Ô£à Danica Patrick Breaks IndyCar'S Biggest Gender Bar
+Ô£à Powell Delivers The Rivers Of Blood Speech
+Ô£à The April Uprising Begins In Bulgaria
+Ô£à Pasteur And Bernard Strike At Spontaneous Generati
+Ô£à Chinese Language Day Enters The UN Calendar
+Ô£à Deepwater Horizon Explodes In The Gulf
+Ô£à Apollo 16 Touches Down On The Moon
+Ô£à Odilon Redon Is Born
+Ô£à The Ludlow Massacre Shocks Industrial America
+
+Done. Updated: 25, Skipped: 0
