@@ -591,38 +591,20 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
             </div>
           </div>
 
-          {(isMusic || item.category === 'viral_music') && (item.metadata?.spotifyId || item.metadata?.deezerId) && (
-            <div className="w-full mb-6 relative z-[60]" style={{ touchAction: 'none' }}>
-              <MusicPlayerCard
-                trackTitle={item.metadata.spotifyTitle || item.metadata.deezerTitle || item.title}
-                artistName={item.metadata.spotifyArtist || item.metadata.deezerArtist || ''}
-                albumCover={item.metadata.spotifyCover || item.metadata.deezerCover || ''}
-                spotifyId={(item.metadata.spotifyId || item.metadata.deezerId) as string}
-              />
-            </div>
-          )}
-
-          {/* Mobile Image Layer */}
-          {showImage && (
-            <div className="col-span-full mt-2 mb-2 md:hidden mx-auto w-[85%] flex flex-col items-end vintage-frame vintage-corners transition-all duration-500">
-              <img 
-                src={item.imageUrl!.includes('wiki') ? `https://wsrv.nl/?url=${item.imageUrl!.replace('https://', '')}&w=800` : item.imageUrl!}
-                alt={item.title} 
-                loading="lazy" 
-                referrerPolicy="no-referrer" 
-                crossOrigin="anonymous" 
-                onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} 
-                className="w-full h-auto max-h-[30vh] object-cover filter grayscale" 
-              />
-              <div className="w-full relative mt-3 px-4 h-full flex flex-col pb-4">
-                <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
-                <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
-              </div>
-            </div>
-          )}
-
         </div>
       </div>
+
+      {/* Music Player — rendered OUTSIDE the scroll container so touch events work on mobile */}
+      {(isMusic || item.category === 'viral_music') && (item.metadata?.spotifyId || item.metadata?.deezerId) && (
+        <div className="col-span-full relative z-[60]" style={{ maxHeight: 220 }}>
+          <MusicPlayerCard
+            trackTitle={item.metadata.spotifyTitle || item.metadata.deezerTitle || item.title}
+            artistName={item.metadata.spotifyArtist || item.metadata.deezerArtist || ''}
+            albumCover={item.metadata.spotifyCover || item.metadata.deezerCover || ''}
+            spotifyId={(item.metadata.spotifyId || item.metadata.deezerId) as string}
+          />
+        </div>
+      )}
     </div>
   );
 }
