@@ -353,9 +353,11 @@ export default function TodayPage() {
         // Mobile style: right aligned dots at 50% height
         "right-4 top-1/2 -translate-y-1/2 flex-col",
         // Desktop style: bottom aligned centered bar
-        "md:right-auto md:top-auto md:bottom-0 md:transform-none md:w-full md:flex-row md:justify-center md:pb-5 md:pt-10 md:bg-gradient-to-t md:from-mist-white md:via-mist-white/80 md:to-transparent"
+        "md:right-auto md:top-auto md:bottom-0 md:transform-none md:w-full md:flex-row md:justify-center md:pb-5"
       )}>
-        <nav className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-3 md:gap-10 md:px-6 pointer-events-auto">
+        {/* Decorative gradient - fully non-interactive */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-t from-mist-white via-mist-white/80 to-transparent pointer-events-none" />
+        <nav className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-3 md:gap-10 md:px-6 pointer-events-auto relative z-10">
            {uniqueCategories.map((catLabel: any) => {
               const currentCategoryName = currentSlide > 0 ? briefing.items[currentSlide - 1].category : '';
               const isActive = currentCategoryName === catLabel;
