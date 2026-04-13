@@ -592,7 +592,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
           </div>
 
           {(isMusic || item.category === 'viral_music') && (item.metadata?.spotifyId || item.metadata?.deezerId) && (
-            <div className="w-full mb-6 relative z-[60]">
+            <div className="w-full mb-6 relative z-[60]" style={{ touchAction: 'none' }}>
               <MusicPlayerCard
                 trackTitle={item.metadata.spotifyTitle || item.metadata.deezerTitle || item.title}
                 artistName={item.metadata.spotifyArtist || item.metadata.deezerArtist || ''}

@@ -34,17 +34,17 @@ export function MusicPlayerCard({ trackTitle, artistName, spotifyId }: MusicPlay
       </div>
 
       {!failed ? (
-        <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-slate-100" style={{ position: 'relative', height: isYouTube ? 200 : 80 }}>
+        <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-slate-100" style={{ position: 'relative', height: isYouTube ? 200 : 80, touchAction: 'none' }}>
           {isYouTube ? (
             <iframe
               width="100%" 
               height="100%" 
-              src={`https://www.youtube.com/embed/${spotifyId}?autoplay=0&showinfo=0&controls=1`} 
+              src={`https://www.youtube.com/embed/${spotifyId}?autoplay=0&showinfo=0&controls=1&playsinline=1`} 
               title="YouTube video player" 
               frameBorder="0" 
               allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
-              style={{ border: "0" }}
+              style={{ border: "0", touchAction: "none" }}
               onError={() => setFailed(true)}
             />
           ) : isDeezer ? (
