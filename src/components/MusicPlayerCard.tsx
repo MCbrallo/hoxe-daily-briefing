@@ -12,23 +12,16 @@ interface MusicPlayerProps {
 /**
  * Bulletproof music player for HOXE.
  * 
- * DESKTOP: Uses embedded iframe (YouTube / Deezer / Spotify) — works perfectly.
- * MOBILE: YouTube iframes don't receive touch events inside scroll containers
- *         (known WebKit/Chrome limitation with cross-origin iframes).
- *         Instead, shows a beautiful thumbnail card that opens YouTube directly
- *         when tapped — guaranteed playback on every mobile device.
+ * YouTube strategy (mobile + desktop):
+ *   Phase 1: Shows a thumbnail with play button (regular DOM = receives taps on mobile)
+ *   Phase 2: On tap, swaps thumbnail for iframe with autoplay=1
+ *            → Video plays inline, inside the app, guaranteed.
+ * 
+ * Spotify / Deezer: Iframe embeds (work everywhere).
  */
 export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId }: MusicPlayerProps) {
   const [failed, setFailed] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Detect mobile by screen width (matches Tailwind md: breakpoint)
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
+  const [ytActivated, setYtActivated] = useState(false);
 
   if (!spotifyId) return null;
 
@@ -36,9 +29,7 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
   const isYouTube = spotifyId.length === 11 && !spotifyId.includes(' ');
   const isSpotify = !isDeezer && !isYouTube;
 
-  // YouTube thumbnail URL (high quality)
   const ytThumbnail = isYouTube ? `https://img.youtube.com/vi/${spotifyId}/hqdefault.jpg` : null;
-  const ytWatchUrl = isYouTube ? `https://www.youtube.com/watch?v=${spotifyId}` : null;
 
   return (
     <div className="w-full mt-3 mb-1">
@@ -51,54 +42,55 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
         <div className="flex-1 h-[1px] bg-ink-navy/10" />
       </div>
 
-      {/* ─── MOBILE YOUTUBE: Thumbnail card that opens YouTube directly ─── */}
-      {isYouTube && isMobile ? (
-        <a
-          href={ytWatchUrl!}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] relative group"
-          style={{ height: 180 }}
-        >
-          {/* Thumbnail */}
-          <img
-            src={ytThumbnail!}
-            alt={trackTitle}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10 group-active:from-black/80" />
-          {/* Play button */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center shadow-lg group-active:scale-95 transition-transform">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </div>
-          {/* Track info at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
-            <p className="text-white text-[13px] font-bold line-clamp-1 drop-shadow-sm">{trackTitle}</p>
-            <p className="text-white/60 text-[10px] font-medium tracking-wider uppercase mt-0.5">{artistName} · YouTube</p>
-          </div>
-        </a>
-      ) : !failed ? (
-        /* ─── DESKTOP: Standard iframe embed ─── */
-        <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-slate-100" style={{ position: 'relative', height: isYouTube ? 200 : 80 }}>
-          {isYouTube ? (
+      {isYouTube ? (
+        <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-black" style={{ position: 'relative', height: 200 }}>
+          {!ytActivated ? (
+            /* Phase 1: Thumbnail + play button (regular DOM, taps work on mobile) */
+            <button
+              onClick={() => setYtActivated(true)}
+              className="w-full h-full relative block group cursor-pointer bg-black"
+              aria-label="Play video"
+            >
+              <img
+                src={ytThumbnail!}
+                alt={trackTitle}
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 group-hover:from-black/70 transition-colors" />
+              {/* YouTube play button */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-11 bg-red-600 rounded-xl flex items-center justify-center shadow-lg group-hover:bg-red-700 group-active:scale-90 transition-all">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+              {/* Track info */}
+              <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
+                <p className="text-white text-[12px] font-bold line-clamp-1 drop-shadow-sm">{trackTitle}</p>
+                <p className="text-white/50 text-[9px] font-medium tracking-wider uppercase mt-0.5">{artistName}</p>
+              </div>
+            </button>
+          ) : (
+            /* Phase 2: Real iframe, loaded with autoplay=1 after user tap */
             <iframe
               width="100%" 
               height="100%" 
-              src={`https://www.youtube.com/embed/${spotifyId}?autoplay=0&showinfo=0&controls=1&playsinline=1`} 
+              src={`https://www.youtube.com/embed/${spotifyId}?autoplay=1&playsinline=1&controls=1&modestbranding=1`} 
               title="YouTube video player" 
               frameBorder="0" 
-              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
               style={{ border: "0" }}
-              onError={() => setFailed(true)}
             />
-          ) : isDeezer ? (
+          )}
+        </div>
+      ) : !failed ? (
+        /* Spotify / Deezer iframe */
+        <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-slate-100" style={{ position: 'relative', height: 80 }}>
+          {isDeezer ? (
             <iframe 
               title="deezer-widget" 
               src={`https://widget.deezer.com/widget/light/track/${spotifyId}`} 
@@ -125,9 +117,9 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
           )}
         </div>
       ) : (
-        /* ─── FALLBACK: Open link directly ─── */
+        /* Fallback link */
         <a 
-          href={isYouTube ? `https://youtube.com/watch?v=${spotifyId}` : isDeezer ? `https://deezer.com/track/${spotifyId}` : `https://open.spotify.com/track/${spotifyId}`} 
+          href={isDeezer ? `https://deezer.com/track/${spotifyId}` : `https://open.spotify.com/track/${spotifyId}`} 
           target="_blank" 
           rel="noopener noreferrer"
           className="flex items-center gap-3 px-4 py-3 rounded-xl border border-ink-navy/10 bg-ink-navy/[0.03] hover:bg-ink-navy/[0.06] transition-colors"
