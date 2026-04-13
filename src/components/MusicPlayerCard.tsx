@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface MusicPlayerProps {
   trackTitle: string;
@@ -12,12 +12,12 @@ interface MusicPlayerProps {
 /**
  * Bulletproof music player for HOXE.
  * 
- * YouTube strategy (mobile + desktop):
- *   Phase 1: Shows a thumbnail with play button (regular DOM = receives taps on mobile)
- *   Phase 2: On tap, swaps thumbnail for iframe with autoplay=1
- *            → Video plays inline, inside the app, guaranteed.
+ * YouTube strategy:
+ *   Phase 1: Thumbnail + play button (regular DOM = receives taps on mobile)
+ *   Phase 2: Fixed overlay with iframe + autoplay — sits OUTSIDE scroll containers
+ *            so pause/seek/fullscreen all work on every device.
  * 
- * Spotify / Deezer: Iframe embeds (work everywhere).
+ * Spotify / Deezer: Inline iframe embeds.
  */
 export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId }: MusicPlayerProps) {
   const [failed, setFailed] = useState(false);
@@ -27,7 +27,6 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
 
   const isDeezer = /^\d+$/.test(spotifyId);
   const isYouTube = spotifyId.length === 11 && !spotifyId.includes(' ');
-  const isSpotify = !isDeezer && !isYouTube;
 
   const ytThumbnail = isYouTube ? `https://img.youtube.com/vi/${spotifyId}/hqdefault.jpg` : null;
 
@@ -43,9 +42,9 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
       </div>
 
       {isYouTube ? (
-        <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-black" style={{ position: 'relative', height: 200 }}>
-          {!ytActivated ? (
-            /* Phase 1: Thumbnail + play button (regular DOM, taps work on mobile) */
+        <>
+          {/* Phase 1: Thumbnail card — always visible as the inline card */}
+          <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-black" style={{ position: 'relative', height: 200 }}>
             <button
               onClick={() => setYtActivated(true)}
               className="w-full h-full relative block group cursor-pointer bg-black"
@@ -57,9 +56,7 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
                 className="w-full h-full object-cover"
                 loading="eager"
               />
-              {/* Dark overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 group-hover:from-black/70 transition-colors" />
-              {/* YouTube play button */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-16 h-11 bg-red-600 rounded-xl flex items-center justify-center shadow-lg group-hover:bg-red-700 group-active:scale-90 transition-all">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
@@ -67,49 +64,69 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
                   </svg>
                 </div>
               </div>
-              {/* Track info */}
               <div className="absolute bottom-0 left-0 right-0 px-4 pb-3">
                 <p className="text-white text-[12px] font-bold line-clamp-1 drop-shadow-sm">{trackTitle}</p>
                 <p className="text-white/50 text-[9px] font-medium tracking-wider uppercase mt-0.5">{artistName}</p>
               </div>
             </button>
-          ) : (
-            /* Phase 2: Real iframe, loaded with autoplay=1 after user tap */
-            <iframe
-              width="100%" 
-              height="100%" 
-              src={`https://www.youtube.com/embed/${spotifyId}?autoplay=1&playsinline=1&controls=1&modestbranding=1`} 
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-              style={{ border: "0" }}
-            />
+          </div>
+
+          {/* Phase 2: Fixed overlay player — OUTSIDE all scroll containers */}
+          {ytActivated && (
+            <div
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm"
+              onClick={(e) => { if (e.target === e.currentTarget) setYtActivated(false); }}
+            >
+              <button
+                onClick={() => setYtActivated(false)}
+                className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
+                aria-label="Close player"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+              <div className="absolute top-5 left-5 md:top-7 md:left-8 z-10">
+                <p className="text-white/90 text-sm font-bold line-clamp-1">{trackTitle}</p>
+                <p className="text-white/40 text-[10px] font-medium tracking-wider uppercase mt-0.5">{artistName}</p>
+              </div>
+              <div className="w-[92%] md:w-[70%] lg:w-[55%] max-w-3xl aspect-video rounded-xl overflow-hidden shadow-2xl">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${spotifyId}?autoplay=1&playsinline=1&controls=1&modestbranding=1&rel=0`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ border: "0" }}
+                />
+              </div>
+            </div>
           )}
-        </div>
+        </>
       ) : !failed ? (
-        /* Spotify / Deezer iframe */
         <div className="w-full rounded-xl overflow-hidden border border-ink-navy/[0.06] bg-slate-100" style={{ position: 'relative', height: 80 }}>
           {isDeezer ? (
-            <iframe 
-              title="deezer-widget" 
-              src={`https://widget.deezer.com/widget/light/track/${spotifyId}`} 
-              width="100%" 
-              height="100%" 
-              frameBorder="0" 
+            <iframe
+              title="deezer-widget"
+              src={`https://widget.deezer.com/widget/light/track/${spotifyId}`}
+              width="100%"
+              height="100%"
+              frameBorder="0"
               // @ts-ignore
-              allowtransparency="true" 
+              allowtransparency="true"
               allow="encrypted-media; clipboard-write; autoplay"
               style={{ border: "0" }}
               onError={() => setFailed(true)}
             />
           ) : (
-            <iframe 
+            <iframe
               src={`https://open.spotify.com/embed/track/${spotifyId}?utm_source=generator&theme=0`}
-              width="100%" 
-              height="100%" 
+              width="100%"
+              height="100%"
               frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
               style={{ border: "0" }}
               onError={() => setFailed(true)}
@@ -117,10 +134,9 @@ export function MusicPlayerCard({ trackTitle, artistName, albumCover, spotifyId 
           )}
         </div>
       ) : (
-        /* Fallback link */
-        <a 
-          href={isDeezer ? `https://deezer.com/track/${spotifyId}` : `https://open.spotify.com/track/${spotifyId}`} 
-          target="_blank" 
+        <a
+          href={isDeezer ? `https://deezer.com/track/${spotifyId}` : `https://open.spotify.com/track/${spotifyId}`}
+          target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 px-4 py-3 rounded-xl border border-ink-navy/10 bg-ink-navy/[0.03] hover:bg-ink-navy/[0.06] transition-colors"
         >
