@@ -12,7 +12,7 @@ export default function SettingsPage() {
 
   const EDITORIAL_CATS = [
     "history", "science", "physics", "biology and medicine", "technology", "environment", 
-    "warfare", "politics and government", "law", "business and economy", 
+    "warfare", "politics", "law", "business", 
     "culture", "music", "film and television", "art and architecture", 
     "literature", "philosophy", "religion", 
     "sports", "exploration", "people"

@@ -21,6 +21,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Onboarding } from "@/components/layout/Onboarding";
 import { LanguageProvider } from "@/context/LanguageContext";
 
+import { NativeSetup } from "@/components/NativeSetup";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,6 +36,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased text-granite-grey bg-mist-white min-h-screen flex flex-col bg-fixed" suppressHydrationWarning>
         <LanguageProvider>
+          <NativeSetup />
           <Onboarding />
           <Navbar />
           <main className="w-full flex-1 flex flex-col">

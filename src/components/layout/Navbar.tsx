@@ -22,7 +22,6 @@ export function Navbar() {
 
   const primaryNav = [
     { label: t("Today"), href: "/", icon: Compass },
-    { label: "Viral", href: "/viral", icon: Flame },
   ];
 
   const secondaryNav = [

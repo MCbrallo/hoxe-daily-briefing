@@ -18,9 +18,9 @@ const CATEGORY_COLOR_MAP: Record<string, { text: string; border: string; hex: st
   technology:                { text: "text-[#0F766E]", border: "border-[#0F766E]", hex: "#0F766E" },
   space:                     { text: "text-[#1E1B4B]", border: "border-[#1E1B4B]", hex: "#1E1B4B" },
   warfare:                   { text: "text-[#162740]", border: "border-[#162740]", hex: "#162740" },
-  "politics and government": { text: "text-[#831843]", border: "border-[#831843]", hex: "#831843" },
+  politics: { text: "text-[#831843]", border: "border-[#831843]", hex: "#831843" },
   law:                       { text: "text-[#451A03]", border: "border-[#451A03]", hex: "#451A03" },
-  "business and economy":    { text: "text-[#14532D]", border: "border-[#14532D]", hex: "#14532D" },
+  business:    { text: "text-[#14532D]", border: "border-[#14532D]", hex: "#14532D" },
   culture:                   { text: "text-[#701A75]", border: "border-[#701A75]", hex: "#701A75" },
   music:                     { text: "text-[#6D28D9]", border: "border-[#6D28D9]", hex: "#6D28D9" },
   "film and television":     { text: "text-[#4C1D95]", border: "border-[#4C1D95]", hex: "#4C1D95" },
@@ -48,7 +48,7 @@ export default function TodayPage() {
       const targetDate = params.get('date');
       
       const CATEGORY_ORDER: Record<string, number> = { 
-        history: 1, warfare: 2, "politics and government": 3, law: 4, "business and economy": 5, 
+        history: 1, warfare: 2, politics: 3, law: 4, business: 5, 
         science: 6, physics: 7, "biology and medicine": 8, environment: 9, technology: 10, space: 11, exploration: 12,
         culture: 13, "art and architecture": 14, literature: 15, "film and television": 16, music: 17, philosophy: 18, religion: 19,
         people: 20, sports: 21, viral_quote: 22 
@@ -409,11 +409,29 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
   }, [isActive]);
 
   const handleShareLink = async () => {
-    if (navigator.share) {
-      try { await navigator.share({ title: `HOXE: ${item.title}`, url: window.location.href }); } catch (err) {}
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copied!");
+    try {
+      const { Share } = await import('@capacitor/share');
+      const { Capacitor } = await import('@capacitor/core');
+      
+      const shareUrl = window.location.href;
+      const shareTitle = `HOXE: ${item.title}`;
+      const shareText = item.shortExplanation?.substring(0, 80) + "...";
+
+      if (Capacitor.isNativePlatform()) {
+        await Share.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+          dialogTitle: "Compartir con"
+        });
+      } else if (navigator.share) {
+        await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Link copied!");
+      }
+    } catch (err) {
+      console.warn("Share failed or was cancelled", err);
     }
     setShowShareMenu(false);
   };
@@ -439,7 +457,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
   };
 
   return (
-    <div ref={cardRef} className="w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 h-full relative" style={{ gridTemplateRows: expanded ? 'auto 1fr' : 'auto 1fr auto' }}>
+    <div ref={cardRef} className="w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 h-full relative" style={{ gridTemplateRows: expanded ? 'auto auto 1fr' : 'auto 1fr auto' }}>
       
       {/* Share Overlay */}
       {showShareMenu && (
@@ -460,7 +478,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
           </span>
           <div className="flex items-center gap-4 md:gap-6">
             {item.year && (
-              <span className="font-serif text-[12px] md:text-base italic text-ink-navy/60 pr-4 border-r border-ink-navy/20">{item.year}</span>
+              <span className="font-serif text-[14px] md:text-[17px] font-semibold text-ink-navy/85 pr-4 border-r border-ink-navy/15 flex items-center">{item.year}</span>
             )}
             <button 
               onClick={() => toggleCard(item)}
@@ -487,7 +505,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
       )}>
         <h2 className={cn(
           "font-serif text-ink-navy tracking-tight transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]",
-          expanded ? "text-xl md:text-2xl leading-[1.15]" : "text-[2.75rem] md:text-[4.5rem] leading-[1.12]"
+          expanded ? "text-lg md:text-xl leading-[1.15]" : "text-[2.25rem] md:text-[3.5rem] leading-[1.1]"
         )}>
           {item.title}
         </h2>
@@ -514,7 +532,7 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
               referrerPolicy="no-referrer" 
               crossOrigin="anonymous" 
               onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} 
-              className="w-full h-auto max-h-[45vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" 
+              className="w-full h-auto max-h-[35vh] object-cover filter grayscale hover:grayscale-0 transition-all duration-[1500ms]" 
             />
             <div className="w-full relative mt-3">
               <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
@@ -525,10 +543,52 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
       )}
 
       <div className={cn(
-        "col-span-full gap-4 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pb-28 md:pb-24 relative z-[55]",
+        "col-span-full gap-4 overflow-y-auto min-h-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] pb-28 md:pb-24 relative z-[55]",
         showImage ? "md:col-span-7" : "md:col-span-12 md:pr-12 lg:pr-24"
       )}>
         <div className="flex flex-col items-center md:items-start w-full">
+          <button 
+            onClick={() => setExpanded(!expanded)}
+            className={cn(
+              "group flex items-center gap-3 focus:outline-none transition-all duration-500 w-full md:w-auto",
+              expanded ? "self-start mb-5 mt-0" : "self-center md:self-start mt-2 mb-6"
+            )}
+          >
+            <div className={cn(
+              "w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300",
+              expanded 
+                ? "bg-ink-navy/10 border border-ink-navy/20" 
+                : "border-2 group-hover:scale-110",
+              !expanded && catColor.border
+            )}>
+              <span className={cn(
+                "transition-all text-sm font-light leading-none",
+                expanded ? "text-ink-navy/60" : "text-ink-navy/50"
+              )}>
+                {expanded ? "×" : "+"}
+              </span>
+            </div>
+            <span className={cn(
+              "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] transition-all",
+              expanded ? "text-ink-navy/40" : "text-ink-navy/50 group-hover:text-ink-navy/80"
+            )}>
+              {expanded ? t("CloseContext") : t("ReadContext")}
+            </span>
+          </button>
+
+          <div className={cn(
+            "grid transition-all duration-[800ms] delay-100 ease-[cubic-bezier(0.23,1,0.32,1)] w-full text-left",
+            expanded ? "grid-rows-[1fr] opacity-100 mt-0 mb-6" : "grid-rows-[0fr] opacity-0 mt-0 mb-0 pointer-events-none"
+          )}>
+            <div className="overflow-hidden min-h-0">
+              <div className="text-sm md:text-base text-ink-navy/85 leading-[1.7] md:leading-[1.75] font-serif space-y-4">
+                {item.whyItMatters.split('\n\n').map((paragraph: any, i: number) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {(isMusic || item.category === 'viral_music') && (item.metadata?.spotifyId || item.metadata?.deezerId) && (
             <div className="w-full mb-6 relative z-[60]">
               <MusicPlayerCard
@@ -540,66 +600,24 @@ function CategorySlideContent({ item, index, isActive }: { item: BriefingItem; i
             </div>
           )}
 
-        {/* Mobile Image Layer (parte baja --> Moved Up) */}
-        {showImage && (
-          <div className="col-span-full mt-4 mb-2 md:hidden mx-auto w-[90%] flex flex-col items-end vintage-frame vintage-corners transition-all duration-500">
-            <img 
-              src={item.imageUrl!.includes('wiki') ? `https://wsrv.nl/?url=${item.imageUrl!.replace('https://', '')}&w=800` : item.imageUrl!}
-              alt={item.title} 
-              loading="lazy" 
-              referrerPolicy="no-referrer" 
-              crossOrigin="anonymous" 
-              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} 
-              className="w-full h-auto max-h-[35vh] object-cover filter grayscale" 
-            />
-            <div className="w-full relative mt-3 px-4 h-full flex flex-col pb-4">
-              <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
-              <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
+          {/* Mobile Image Layer */}
+          {showImage && (
+            <div className="col-span-full mt-2 mb-2 md:hidden mx-auto w-[85%] flex flex-col items-end vintage-frame vintage-corners transition-all duration-500">
+              <img 
+                src={item.imageUrl!.includes('wiki') ? `https://wsrv.nl/?url=${item.imageUrl!.replace('https://', '')}&w=800` : item.imageUrl!}
+                alt={item.title} 
+                loading="lazy" 
+                referrerPolicy="no-referrer" 
+                crossOrigin="anonymous" 
+                onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.style.display = 'none'; }} 
+                className="w-full h-auto max-h-[30vh] object-cover filter grayscale" 
+              />
+              <div className="w-full relative mt-3 px-4 h-full flex flex-col pb-4">
+                <div className="w-full h-[1px] bg-ink-navy/10 mb-2" />
+                <span className="text-[8px] uppercase tracking-[0.2em] font-bold text-ink-navy/40 text-right w-full block">{item.imageSource?.replace("Photo by", t("By"))}</span>
+              </div>
             </div>
-          </div>
-        )}
-
-        <button 
-          onClick={() => setExpanded(!expanded)}
-          className={cn(
-            "group flex items-center gap-3 focus:outline-none transition-all duration-500",
-            expanded ? "self-start mb-5 mt-0" : "self-center mt-6 mb-4"
           )}
-        >
-          <div className={cn(
-            "w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300",
-            expanded 
-              ? "bg-ink-navy/10 border border-ink-navy/20" 
-              : "border-2 group-hover:scale-110",
-            !expanded && catColor.border
-          )}>
-            <span className={cn(
-              "transition-all text-sm font-light leading-none",
-              expanded ? "text-ink-navy/60" : "text-ink-navy/50"
-            )}>
-              {expanded ? "×" : "+"}
-            </span>
-          </div>
-          <span className={cn(
-            "text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] transition-all",
-            expanded ? "text-ink-navy/40" : "text-ink-navy/50 group-hover:text-ink-navy/80"
-          )}>
-            {expanded ? t("CloseContext") : t("ReadContext")}
-          </span>
-        </button>
-
-        <div className={cn(
-          "grid transition-all duration-[800ms] delay-100 ease-[cubic-bezier(0.23,1,0.32,1)] w-full text-left",
-          expanded ? "grid-rows-[1fr] opacity-100 mt-0" : "grid-rows-[0fr] opacity-0 mt-0 pointer-events-none"
-        )}>
-          <div className="overflow-hidden min-h-0">
-            <div className="text-sm md:text-base text-ink-navy/85 leading-[1.7] md:leading-[1.75] font-serif space-y-4">
-              {item.whyItMatters.split('\n\n').map((paragraph: any, i: number) => (
-                <p key={i}>{paragraph}</p>
-              ))}
-            </div>
-          </div>
-        </div>
 
         </div>
       </div>
